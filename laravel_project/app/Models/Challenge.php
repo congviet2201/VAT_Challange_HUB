@@ -21,4 +21,9 @@ class Challenge extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function progress()
+    {
+        return $this->hasMany(ChallengeProgress::class);
+    }
 }
