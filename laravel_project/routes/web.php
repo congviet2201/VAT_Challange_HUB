@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\AuthController;
 use App\Models\UserChallenge;
@@ -26,6 +27,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
 
 Route::get('/dashboard', function () {
-    $userChallenges = UserChallenge::where('user_id', auth()->id())->get();
+    $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
 })->middleware('auth');

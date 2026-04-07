@@ -10,7 +10,30 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
 
+    public function register(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6',
+        'role' => 'required|in:user,useradmin'
+    ]);
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'avatar' => null,
+        'role' => $request->role
+    ]);
+
+    return redirect()->route('auth.login')->with('success', 'Đăng ký thành công! Hãy đăng nhập.');
+}
 
 
     // 1. HIỂN THỊ FORM ĐĂNG NHẬP
@@ -46,39 +69,6 @@ class AuthController extends Controller
     }
 
     // 3. HIỂN THỊ FORM ĐĂNG KÝ
-    public function showRegister()
-    {
-        return view('auth.register');
-    }
-
-    // 4. XỬ LÝ ĐĂNG KÝ
-    public function register(Request $request)
-    {
-        // Kiểm tra dữ liệu nhập vào
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ], [
-            'name.required' => 'Tên là bắt buộc',
-            'email.required' => 'Email là bắt buộc',
-            'email.email' => 'Email không hợp lệ',
-            'email.unique' => 'Email này đã được sử dụng',
-            'password.required' => 'Mật khẩu là bắt buộc',
-            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-            'password.confirmed' => 'Xác nhận mật khẩu không trùng khớp',
-        ]);
-
-        // Tạo user mới
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user',
-        ]);
-
-        return redirect('/login')->with('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
-    }
 
     // 5. XỬ LÝ ĐĂNG XUẤT
     public function logout(Request $request)
