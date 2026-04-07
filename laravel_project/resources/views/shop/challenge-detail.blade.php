@@ -56,7 +56,10 @@
 
                 <!-- Nút hành động -->
                 @if (Auth::check())
-                    <button class="btn btn-primary btn-lg">✨ Bắt đầu thử thách</button>
+                    <form action="{{ route('challenge.start', $challenge->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-lg" id="startChallengeBtn">✨ Bắt đầu thử thách</button>
+                    </form>
                 @else
                     <a href="{{ route('auth.login') }}" class="btn btn-primary btn-lg">✨ Bắt đầu thử thách</a>
                 @endif

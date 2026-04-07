@@ -19,8 +19,14 @@ class User extends Authenticatable
         'avatar',
         'role'
         ];
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
-}
+
+
+    public function challengeProgress()
+    {
+        return $this->hasMany(ChallengeProgress::class);
+    }}

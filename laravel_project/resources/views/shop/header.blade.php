@@ -19,8 +19,8 @@
 
             <!-- MENU: Giới thiệu, Liên hệ, Đăng nhập/Đăng ký/Tên user -->
             <div class="ms-auto d-flex gap-3 align-items-center">
-                <a href="#" class="text-dark text-decoration-none">Giới thiệu</a>
-                <a href="#" class="text-dark text-decoration-none">Liên hệ</a>
+                <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
+                <a href="{{ route('contact') }}" class="text-dark text-decoration-none">Liên hệ</a>
 
                 <!-- KIỂM TRA ĐĂNG NHẬP -->
                 @if (Auth::check())
