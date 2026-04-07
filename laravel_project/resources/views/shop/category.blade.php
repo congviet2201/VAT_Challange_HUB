@@ -2,108 +2,71 @@
 
 @section('content')
 
-<div class="container mt-4">
-
-    {{-- TOP: CATEGORY INFO --}}
-    <div class="row mb-5 align-items-center">
-
-        {{-- IMAGE --}}
-        <div class="col-md-7">
-        <img src="{{ asset('images/' . $category->image) }}"
-            class="img-fluid rounded shadow w-100 category-img">
+<!-- PHẦN HEADER: DANH MỤC INFO -->
+<section class="mb-5 pb-4 border-bottom">
+    <div class="row align-items-center g-4">
+        <!-- Hình ảnh -->
+        <div class="col-md-5">
+            <img src="{{ asset('images/' . $category->image) }}" class="img-fluid rounded shadow" style="width: 100%; height: 300px; object-fit: cover;" onerror="this.src='{{ asset('images/default.jpg') }}'">
         </div>
 
-        {{-- INFO --}}
-        <div class="col-md-5">
-            <h2 class="fw-bold mb-3">
-                {{ $category->name }}
-            </h2>
-
-            <p class="text-muted fs-5">
-                {{ $category->description }}
-            </p>
-
-            <a href="/" class="btn btn-outline-secondary mt-3">
+        <!-- Thông tin -->
+        <div class="col-md-7">
+            <h1 class="fw-bold mb-3">{{ $category->name }}</h1>
+            <p class="text-muted fs-5 lh-lg mb-4">{{ $category->description }}</p>
+            <a href="{{ route('home') }}" class="btn btn-outline-secondary">
                 ← Quay lại
             </a>
         </div>
-
     </div>
+</section>
 
-    {{-- LEVEL / CHALLENGE --}}
-    <h3 class="mb-4 fw-bold">🚀 Chọn cấp độ</h3>
+<!-- PHẦN THỬ THÁCH: CHỌN CẤP ĐỘ -->
+<section>
+    <h3 class="fw-bold mb-4">🚀 Chọn cấp độ thử thách</h3>
 
-    <div class="row">
-
+    <div class="row g-4">
         @foreach($challenges as $c)
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <!-- Hình ảnh cấp độ -->
+                    <img src="{{ asset('images/' . $c->difficulty . '.jpg') }}" class="card-img-top" style="height: 150px; object-fit: cover;" onerror="this.src='{{ asset('images/default.jpg') }}'">
 
-                <div class="card shadow-sm h-100 level-card">
-
-                    {{-- IMAGE --}}
-                    <img src="{{ asset('images/' . $c->difficulty . '.jpg') }}"
-                        class="card-img-top">
-
+                    <!-- Nội dung -->
                     <div class="card-body d-flex flex-column text-center">
-
-                        {{-- LEVEL --}}
-                        <h4 class="
+                        <!-- Cấp độ -->
+                        <h5 class="fw-bold mb-2
                             @if($c->difficulty=='easy') text-success
                             @elseif($c->difficulty=='medium') text-warning
                             @else text-danger
                             @endif
                         ">
-                            {{ strtoupper($c->difficulty) }}
-                        </h4>
-
-                        {{-- TITLE --}}
-                        <h5 class="fw-bold">
-                            {{ $c->title }}
+                            @if($c->difficulty=='easy') 🟢 EASY (Dễ)
+                            @elseif($c->difficulty=='medium') 🟡 MEDIUM (Trung bình)
+                            @else 🔴 HARD (Khó)
+                            @endif
                         </h5>
 
-                        {{-- DESC --}}
-                        <p class="text-muted flex-grow-1">
+                        <!-- Tiêu đề -->
+                        <h6 class="fw-bold mb-2">{{ $c->title }}</h6>
+
+                        <!-- Mô tả -->
+                        <p class="text-muted small flex-grow-1 mb-3">
                             {{ $c->description }}
                         </p>
 
-                        {{-- TIME --}}
-                        <small class="mb-2">
-                            ⏱ {{ $c->daily_time }} phút/ngày
-                        </small>
+                        <!-- Thời gian -->
+                        <small class="text-muted mb-3">⏱ {{ $c->daily_time }} phút/ngày</small>
 
-                        {{-- BUTTON --}}
-                        <button>
-                            Tham gia
-                        </button>
-
+                        <!-- Nút -->
+                        <a href="{{ route('challenge.detail', $c->id) }}" class="btn btn-primary w-100">
+                            Chi tiết
+                        </a>
                     </div>
-
                 </div>
-
             </div>
         @endforeach
-
     </div>
-
-</div>
-
-{{-- CSS --}}
-<style>
-.level-card {
-    border-radius: 12px;
-    transition: 0.3s;
-}
-.level-card:hover {
-    transform: translateY(-6px);
-}
-.category-img {
-    height: 350px;
-    object-fit: cover;
-}
-.card-img-top {
-    height: 180px;
-    object-fit: cover;
-}
-</style>
+</section>
 
 @endsection

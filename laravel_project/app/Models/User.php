@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'avatar', 'role'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,5 +29,36 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function challengeProgress()
+    {
+        return $this->hasMany(ChallengeProgress::class);
+    }
+
+    // CHECK ROLE (NHỰT)
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUserAdmin()
+    {
+        return $this->role === 'useradmin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
+    // ROLE LABEL (HIỂN THỊ)
+    public function getRoleLabel()
+    {
+        return match($this->role) {
+            'admin' => 'Admin',
+            'useradmin' => 'Creator',
+            default => 'User',
+        };
     }
 }
