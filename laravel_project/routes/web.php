@@ -10,6 +10,7 @@ use App\Models\UserChallenge;
 
 
 
+
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -43,3 +44,11 @@ Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
 })->middleware('auth');
+
+
+use App\Http\Controllers\Admin\UserController;
+
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    Route::post('/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
+});
