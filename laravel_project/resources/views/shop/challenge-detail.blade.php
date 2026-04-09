@@ -32,7 +32,7 @@
                 <!-- Cấp độ & Thời gian -->
                 <div class="row mb-4">
                     <div class="col-sm-6">
-                        <strong>🎯 Cấp độ:</strong>
+                        <strong> Cấp độ:</strong>
                         @if($challenge->difficulty == 'easy')
                             <span class="badge bg-success">Dễ</span>
                         @elseif($challenge->difficulty == 'medium')
@@ -49,7 +49,7 @@
                 <hr>
 
                 <!-- Mô tả -->
-                <h4 class="fw-bold mb-3">📝 Mô tả thử thách</h4>
+                <h4 class="fw-bold mb-3"> Mô tả thử thách</h4>
                 <p class="lh-lg mb-4">{{ $challenge->description }}</p>
 
                 <hr>
@@ -73,7 +73,7 @@
         <!-- Thông tin danh mục -->
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">📚 {{ $category->name }}</h5>
+                <h5 class="mb-0"> {{ $category->name }}</h5>
             </div>
             <div class="card-body">
                 <img src="{{ asset('images/' . $category->image) }}" class="img-fluid rounded mb-3" style="height: 120px; object-fit: cover;" onerror="this.src='{{ asset('images/default.jpg') }}'">

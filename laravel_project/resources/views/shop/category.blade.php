@@ -23,7 +23,7 @@
 
 <!-- PHẦN THỬ THÁCH: CHỌN CẤP ĐỘ -->
 <section>
-    <h3 class="fw-bold mb-4">🚀 Chọn cấp độ thử thách</h3>
+    <h3 class="fw-bold mb-4"> Chọn cấp độ thử thách</h3>
 
     <div class="row g-4">
         @foreach($challenges as $c)
@@ -41,9 +41,9 @@
                             @else text-danger
                             @endif
                         ">
-                            @if($c->difficulty=='easy') 🟢 EASY (Dễ)
-                            @elseif($c->difficulty=='medium') 🟡 MEDIUM (Trung bình)
-                            @else 🔴 HARD (Khó)
+                            @if($c->difficulty=='easy')  EASY (Dễ)
+                            @elseif($c->difficulty=='medium')  MEDIUM (Trung bình)
+                            @else  HARD (Khó)
                             @endif
                         </h5>
 

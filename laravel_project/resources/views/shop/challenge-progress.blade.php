@@ -14,7 +14,7 @@
 <!-- Toast Notification -->
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert" id="successToast">
-        <strong>✅ Thành công!</strong> {{ session('success') }}
+        <strong> Thành công!</strong> {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 @endif
@@ -35,13 +35,13 @@
                 <!-- Danh mục & Cấp độ -->
                 <div class="row mb-4">
                     <div class="col-md-6">
-                        <p class="mb-2"><strong>📚 Danh mục:</strong></p>
+                        <p class="mb-2"><strong> Danh mục:</strong></p>
                         <a href="{{ route('category.show', $category->id) }}" class="badge bg-info p-2">
                             {{ $category->name }}
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-2"><strong>🎯 Cấp độ:</strong></p>
+                        <p class="mb-2"><strong> Cấp độ:</strong></p>
                         @if($challenge->difficulty == 'easy')
                             <span class="badge bg-success p-2">Dễ</span>
                         @elseif($challenge->difficulty == 'medium')
@@ -55,7 +55,7 @@
                 <hr>
 
                 <!-- Mô tả -->
-                <h5 class="fw-bold mb-3">📝 Mô tả thử thách</h5>
+                <h5 class="fw-bold mb-3"> Mô tả thử thách</h5>
                 <p class="lh-lg text-muted">{{ $challenge->description }}</p>
 
                 <div class="row text-center mt-4">
@@ -64,7 +64,7 @@
                         <h4 class="fw-bold">{{ $challenge->daily_time }} phút</h4>
                     </div>
                     <div class="col-sm-6">
-                        <h6 class="text-muted">📅 Bắt đầu từ</h6>
+                        <h6 class="text-muted"> Bắt đầu từ</h6>
                         <h4 class="fw-bold">{{ $progress->started_at->format('d/m/Y') }}</h4>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
         <!-- Tiến độ chính -->
         <div class="card mb-4">
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">📊 Tiến độ của bạn</h5>
+                <h5 class="mb-0"> Tiến độ của bạn</h5>
             </div>
             <div class="card-body text-center">
                 <!-- Progress Circle -->
@@ -118,15 +118,15 @@
                 <!-- Status Badge -->
                 @if($progress->progress == 0)
                     <p class="mb-3">
-                        <span class="badge bg-secondary p-3 fs-6">🚀 Chưa bắt đầu</span>
+                        <span class="badge bg-secondary p-3 fs-6"> Chưa bắt đầu</span>
                     </p>
                 @elseif($progress->progress < 100)
                     <p class="mb-3">
-                        <span class="badge bg-info p-3 fs-6">🔄 Đang tiến hành</span>
+                        <span class="badge bg-info p-3 fs-6"> Đang tiến hành</span>
                     </p>
                 @else
                     <p class="mb-3">
-                        <span class="badge bg-success p-3 fs-6">✅ Đã hoàn thành</span>
+                        <span class="badge bg-success p-3 fs-6"> Đã hoàn thành</span>
                     </p>
                     <p class="text-muted small mb-3">
                         Hoàn thành ngày: <strong>{{ $progress->completed_at->format('d/m/Y lúc H:i') }}</strong>

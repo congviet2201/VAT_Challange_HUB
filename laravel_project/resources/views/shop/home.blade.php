@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="mb-5">
-    <h2 class="fw-bold mb-4">🔥 Danh mục thử thách</h2>
+    <h2 class="fw-bold mb-4"> Danh mục thử thách</h2>
 
     <!-- Lưới 3 cột: danh mục -->
     <div class="row g-4">
