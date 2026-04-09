@@ -4,8 +4,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ChallengeController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Models\UserChallenge;
+use App\Http\Controllers\UserController;
+
+
+
 
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,3 +38,29 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.store')->mi
 Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.register')->middleware('guest');
 Route::post('/register', [AuthController::class, 'register'])->name('register.store')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
+
+Route::get('/dashboard', function () {
+    $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
+    return view('dashboard', compact('userChallenges'));
+})->middleware('auth');
+
+
+
+
+
+
+// Nhóm các Route dành cho Admin lại một chỗ cho gọn
+ // Đảm bảo dòng này đúng địa chỉ file
+
+// Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    // Viết thẳng đường dẫn bạn muốn vào đây
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+
+    // Đường dẫn cho nút Khóa/Mở
+    Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
+
+});
