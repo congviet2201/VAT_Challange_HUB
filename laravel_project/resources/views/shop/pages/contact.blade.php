@@ -143,9 +143,9 @@
 
         <!-- Thông tin bổ sung -->
         <div class="alert alert-light border mt-5 p-4" role="alert">
-            <h5 class="fw-bold mb-2">⏱️ Thời gian phản hồi</h5>
+            <h5 class="fw-bold mb-2">⏱️Thời gian phản hồi</h5>
             <p class="mb-0">
-                Chúng tôi sẽ cố gắng phản hồi trong vòng 24 giờ.
+                Chúng tôi sẽ cố gắng phản hồi nhanh trong vòng 24 giờ.
                 Cảm ơn bạn đã liên hệ với Challenge Hub!
             </p>
         </div>
