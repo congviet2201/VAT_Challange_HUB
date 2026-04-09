@@ -136,7 +136,7 @@
                 <!-- Nút gửi -->
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{{ route('home') }}" class="btn btn-secondary btn-lg">← Quay lại</a>
-                    <button type="submit" class="btn btn-primary btn-lg">✉️ Gửi tin nhắn</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Gửi tin nhắn</button>
                 </div>
             </form>
         </div>

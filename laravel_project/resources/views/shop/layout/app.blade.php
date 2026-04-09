@@ -96,13 +96,31 @@
             text-align: center;
         }
 
+        footer h5, footer h6 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        footer p, footer ul {
+            color: #c0c0c0;
+        }
+
+        footer .text-muted {
+            color: #c0c0c0 !important;
+        }
+
         footer a {
-            color: #6c757d;
+            color: #a8a8a8;
             text-decoration: none;
         }
 
         footer a:hover {
             color: white;
+            transition: 0.3s ease;
+        }
+
+        footer small {
+            color: #b0b0b0;
         }
 
         /* RESPONSIVE */
