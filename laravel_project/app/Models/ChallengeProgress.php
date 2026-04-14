@@ -8,13 +8,15 @@ class ChallengeProgress extends Model
 {
     protected $table = 'challenge_progress';
 
-    protected $fillable = [
-        'user_id',
-        'challenge_id',
-        'progress',
-        'started_at',
-        'completed_at'
-    ];
+  protected $fillable = [
+    'user_id',
+    'challenge_id',
+    'progress',
+    'started_at',
+    'completed_at',
+    'completed_days', 
+    'streak'
+];
 
     protected $casts = [
         'started_at' => 'datetime',
