@@ -64,3 +64,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
 
 });
+Route::get('/challenges', [ChallengeController::class, 'index'])->name('challenges.index');

@@ -13,10 +13,20 @@
         <!-- MENU & SEARCH -->
         <div class="collapse navbar-collapse" id="navbarContent">
             <!-- SEARCH BAR: Tìm kiếm thử thách (ẩn trên mobile) -->
-            <form class="d-none d-lg-flex mx-auto">
-                <input class="form-control form-control-lg" type="search" placeholder="Tìm kiếm thử thách...">
+            <form
+                class="d-none d-lg-flex mx-auto w-50 gap-2"
+                method="GET"
+                action="{{ route('challenges.index') }}">
+                <input
+                    class="form-control form-control-lg rounded-pill"
+                    type="search"
+                    name="keyword"
+                    placeholder=" Tìm kiếm thử thách..."
+                    value="{{ request('keyword') }}">
+                <button class="btn btn-primary rounded-pill px-4">
+                    Tìm
+                </button>
             </form>
-
             <!-- MENU: Giới thiệu, Liên hệ, Đăng nhập/Đăng ký/Tên user -->
             <div class="ms-auto d-flex gap-3 align-items-center">
                 <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
