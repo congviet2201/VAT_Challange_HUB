@@ -61,7 +61,9 @@
                         <button type="submit" class="btn btn-primary btn-lg" id="startChallengeBtn">✨ Bắt đầu thử thách</button>
                     </form>
                 @else
-                    <a href="{{ route('auth.login') }}" class="btn btn-primary btn-lg">✨ Bắt đầu thử thách</a>
+                    <a href="{{ route('challenge.start', $challenge->id) }}" class="btn btn-primary">
+                        ✨ Bắt đầu thử thách
+                    </a>
                 @endif
                 <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary btn-lg">← Quay lại</a>
             </div>

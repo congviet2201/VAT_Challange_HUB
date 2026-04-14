@@ -39,17 +39,13 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.reg
 Route::post('/register', [AuthController::class, 'register'])->name('register.store')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+
 Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
 
 Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
 })->middleware('auth');
-
-
-
-
-
 
 // Nhóm các Route dành cho Admin lại một chỗ cho gọn
  // Đảm bảo dòng này đúng địa chỉ file
@@ -64,3 +60,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
 
 });
+
+// Bắt đầu thử thách
+Route::get('/challenge/{id}/start', [ChallengeController::class, 'start'])->name('challenge.start');
