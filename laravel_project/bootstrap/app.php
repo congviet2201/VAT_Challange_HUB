@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // ĐĂNG KÝ BIỆT DANH (ALIAS) CHO MIDDLEWARE TẠI ĐÂY
         $middleware->alias([
             'admin' => \App\Http\Middleware\IsAdmin::class,
+            'useradmin' => \App\Http\Middleware\IsUserAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

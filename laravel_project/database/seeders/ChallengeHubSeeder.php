@@ -19,7 +19,49 @@ class ChallengeHubSeeder extends Seeder
                 'avatar' => null,
                 'role' => 'admin',
                 'is_active' => 1,
-            ]
+            ],
+            // UserAdmin Accounts - Để quản lý nhóm
+            [
+                'name' => 'Trưởng Nhóm A',
+                'email' => 'useradmin1@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'role' => 'useradmin',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Trưởng Nhóm B',
+                'email' => 'useradmin2@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'role' => 'useradmin',
+                'is_active' => 1,
+            ],
+            // Regular Users
+            [
+                'name' => 'Người Dùng 1',
+                'email' => 'user1@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'role' => 'user',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Người Dùng 2',
+                'email' => 'user2@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'role' => 'user',
+                'is_active' => 1,
+            ],
+            [
+                'name' => 'Người Dùng 3',
+                'email' => 'user3@gmail.com',
+                'password' => Hash::make('password'),
+                'avatar' => null,
+                'role' => 'user',
+                'is_active' => 1,
+            ],
         ]);
 
         // Insert Categories

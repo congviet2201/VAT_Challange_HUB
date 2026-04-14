@@ -29,6 +29,10 @@
                         <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm fw-bold">
                             <i class="bi bi-gear"></i> Quản Lý
                         </a>
+                    @elseif (Auth::user()->role === 'useradmin')
+                        <a href="{{ route('useradmin.groups.index') }}" class="btn btn-primary btn-sm fw-bold">
+                            <i class="bi bi-people"></i> Nhóm
+                        </a>
                     @endif
                     
                     <span class="text-dark">👤 {{ Auth::user()->name }}</span>
