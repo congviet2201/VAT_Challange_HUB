@@ -4,8 +4,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ChallengeController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Models\UserChallenge;
+
+
+
 
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,3 +37,18 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.store')->mi
 Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.register')->middleware('guest');
 Route::post('/register', [AuthController::class, 'register'])->name('register.store')->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
+
+Route::get('/dashboard', function () {
+    $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
+    return view('dashboard', compact('userChallenges'));
+})->middleware('auth');
+
+
+use App\Http\Controllers\Admin\UserController;
+
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    Route::post('/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
+});
