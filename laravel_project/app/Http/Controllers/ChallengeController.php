@@ -98,7 +98,6 @@ class ChallengeController extends Controller
 
             return redirect()->route('challenge.progress', $challenge->id)
                 ->with('success', 'Bắt đầu thử thách thành công!');
-
         } catch (\Exception $e) {
             \Log::error('Error starting challenge: ' . $e->getMessage());
             return back()->with('error', 'Có lỗi xảy ra khi tham gia thử thách. Vui lòng thử lại!');
@@ -120,17 +119,17 @@ class ChallengeController extends Controller
     }
 
     public function index(Request $request)
-{
-    $keyword = $request->input('keyword');
+    {
+        $keyword = $request->input('keyword');
 
-    $challenges = Challenge::query()
-        ->when($keyword, function ($query) use ($keyword) {
-            $query->where('title', 'like', "%$keyword%")
-                  ->orWhere('description', 'like', "%$keyword%");
-        })
-        ->latest()
-        ->paginate(6);
+        $challenges = Challenge::query()
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where('title', 'like', "%$keyword%")
+                    ->orWhere('description', 'like', "%$keyword%");
+            })
+            ->latest()
+            ->paginate(6);
 
-    return view('shop.pages.challenges', compact('challenges', 'keyword'));
-}
+        return view('shop.pages.challenges', compact('challenges', 'keyword'));
+    }
 }

@@ -54,29 +54,11 @@ Route::get('/dashboard', function () {
 
 
 
-// Test route để debug
-Route::get('/test-start/{id}', function ($id) {
+// Test Checkin model
+Route::get('/test-checkin', function () {
     try {
-        $user = Auth::user();
-        if (!$user) {
-            return 'User not authenticated';
-        }
-
-        $challenge = \App\Models\Challenge::find($id);
-        if (!$challenge) {
-            return 'Challenge not found';
-        }
-
-        $progress = \App\Models\ChallengeProgress::create([
-            'user_id' => $user->id,
-            'challenge_id' => $challenge->id,
-            'progress' => 0,
-            'completed_days' => 0,
-            'streak' => 0,
-            'started_at' => now()
-        ]);
-
-        return 'Success: ' . $progress->id;
+        $checkins = \App\Models\Checkin::all();
+        return 'Checkins count: ' . $checkins->count();
     } catch (\Exception $e) {
         return 'Error: ' . $e->getMessage();
     }
