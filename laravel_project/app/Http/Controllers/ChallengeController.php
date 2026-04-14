@@ -12,58 +12,68 @@ class ChallengeController extends Controller
 {
     public function checkin(Request $request)
     {
-        // Sửa lỗi đỏ ở auth()->id() bằng cách dùng Auth::id()
-        $userId = Auth::id();
-        $challengeId = $request->challenge_id;
-        $today = now()->toDateString();
+        try {
+            $userId = Auth::id();
+            $challengeId = $request->challenge_id;
+            $today = now()->toDateString();
 
-        // 1. Kiểm tra check-in hôm nay chưa
-        $exists = Checkin::where('user_id', $userId)
-            ->where('challenge_id', $challengeId)
-            ->where('date', $today)
-            ->exists();
-
-        if ($exists) {
-            return back()->with('error', 'Bạn đã check-in hôm nay rồi!');
-        }
-
-        // 2. Tạo bản ghi Checkin
-        Checkin::create([
-            'user_id' => $userId,
-            'challenge_id' => $challengeId,
-            'date' => $today,
-            'status' => 'done'
-        ]);
-
-        // 3. Cập nhật tiến trình (Dùng Model ChallengeProgress cho đồng bộ)
-        $uc = ChallengeProgress::where('user_id', $userId)
-            ->where('challenge_id', $challengeId)
-            ->first();
-
-        if ($uc) {
-            $uc->completed_days += 1;
-
-            // Giả sử mỗi thử thách mặc định 30 ngày
-            $totalDays = $uc->challenge->duration_days ?? 30;
-            $uc->progress = min(($uc->completed_days / $totalDays) * 100, 100);
-
-            // 4. Tính streak (chuỗi ngày liên tiếp)
-            $yesterday = now()->subDay()->toDateString();
-            $checkedYesterday = Checkin::where('user_id', $userId)
-                ->where('challenge_id', $challengeId)
-                ->where('date', $yesterday)
-                ->exists();
-
-            if ($checkedYesterday) {
-                $uc->streak += 1;
-            } else {
-                $uc->streak = 1;
+            // Validate input
+            if (!$challengeId) {
+                return back()->with('error', 'Thiếu thông tin thử thách!');
             }
 
-            $uc->save();
-        }
+            // 1. Kiểm tra check-in hôm nay chưa
+            $exists = Checkin::where('user_id', $userId)
+                ->where('challenge_id', $challengeId)
+                ->where('date', $today)
+                ->exists();
 
-        return back()->with('success', 'Check-in thành công!');
+            if ($exists) {
+                return back()->with('error', 'Bạn đã check-in hôm nay rồi!');
+            }
+
+            // 2. Tạo bản ghi Checkin
+            Checkin::create([
+                'user_id' => $userId,
+                'challenge_id' => $challengeId,
+                'date' => $today,
+                'status' => 'done'
+            ]);
+
+            // 3. Cập nhật tiến trình
+            /** @var ChallengeProgress $progress */
+            $progress = ChallengeProgress::where('user_id', $userId)
+                ->where('challenge_id', $challengeId)
+                ->first();
+
+            if ($progress) {
+                $progress->completed_days += 1;
+
+                // Giả sử mỗi thử thách mặc định 30 ngày
+                $totalDays = $progress->challenge->duration_days ?? 30;
+                $progress->progress = min(($progress->completed_days / $totalDays) * 100, 100);
+
+                // 4. Tính streak (chuỗi ngày liên tiếp)
+                $yesterday = now()->subDay()->toDateString();
+                $checkedYesterday = Checkin::where('user_id', $userId)
+                    ->where('challenge_id', $challengeId)
+                    ->where('date', $yesterday)
+                    ->exists();
+
+                if ($checkedYesterday) {
+                    $progress->streak += 1;
+                } else {
+                    $progress->streak = 1;
+                }
+
+                $progress->save();
+            }
+
+            return back()->with('success', 'Check-in thành công!');
+        } catch (\Exception $e) {
+            \Log::error('Checkin error: ' . $e->getMessage());
+            return back()->with('error', 'Có lỗi xảy ra khi check-in. Vui lòng thử lại!');
+        }
     }
 
     // Bắt đầu thử thách

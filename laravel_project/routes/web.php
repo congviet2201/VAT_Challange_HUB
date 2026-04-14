@@ -63,3 +63,13 @@ Route::get('/test-checkin', function () {
         return 'Error: ' . $e->getMessage();
     }
 })->middleware('auth');
+
+// Test checkin method
+Route::post('/test-checkin-method', function (\Illuminate\Http\Request $request) {
+    try {
+        $controller = new \App\Http\Controllers\ChallengeController();
+        return $controller->checkin($request);
+    } catch (\Exception $e) {
+        return 'Error in checkin method: ' . $e->getMessage();
+    }
+})->middleware('auth');
