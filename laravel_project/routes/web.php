@@ -15,6 +15,9 @@ use App\Http\Controllers\UserController;
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Trang tất cả thử thách với tìm kiếm
+Route::get('/challenges', [HomeController::class, 'challenges'])->name('challenges');
+
 // Trang danh mục
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('category.show');
 
@@ -52,7 +55,7 @@ Route::get('/dashboard', function () {
 
 
 // Nhóm các Route dành cho Admin lại một chỗ cho gọn
- // Đảm bảo dòng này đúng địa chỉ file
+// Đảm bảo dòng này đúng địa chỉ file
 
 // Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -62,6 +65,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Đường dẫn cho nút Khóa/Mở
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
-
 });
-Route::get('/challenges', [ChallengeController::class, 'index'])->name('challenges.index');

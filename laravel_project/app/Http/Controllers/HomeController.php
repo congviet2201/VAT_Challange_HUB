@@ -37,4 +37,19 @@ class HomeController extends Controller
 
         return view('shop.challenge-detail', compact('challenge', 'category', 'relatedChallenges'));
     }
+
+    // 4. TRANG TẤT CẢ THỬ THÁCH VỚI TÌM KIẾM
+    public function challenges(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $query = Challenge::query();
+
+        if ($keyword) {
+            $query->where('title', 'like', '%' . $keyword . '%');
+        }
+
+        $challenges = $query->paginate(12); // Phân trang 12 item mỗi trang
+
+        return view('shop.pages.challenges', compact('challenges', 'keyword'));
+    }
 }

@@ -16,7 +16,7 @@
             <form
                 class="d-none d-lg-flex mx-auto w-50 gap-2"
                 method="GET"
-                action="{{ route('challenges.index') }}">
+                action="{{ route('challenges') }}">
                 <input
                     class="form-control form-control-lg rounded-pill"
                     type="search"
@@ -29,6 +29,7 @@
             </form>
             <!-- MENU: Giới thiệu, Liên hệ, Đăng nhập/Đăng ký/Tên user -->
             <div class="ms-auto d-flex gap-3 align-items-center">
+                <a href="{{ route('challenges') }}" class="text-dark text-decoration-none">Thử thách</a>
                 <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
                 <a href="{{ route('contact') }}" class="text-dark text-decoration-none">Liên hệ</a>
 

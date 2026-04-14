@@ -1,4 +1,25 @@
-<h2 class="mb-4">Kết quả tìm kiếm</h2>
+@extends('shop.layout.app')
+
+@section('content')
+
+<div class="container my-5">
+    <h1 class="mb-4">Tất cả thử thách</h1>
+
+    <!-- Form tìm kiếm -->
+    <div class="mb-4">
+        <form method="GET" action="{{ route('challenges') }}" class="d-flex">
+            <input type="text" name="keyword" class="form-control me-2" placeholder="Tìm kiếm thử thách theo tên..." value="{{ $keyword ?? '' }}">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Tìm kiếm
+            </button>
+        </form>
+    </div>
+
+    @if($keyword)
+        <h2 class="mb-4">Kết quả tìm kiếm cho "{{ $keyword }}"</h2>
+    @else
+        <h2 class="mb-4">Tất cả thử thách</h2>
+    @endif
 
 <div class="row">
     @forelse($challenges as $challenge)
@@ -48,7 +69,11 @@
         </div>
     @empty
         <div class="col-12 text-center py-5">
-            <p class="text-muted">Không tìm thấy thử thách nào với từ khóa "{{ $keyword }}".</p>
+            @if($keyword)
+                <p class="text-muted">Không tìm thấy thử thách nào với từ khóa "{{ $keyword }}".</p>
+            @else
+                <p class="text-muted">Chưa có thử thách nào.</p>
+            @endif
         </div>
     @endforelse
 </div>
@@ -56,3 +81,6 @@
 <div class="d-flex justify-content-center mt-4">
     {{ $challenges->appends(['keyword' => $keyword])->links() }}
 </div>
+</div>
+
+@endsection
