@@ -147,6 +147,52 @@
                         {{ $progress->progress }}%
                     </div>
                 </div>
+
+                <!-- Streak Counter -->
+                <div class="mb-3">
+                    <h6 class="text-muted mb-2">🔥 Chuỗi ngày liên tiếp</h6>
+                    <h3 class="fw-bold text-danger">{{ $progress->streak }} ngày</h3>
+                </div>
+
+                <!-- Check-in Button -->
+                @if($progress->progress < 100)
+                    <form action="{{ route('checkin') }}" method="POST" class="mb-3">
+                        @csrf
+                        <input type="hidden" name="challenge_id" value="{{ $challenge->id }}">
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            ✅ Check-in hôm nay
+                        </button>
+                    </form>
+                @endif
+            </div>
+        </div>
+
+        <!-- Lịch Check-in -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h6 class="mb-0">📅 Lịch Check-in</h6>
+            </div>
+            <div class="card-body">
+                @php
+                    $checkins = \App\Models\Checkin::where('user_id', Auth::id())
+                        ->where('challenge_id', $challenge->id)
+                        ->orderBy('date', 'desc')
+                        ->take(10)
+                        ->get();
+                @endphp
+
+                @if($checkins->count() > 0)
+                    <div class="list-group list-group-flush">
+                        @foreach($checkins as $checkin)
+                            <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <span>{{ \Carbon\Carbon::parse($checkin->date)->format('d/m/Y') }}</span>
+                                <span class="badge bg-success">✅ Hoàn thành</span>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-muted text-center mb-0">Chưa có check-in nào</p>
+                @endif
             </div>
         </div>
     </div>

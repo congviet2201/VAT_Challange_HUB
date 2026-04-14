@@ -3,16 +3,6 @@
 @section('content')
 
 <div class="container my-5">
-    <h1 class="mb-4">Tất cả thử thách</h1>
-
-    <!-- Form tìm kiếm -->
-    <div class="mb-4">
-        <form method="GET" action="{{ route('challenges') }}" class="d-flex">
-            <input type="text" name="keyword" class="form-control me-2" placeholder="Tìm kiếm thử thách theo tên..." value="{{ $keyword ?? '' }}">
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-search"></i> Tìm kiếm
-            </button>
-        </form>
     </div>
 
     @if($keyword)

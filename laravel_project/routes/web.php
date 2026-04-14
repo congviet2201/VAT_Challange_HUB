@@ -45,7 +45,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
 
 Route::get('/dashboard', function () {
-    $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
+    $userChallenges = \App\Models\ChallengeProgress::where('user_id', Auth::id())->with('challenge')->get();
     return view('dashboard', compact('userChallenges'));
 })->middleware('auth');
 
