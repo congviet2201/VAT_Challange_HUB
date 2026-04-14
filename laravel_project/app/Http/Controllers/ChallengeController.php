@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Challenge;
 use App\Models\ChallengeProgress;
 use App\Models\Checkin;
+use App\Models\Task;
+use App\Models\TaskCompletion;
 
 class ChallengeController extends Controller
 {
@@ -101,6 +103,86 @@ class ChallengeController extends Controller
 
         $category = $challenge->category;
 
-        return view('shop.challenge-progress', compact('challenge', 'category', 'progress'));
+        // Lấy 10 thử thách khác cho demo
+        $demoChallenges = Challenge::where('id', '!=', $challenge->id)
+            ->limit(10)
+            ->get();
+
+        // Lấy danh sách tasks cho challenge này
+        $tasks = $challenge->tasks()
+            ->with(['completions' => function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            }])
+            ->get();
+
+        // Tính phần trăm hoàn thành task
+        $totalTasks = $tasks->count();
+        $completedTasks = $tasks->sum(function($task) {
+            return $task->completions->count() > 0 ? 1 : 0;
+        });
+
+        return view('shop.challenge-progress', compact('challenge', 'category', 'progress', 'demoChallenges', 'tasks', 'totalTasks', 'completedTasks'));
+    }
+
+    // Toggle task completion
+    public function toggleTask(Request $request)
+    {
+        $user = Auth::user();
+        $taskId = $request->input('task_id');
+        $challengeId = $request->input('challenge_id');
+
+        $task = Task::findOrFail($taskId);
+        $challenge = Challenge::findOrFail($challengeId);
+
+        // Kiểm tra xem task đã hoàn thành chưa
+        $completion = TaskCompletion::where('user_id', $user->id)
+            ->where('task_id', $taskId)
+            ->first();
+
+        if ($completion) {
+            // Nếu đã hoàn thành thì xóa
+            $completion->delete();
+            $isCompleted = false;
+        } else {
+            // Nếu chưa thì tạo mới
+            TaskCompletion::create([
+                'user_id' => $user->id,
+                'task_id' => $taskId,
+                'challenge_id' => $challengeId,
+                'completed_at' => now(),
+            ]);
+            $isCompleted = true;
+        }
+
+        // Tính lại progress
+        $tasks = $challenge->tasks()
+            ->with(['completions' => function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            }])
+            ->get();
+
+        $totalTasks = $tasks->count();
+        $completedTasks = $tasks->sum(function($t) {
+            return $t->completions->count() > 0 ? 1 : 0;
+        });
+
+        $progressPercent = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0;
+
+        // Cập nhật ChallengeProgress
+        $progress = ChallengeProgress::where('user_id', $user->id)
+            ->where('challenge_id', $challengeId)
+            ->first();
+
+        if ($progress) {
+            $progress->update(['progress' => $progressPercent]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'is_completed' => $isCompleted,
+            'completed_tasks' => $completedTasks,
+            'total_tasks' => $totalTasks,
+            'progress_percent' => $progressPercent,
+        ]);
     }
 }

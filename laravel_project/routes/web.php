@@ -44,6 +44,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
 
+Route::post('/challenge/toggle-task', [ChallengeController::class, 'toggleTask'])->middleware('auth')->name('challenge.toggleTask');
+
 Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
