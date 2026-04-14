@@ -1,47 +1,45 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    // Hiển thị danh sách người dùng
-    // app/Http/Controllers/Admin/UserController.php
+    public function index()
+    {
+        $auth = Auth::user();
 
-// app/Http/Controllers/Admin/UserController.php
+        if ($auth->role === 'admin') {
+            // ADMIN: Lấy tất cả UserAdmin và User (loại trừ chính mình)
+            $users = User::where('id', '!=', $auth->id)
+                         ->whereIn('role', ['user', 'useradmin'])
+                         ->get();
+        }
+        else if ($auth->role === 'useradmin') {
+            // USERADMIN: Chỉ lấy User đang tham gia thử thách do mình tạo
+            $users = User::whereHas('userChallenges.challenge', function($query) use ($auth) {
+                $query->where('created_by', $auth->id);
+            })->where('role', 'user')->distinct()->get();
+        } else {
+            return redirect('/')->with('error', 'Bạn không có quyền truy cập!');
+        }
 
-public function index()
-{
-    $auth = auth::user();
-
-    if ($auth->role === 'admin') {
-        // ADMIN: Lấy tất cả (bao gồm cả UserAdmin và User thường)
-        // Trừ chính bản thân mình ra để không tự khóa chính mình
-        $users = User::where('id', '!=', $auth->id)->get();
+        return view('admin.users', compact('users'));
     }
-    else if ($auth->role === 'useradmin') {
-        // USERADMIN: Chỉ lấy những User đang tham gia thử thách do UserAdmin này tạo
-        // Logic: User -> qua bảng UserChallenge -> qua bảng Challenge (của UserAdmin này)
-        $users = User::whereHas('userChallenges.challenge', function($query) use ($auth) {
-            $query->where('created_by', $auth->id);
-        })->where('role', 'user')->distinct()->get();
-    }
 
-    return view('admin.users', compact('users'));
-}
-
-    // Toggle Khóa/Mở khóa
     public function toggleStatus($id)
     {
         $user = User::findOrFail($id);
-        $user->is_active = !$user->is_active;
+
+        // Đảo ngược trạng thái
+        $user->is_active = $user->is_active ? 0 : 1;
         $user->save();
 
         $status = $user->is_active ? 'mở khóa' : 'khóa';
-        return back()->with('success', "Đã $status tài khoản của {$user->name} thành công!");
+        return back()->with('success', "Đã $status tài khoản {$user->name} thành công!");
     }
 }

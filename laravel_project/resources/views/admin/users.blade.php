@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý người dùng - Admin</title>
+    <title>Quản lý người dùng</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
 
 <div class="container mt-5">
     <div class="card shadow border-0">
-        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0 fw-bold text-primary"> <i class="bi bi-people-fill"></i> QUẢN LÝ NGƯỜI DÙNG</h5>
-            <span class="badge bg-primary">{{ $users->count() }} Thành viên</span>
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0">
+                <i class="bi bi-people-fill me-2"></i>
+                {{ Auth::user()->role === 'admin' ? 'Quản trị hệ thống' : 'Quản lý nhóm thử thách' }}
+            </h5>
+            <span class="badge bg-light text-dark">Tổng số: {{ $users->count() }}</span>
         </div>
-        <div class="card-body">
 
+        <div class="card-body">
             @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <div class="alert alert-success border-0 shadow-sm">{{ session('success') }}</div>
             @endif
 
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>ID</th>
-                            <th>Người dùng</th>
+                            <th>Tên</th>
                             <th>Email</th>
-                            <th>Ngày tham gia</th>
+                            <th>Vai trò</th>
                             <th>Trạng thái</th>
                             <th class="text-center">Hành động</th>
                         </tr>
@@ -39,39 +38,41 @@
                     <tbody>
                         @foreach($users as $user)
                         <tr>
-                            <td>#{{ $user->id }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ $user->avatar ?? 'https://ui-avatars.com/api/?name='.$user->name }}"
-                                         class="rounded-circle me-2" width="35" height="35">
-                                    <span class="fw-semibold">{{ $user->name }}</span>
-                                </div>
-                            </td>
+                            <td class="fw-bold">{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                            <td>
+                                @if($user->role === 'useradmin')
+                                    <span class="badge bg-info text-dark">Trưởng nhóm</span>
+                                @else
+                                    <span class="badge bg-secondary text-white">Thành viên</span>
+                                @endif
+                            </td>
                             <td>
                                 @if($user->is_active)
-                                    <span class="badge bg-success-subtle text-success border border-success">Đang hoạt động</span>
+                                    <span class="text-success"><i class="bi bi-check-circle-fill"></i> Hoạt động</span>
                                 @else
-                                    <span class="badge bg-danger-subtle text-danger border border-danger">Bị khóa</span>
+                                    <span class="text-danger"><i class="bi bi-x-circle-fill"></i> Đang khóa</span>
                                 @endif
                             </td>
                             <td class="text-center">
-                                <form action="{{ route('admin.users.toggle', $user->id) }}" method="POST">
+                                <form action="{{ route('admin.users.toggle', $user->id) }}" method="POST" onsubmit="return confirm('Xác nhận thay đổi trạng thái người dùng này?')">
                                     @csrf
-                                    @if($user->is_active)
-                                        <button class="btn btn-sm btn-outline-danger w-75">
-                                            <i class="bi bi-lock-fill"></i> Khóa
-                                        </button>
-                                    @else
-                                        <button class="btn btn-sm btn-outline-success w-75">
-                                            <i class="bi bi-unlock-fill"></i> Mở khóa
-                                        </button>
-                                    @endif
+                                    <button class="btn btn-sm {{ $user->is_active ? 'btn-outline-danger' : 'btn-outline-success' }} w-100 px-3">
+                                        @if($user->is_active)
+                                            <i class="bi bi-lock"></i> Khóa
+                                        @else
+                                            <i class="bi bi-unlock"></i> Mở khóa
+                                        @endif
+                                    </button>
                                 </form>
                             </td>
                         </tr>
                         @endforeach
+                        @if($users->isEmpty())
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">Chưa có người dùng nào thuộc phạm vi quản lý.</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -79,6 +80,5 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
