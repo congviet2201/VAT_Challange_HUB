@@ -69,13 +69,24 @@ class ChallengeController extends Controller
     // Bắt đầu thử thách
     public function start(Challenge $challenge)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $progress = ChallengeProgress::where('user_id', $user->id)
-            ->where('challenge_id', $challenge->id)
-            ->first();
+            if (!$user) {
+                return redirect()->route('auth.login')->with('error', 'Vui lòng đăng nhập để tham gia thử thách!');
+            }
 
-        if (!$progress) {
+            // Kiểm tra đã tham gia chưa
+            $existingProgress = ChallengeProgress::where('user_id', $user->id)
+                ->where('challenge_id', $challenge->id)
+                ->first();
+
+            if ($existingProgress) {
+                return redirect()->route('challenge.progress', $challenge->id)
+                    ->with('info', 'Bạn đã tham gia thử thách này rồi!');
+            }
+
+            // Tạo progress mới
             $progress = ChallengeProgress::create([
                 'user_id' => $user->id,
                 'challenge_id' => $challenge->id,
@@ -84,10 +95,14 @@ class ChallengeController extends Controller
                 'streak' => 0,
                 'started_at' => now()
             ]);
-        }
 
-        return redirect()->route('challenge.progress', $challenge->id)
-            ->with('success', ' Bắt đầu thử thách thành công!');
+            return redirect()->route('challenge.progress', $challenge->id)
+                ->with('success', 'Bắt đầu thử thách thành công!');
+
+        } catch (\Exception $e) {
+            \Log::error('Error starting challenge: ' . $e->getMessage());
+            return back()->with('error', 'Có lỗi xảy ra khi tham gia thử thách. Vui lòng thử lại!');
+        }
     }
 
     // Trang tiến độ thử thách

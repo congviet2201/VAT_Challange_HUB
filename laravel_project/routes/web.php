@@ -54,15 +54,30 @@ Route::get('/dashboard', function () {
 
 
 
-// Nhóm các Route dành cho Admin lại một chỗ cho gọn
-// Đảm bảo dòng này đúng địa chỉ file
+// Test route để debug
+Route::get('/test-start/{id}', function ($id) {
+    try {
+        $user = Auth::user();
+        if (!$user) {
+            return 'User not authenticated';
+        }
 
-// Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
-Route::middleware(['auth', 'admin'])->group(function () {
+        $challenge = \App\Models\Challenge::find($id);
+        if (!$challenge) {
+            return 'Challenge not found';
+        }
 
-    // Viết thẳng đường dẫn bạn muốn vào đây
-    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+        $progress = \App\Models\ChallengeProgress::create([
+            'user_id' => $user->id,
+            'challenge_id' => $challenge->id,
+            'progress' => 0,
+            'completed_days' => 0,
+            'streak' => 0,
+            'started_at' => now()
+        ]);
 
-    // Đường dẫn cho nút Khóa/Mở
-    Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
-});
+        return 'Success: ' . $progress->id;
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+})->middleware('auth');
