@@ -16,8 +16,8 @@ class IsAdmin
      */
  public function handle(Request $request, Closure $next)
 {
-    // Kiểm tra: Nếu đã đăng nhập VÀ (role là admin HOẶC useradmin)
-    if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'useradmin')) {
+    // Kiểm tra: Chỉ admin mới được truy cập
+    if (Auth::check() && Auth::user()->role == 'admin') {
         return $next($request); // Cho phép đi tiếp
     }
 
@@ -25,4 +25,3 @@ class IsAdmin
     return redirect('/')->with('error', 'Bạn không có quyền truy cập vào khu vực này!');
 }
 }
-// app/Http/Middleware/IsAdmin.php

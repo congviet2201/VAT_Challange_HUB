@@ -65,6 +65,18 @@
                             @enderror
                         </div>
 
+                        <!-- REMEMBER ME CHECKBOX -->
+                        <div class="mb-4 form-check">
+                            <input 
+                                type="checkbox" 
+                                class="form-check-input" 
+                                id="remember" 
+                                name="remember">
+                            <label class="form-check-label" for="remember">
+                                🔒 Ghi nhớ tôi lần tới
+                            </label>
+                        </div>
+
                         <!-- SUBMIT BUTTON -->
                         <button type="submit" class="btn btn-primary btn-lg w-100">
                             Đăng nhập

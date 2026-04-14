@@ -24,14 +24,21 @@
 
                 <!-- KIỂM TRA ĐĂNG NHẬP -->
                 @if (Auth::check())
+                    <!-- Admin Panel Button - Chỉ hiển thị nếu là admin -->
+                    @if (Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm fw-bold">
+                            <i class="bi bi-gear"></i> Quản Lý
+                        </a>
+                    @endif
+                    
                     <span class="text-dark">👤 {{ Auth::user()->name }}</span>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
                         @csrf
                         <button type="submit" class="btn btn-danger btn-sm">Đăng xuất</button>
                     </form>
                 @else
-                    <a href="{{ route('auth.login') }}" class="text-dark text-decoration-none">Đăng nhập</a>
-                    <a href="{{ route('auth.register') }}" class="btn btn-primary">Đăng ký</a>
+                    <a href="{{ route('auth.login') }}" class="btn btn-primary btn-sm">Đăng nhập</a>
+                    <a href="{{ route('auth.register') }}" class="btn btn-outline-primary btn-sm">Đăng ký</a>
                 @endif
             </div>
         </div>
