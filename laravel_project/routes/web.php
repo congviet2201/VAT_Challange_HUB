@@ -3,11 +3,12 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AuthController;
 use App\Models\UserChallenge;
-use App\Http\Controllers\UserController;
 
 
 
@@ -48,16 +49,24 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 // Nhóm các Route dành cho Admin lại một chỗ cho gọn
- // Đảm bảo dòng này đúng địa chỉ file
-
-// Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    // Viết thẳng đường dẫn bạn muốn vào đây
+    // Quản lý user
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
-
-    // Đường dẫn cho nút Khóa/Mở
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
+
+    // Quản lý thử thách
+    Route::get('/admin/challenges', [AdminChallengeController::class, 'index'])->name('admin.challenges.index');
+    Route::get('/admin/challenges/create', [AdminChallengeController::class, 'create'])->name('admin.challenges.create');
+    Route::post('/admin/challenges', [AdminChallengeController::class, 'store'])->name('admin.challenges.store');
+    Route::get('/admin/challenges/{challenge}', [AdminChallengeController::class, 'show'])->name('admin.challenges.show');
+    Route::get('/admin/challenges/{challenge}/edit', [AdminChallengeController::class, 'edit'])->name('admin.challenges.edit');
+    Route::put('/admin/challenges/{challenge}', [AdminChallengeController::class, 'update'])->name('admin.challenges.update');
+    Route::delete('/admin/challenges/{challenge}', [AdminChallengeController::class, 'destroy'])->name('admin.challenges.destroy');
 
 });
 
