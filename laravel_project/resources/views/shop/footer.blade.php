@@ -1,13 +1,14 @@
+{{-- Footer của trang shop --}}
 <footer class="mt-auto py-5">
     <div class="container">
         <div class="row g-4">
-            <!-- THÔNG TIN CÔNG TY -->
+            {{-- Cột 1: Giới thiệu --}}
             <div class="col-md-3">
                 <h5 class="fw-bold mb-3">Challenge Hub</h5>
                 <p class="text-muted small lh-lg">Hệ thống quản lý thử thách giúp bạn phát triển bản thân và đạt được mục tiêu của mình.</p>
             </div>
 
-            <!-- DANH MỤC -->
+            {{-- Cột 2: Danh mục --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Danh mục</h6>
                 <ul class="list-unstyled small">
@@ -18,33 +19,36 @@
                 </ul>
             </div>
 
-            <!-- THÔNG TIN -->
+            {{-- Cột 3: Thông tin --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Thông tin</h6>
                 <ul class="list-unstyled small">
-                    <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Giới thiệu</a></li>
+                    <li class="mb-2"><a href="{{ route('about') }}" class="text-muted text-decoration-none">Giới thiệu</a></li>
                     <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Điều khoản sử dụng</a></li>
                     <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Chính sách bảo mật</a></li>
                     <li><a href="#" class="text-muted text-decoration-none">Câu hỏi thường gặp</a></li>
                 </ul>
             </div>
 
-            <!-- LIÊN HỆ -->
+            {{-- Cột 4: Liên hệ --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Liên hệ</h6>
-                <p class="text-muted small mb-2">📧 contact@challengehub.vn</p>
-                <p class="text-muted small mb-2">📞 0123 456 789</p>
-                <p class="text-muted small mb-3">📍 Hà Nội, Việt Nam</p>
+                <p class="text-muted small mb-2">contact@challengehub.vn</p>
+                <p class="text-muted small mb-2">0123 456 789</p>
+                <p class="text-muted small mb-3">Hà Nội, Việt Nam</p>
+                {{-- Liên kết mạng xã hội --}}
                 <div class="d-flex gap-3 small">
-                    <a href="#" class="text-muted">f</a>
-                    <a href="#" class="text-muted">𝕏</a>
-                    <a href="#" class="text-muted">📷</a>
+                    <a href="#" class="text-muted">Facebook</a>
+                    <a href="#" class="text-muted">TikTok</a>
+                    <a href="#" class="text-muted">Instagram</a>
                 </div>
             </div>
         </div>
 
+        {{-- Đường kẻ ngang --}}
         <hr class="my-4 text-muted">
 
+        {{-- Copyright --}}
         <p class="text-center text-muted small mb-0">© 2026 Challenge Hub. Tất cả quyền được bảo lưu.</p>
     </div>
 </footer>

@@ -1,58 +1,206 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Challenge Hub 🎯
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" alt="JavaScript">
 </p>
 
-## About Laravel
+## 📖 Giới thiệu dự án
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Challenge Hub** là một nền tảng web ứng dụng quản lý và theo dõi thử thách cá nhân, được xây dựng bằng framework Laravel. Dự án nhằm tạo ra một cộng đồng nơi mọi người có thể tham gia các thử thách đa dạng để phát triển bản thân, cải thiện sức khỏe, và đạt được các mục tiêu trong cuộc sống.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 👥 Thành viên nhóm
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Đoàn Công Việt** - *Leader* 👑
+- **Nguyễn Thị Ngọc Anh** 👩‍💻
+- **Nguyễn Tiến Nhựt** 👨‍💻
 
-## Learning Laravel
+## 🛠️ Công nghệ sử dụng
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Backend
+- **Laravel 11** - Framework PHP chính
+- **PHP 8.2+** - Ngôn ngữ lập trình backend
+- **MySQL** - Hệ quản trị cơ sở dữ liệu
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Frontend
+- **Bootstrap 5** - Framework CSS responsive
+- **Blade Templates** - Template engine của Laravel
+- **JavaScript** - Tương tác phía client
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Công cụ phát triển
+- **Composer** - Quản lý dependencies PHP
+- **NPM** - Quản lý dependencies JavaScript
+- **Git** - Hệ thống quản lý phiên bản
 
-## Agentic Development
+## 🎯 Mô tả dự án
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Challenge Hub là một ứng dụng web toàn diện giúp người dùng:
 
+### Đối với Người dùng thông thường:
+- Khám phá và tham gia các thử thách đa dạng trong 12 danh mục khác nhau
+- Theo dõi tiến độ hoàn thành thử thách hàng ngày
+- Tham gia vào các nhóm cộng đồng
+- Tìm kiếm thử thách theo tên hoặc danh mục
+
+### Đối với UserAdmin:
+- Tạo và quản lý nhóm cộng đồng
+- Thêm thành viên vào nhóm
+- Gán thử thách cho nhóm
+- Gửi thông báo đến thành viên
+
+### Đối với Admin:
+- Quản lý toàn bộ hệ thống
+- CRUD danh mục và thử thách
+- Quản lý tài khoản người dùng
+
+## 📋 Các danh mục thử thách
+
+1. **Học tập** 📚 - Phát triển kiến thức và kỹ năng học tập
+2. **Sức khỏe** 💪 - Cải thiện thể chất và tinh thần
+3. **Phát triển bản thân** 🧠 - Nâng cao khả năng cá nhân
+4. **Kỹ năng** 🛠️ - Học các kỹ năng thực tế
+5. **Thể thao** 🏃 - Hoạt động thể chất và rèn luyện
+6. **Thói quen tốt** 🌱 - Xây dựng thói quen tích cực
+7. **Tài chính** 💰 - Quản lý tài chính cá nhân
+8. **Mối quan hệ** 👥 - Xây dựng mối quan hệ lành mạnh
+9. **Nghệ thuật** 🎨 - Phát triển khả năng sáng tạo
+10. **Công nghệ** 💻 - Theo kịp xu hướng công nghệ
+11. **Môi trường** 🌍 - Bảo vệ môi trường sống
+12. **Du lịch** ✈️ - Khám phá và trải nghiệm
+
+## 🚀 Tính năng chính
+
+### 🔐 Hệ thống xác thực
+- Đăng ký/Đăng nhập tài khoản
+- Phân quyền người dùng (User, UserAdmin, Admin)
+- Bảo mật thông tin cá nhân
+
+### 🎯 Quản lý thử thách
+- Hiển thị thử thách theo danh mục
+- Chi tiết thử thách với mô tả và độ khó
+- Bắt đầu và theo dõi tiến độ thử thách
+- Đánh giá độ khó (Dễ, Trung bình, Khó)
+
+### 👥 Quản lý nhóm
+- Tạo nhóm cộng đồng
+- Mời và quản lý thành viên
+- Gán thử thách cho nhóm
+- Hệ thống thông báo
+
+### 🔍 Tìm kiếm thông minh
+- Tìm kiếm theo tên thử thách
+- Lọc theo danh mục
+- Không phân biệt dấu và hoa thường
+
+### 📱 Giao diện responsive
+- Thiết kế responsive cho mọi thiết bị
+- Giao diện thân thiện và dễ sử dụng
+- Phân trang đẹp mắt
+
+## 🗄️ Cấu trúc cơ sở dữ liệu
+
+### Các bảng chính:
+- `users` - Thông tin người dùng
+- `categories` - Danh mục thử thách
+- `challenges` - Thông tin thử thách
+- `challenge_progress` - Tiến độ hoàn thành
+- `groups` - Nhóm cộng đồng
+- `notifications` - Hệ thống thông báo
+
+## 📦 Cài đặt và chạy dự án
+
+### Yêu cầu hệ thống:
+- PHP 8.2 hoặc cao hơn
+- Composer
+- MySQL 8.0+
+- Node.js & NPM
+
+### Các bước cài đặt:
+
+1. **Clone repository:**
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <repository-url>
+cd challenge-hub
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. **Cài đặt dependencies PHP:**
+```bash
+composer install
+```
 
-## Contributing
+3. **Cài đặt dependencies JavaScript:**
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. **Cấu hình môi trường:**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Code of Conduct
+5. **Cấu hình database trong file .env:**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=challenge_hub
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. **Chạy migration và seed:**
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Security Vulnerabilities
+7. **Chạy ứng dụng:**
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Truy cập: `http://localhost:8000`
 
-## License
+## 🎨 Demo
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Trang chủ
+![Home Page](screenshots/home.png)
+
+### Danh sách thử thách
+![Challenges](screenshots/challenges.png)
+
+### Chi tiết thử thách
+![Challenge Detail](screenshots/challenge-detail.png)
+
+## 📈 Tình trạng dự án
+
+- ✅ Hoàn thành: Hệ thống xác thực, quản lý thử thách, quản lý nhóm
+- ✅ Hoàn thành: Giao diện responsive, tìm kiếm thông minh
+- ✅ Hoàn thành: Phân trang, hệ thống thông báo
+- 🔄 Đang phát triển: Tính năng nâng cao (API, mobile app)
+
+## 🤝 Đóng góp
+
+Chúng tôi hoan nghênh mọi đóng góp! Vui lòng:
+
+1. Fork dự án
+2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Tạo Pull Request
+
+## 📄 Giấy phép
+
+Dự án này được phân phối dưới giấy phép MIT. Xem file `LICENSE` để biết thêm chi tiết.
+
+## 📞 Liên hệ
+
+- **Email:** challengehub@example.com
+- **GitHub:** [https://github.com/your-username/challenge-hub](https://github.com/your-username/challenge-hub)
+
+---
+
+<p align="center">Được phát triển với ❤️ bởi Team Challenge Hub</p>
