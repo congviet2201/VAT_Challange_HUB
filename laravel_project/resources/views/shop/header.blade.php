@@ -48,8 +48,10 @@
                         </a>
                     @endif
 
-                    {{-- Hiển thị tên người dùng --}}
-                    <span class="text-dark">{{ Auth::user()->name }}</span>
+                    {{-- Nút profile người dùng --}}
+                    <a href="{{ route('profile') }}" class="btn btn-outline-dark btn-sm">
+                        {{ Auth::user()->name }}
+                    </a>
                     {{-- Nút đăng xuất --}}
                     <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
                         @csrf

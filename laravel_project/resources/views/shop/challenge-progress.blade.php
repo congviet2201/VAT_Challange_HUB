@@ -163,6 +163,22 @@
     </div>
 </div>
 
+{{-- Phần phản hồi AI dành cho người dùng --}}
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">AI Coach - Đánh giá và gợi ý</h5>
+    </div>
+    <div class="card-body">
+        <p class="fs-5 fw-semibold">{{ $feedback['evaluation'] }}</p>
+        <hr>
+        <ul class="list-group list-group-flush">
+            @foreach($feedback['suggestions'] as $suggestion)
+                <li class="list-group-item">{{ $suggestion }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+
 {{-- JavaScript để tự động ẩn thông báo thành công --}}
 <script>
     const successToast = document.getElementById('successToast');

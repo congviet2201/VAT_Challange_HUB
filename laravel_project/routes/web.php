@@ -104,7 +104,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
-})->middleware('auth');
+})->name('dashboard')->middleware('auth');
+
+// Trang profile của người dùng (tất cả tài khoản đăng nhập đều có thể truy cập)
+Route::get('/profile', [UserController::class, 'profile'])->name('profile')->middleware('auth');
 
 // ==========================================
 // QUẢN TRỊ VIÊN (ADMIN) - Cần quyền admin

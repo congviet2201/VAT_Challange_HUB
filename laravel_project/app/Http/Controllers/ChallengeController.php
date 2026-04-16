@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Challenge;
 use App\Models\ChallengeProgress;
 use App\Models\Checkin;
+use App\Services\ChallengeFeedbackService;
 
 class ChallengeController extends Controller
 {
@@ -116,7 +117,8 @@ class ChallengeController extends Controller
             ->firstOrFail();
 
         $category = $challenge->category;
+        $feedback = ChallengeFeedbackService::getFeedback($progress, $challenge);
 
-        return view('shop.challenge-progress', compact('challenge', 'category', 'progress'));
+        return view('shop.challenge-progress', compact('challenge', 'category', 'progress', 'feedback'));
     }
 }

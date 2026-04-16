@@ -121,4 +121,24 @@ class UserController extends Controller
         $status = $user->is_active ? 'mở khóa' : 'khóa';
         return back()->with('success', "✅ Đã $status tài khoản {$user->name} thành công!");
     }
+
+    /**
+     * Hiển thị trang profile cho người dùng đã đăng nhập.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        $progressItems = $user->challengeProgress()
+            ->with('challenge.category')
+            ->orderByDesc('progress')
+            ->get();
+
+        $activeCount = $progressItems->where('progress', '<', 100)->count();
+        $completedCount = $progressItems->where('progress', '>=', 100)->count();
+        $totalCount = $progressItems->count();
+
+        return view('shop.profile', compact('user', 'progressItems', 'activeCount', 'completedCount', 'totalCount'));
+    }
 }
