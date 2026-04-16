@@ -11,7 +11,7 @@ class HomeController extends Controller
     // 1. TRANG CHỦ: Lấy tất cả danh mục để hiển thị
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(6);
         return view('shop.home', compact('categories'));
     }
 
