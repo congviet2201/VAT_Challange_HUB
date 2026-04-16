@@ -16,20 +16,17 @@ class UserChallenge extends Model
         'streak'
     ];
 
-<<<<<<< HEAD
-=======
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
->>>>>>> origin/feature/challenge
+
     public function challenge()
     {
         return $this->belongsTo(Challenge::class, 'challenge_id');
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/feature/challenge
 }

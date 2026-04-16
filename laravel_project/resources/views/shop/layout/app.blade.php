@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenge Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #007bff;
@@ -41,6 +42,25 @@
             font-weight: 700;
             font-size: 1.5rem;
             color: #007bff !important;
+        }
+
+        .search-input-group .input-group-text {
+            border-radius: 999px 0 0 999px;
+        }
+
+        .search-input-group .form-control {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .search-input-group .btn {
+            border-radius: 0 999px 999px 0;
+        }
+
+        .search-input-group:focus-within .input-group-text,
+        .search-input-group:focus-within .form-control,
+        .search-input-group:focus-within .btn {
+            border-color: #86b7fe;
         }
 
         .card {
@@ -117,11 +137,14 @@
             color: #b0b0b0;
         }
 
-        @media (max-width: 768px) {
-            .navbar form {
-                display: none;
+        @media (max-width: 991px) {
+            .search-form {
+                margin: 1rem 0;
+                padding: 0;
             }
+        }
 
+        @media (max-width: 768px) {
             .card {
                 margin-bottom: 15px;
             }

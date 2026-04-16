@@ -12,7 +12,7 @@ class ChallengeController extends Controller
 {
     public function checkin(Request $request)
     {
-        // Sửa lỗi đỏ ở auth()->id() bằng cách dùng Auth::id()
+
         $userId = Auth::id();
         $challengeId = $request->challenge_id;
         $today = now()->toDateString();
@@ -103,22 +103,7 @@ class ChallengeController extends Controller
 
         return view('shop.challenge-progress', compact('challenge', 'category', 'progress'));
     }
-<<<<<<< HEAD
 
-    public function index(Request $request)
-{
-    $keyword = $request->input('keyword');
 
-    $challenges = Challenge::query()
-        ->when($keyword, function ($query) use ($keyword) {
-            $query->where('title', 'like', "%$keyword%")
-                  ->orWhere('description', 'like', "%$keyword%");
-        })
-        ->latest()
-        ->paginate(6);
 
-    return view('shop.pages.challenges', compact('challenges', 'keyword'));
-}
-=======
->>>>>>> origin/feature/challenge
 }

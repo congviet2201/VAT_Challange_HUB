@@ -103,6 +103,20 @@
 
                 @if($progress->progress == 0)
                     <p class="mb-3">
+<<<<<<< HEAD
+                        <span class="badge bg-secondary p-3 fs-6"> Chưa bắt đầu</span>
+                    </p>
+                @elseif($progress->progress < 100)
+                    <p class="mb-3">
+                        <span class="badge bg-info p-3 fs-6"> Đang tiến hành</span>
+                    </p>
+                @else
+                    <p class="mb-3">
+                        <span class="badge bg-success p-3 fs-6"> Đã hoàn thành</span>
+                    </p>
+                    <p class="text-muted small mb-3">
+                        Hoàn thành ngày: <strong>{{ $progress->completed_at->format('d/m/Y lúc H:i') }}</strong>
+=======
                         <span class="badge bg-secondary p-3 fs-6">Chưa bắt đầu</span>
                     </p>
                 @elseif($progress->progress < 100)
@@ -112,6 +126,7 @@
                 @else
                     <p class="mb-3">
                         <span class="badge bg-success p-3 fs-6">Đã hoàn thành</span>
+>>>>>>> origin/feature/challenge
                     </p>
                     @if($progress->completed_at)
                         <p class="text-muted small mb-3">

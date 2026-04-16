@@ -9,8 +9,21 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarContent">
-            <form class="mx-auto flex-grow-1" action="{{ route('search') }}" method="GET">
-                <input class="form-control form-control-lg" type="search" name="query" value="{{ request('query') }}" placeholder="Tìm kiếm thử thách...">
+            <form class="search-form mx-auto flex-grow-1 px-lg-4" action="{{ route('search') }}" method="GET">
+                <div class="input-group input-group-lg search-input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="bi bi-search text-primary"></i>
+                    </span>
+                    <input
+                        class="form-control border-start-0 ps-0"
+                        type="search"
+                        name="keyword"
+                        value="{{ request('keyword', request('query')) }}"
+                        placeholder="Tìm kiếm thử thách..."
+                        aria-label="Tìm kiếm thử thách"
+                    >
+                    <button class="btn btn-primary px-4" type="submit">Tìm</button>
+                </div>
             </form>
 
             <div class="ms-auto d-flex gap-3 align-items-center">

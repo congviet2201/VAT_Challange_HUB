@@ -2,75 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Challenge;
 use App\Models\Category;
+use App\Models\Challenge;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    // 1. TRANG CHỦ: Lấy tất cả danh mục để hiển thị
     public function index()
     {
         $categories = Category::all();
+
         return view('shop.home', compact('categories'));
     }
 
-    // 2. TRANG DANH MỤC: Lấy thử thách của một danh mục
     public function category($id)
     {
         $category = Category::findOrFail($id);
         $challenges = Challenge::where('category_id', $id)->get();
+
         return view('shop.category', compact('category', 'challenges'));
     }
 
-    // 2.5 TRANG TÌM KIẾM: Tìm thử thách theo tên và thể loại
     public function search(Request $request)
     {
-        $query = trim($request->query('query', ''));
+        $keyword = trim((string) $request->input('keyword', $request->input('query', '')));
+        $challenges = $this->buildChallengeSearchQuery($keyword)
+            ->paginate(9)
+            ->withQueryString();
 
-        $challenges = Challenge::with('category')
-            ->when($query, function ($q, $query) {
-                $term = '%' . mb_strtolower($query, 'UTF-8') . '%';
-
-                $q->where(function ($q) use ($term) {
-                    $q->whereRaw("LOWER(challenges.title) LIKE ? COLLATE utf8mb4_unicode_ci", [$term])
-                        ->orWhereHas('category', function ($q) use ($term) {
-                            $q->whereRaw("LOWER(categories.name) LIKE ? COLLATE utf8mb4_unicode_ci", [$term]);
-                        });
-                });
-            })
-            ->get();
-
-        return view('shop.search-results', compact('challenges', 'query'));
+        return view('shop.pages.challenges', compact('challenges', 'keyword'));
     }
 
-    // 3. TRANG CHI TIẾT THỬ THÁCH: Lấy chi tiết thử thách và thử thách liên quan
     public function challengeDetail($id)
     {
         $challenge = Challenge::findOrFail($id);
         $category = $challenge->category;
-
-        // Lấy các thử thách khác cùng danh mục để gợi ý
         $relatedChallenges = Challenge::where('category_id', $category->id)
             ->where('id', '!=', $id)
-            ->limit(3)
+            ->limit(4)
             ->get();
 
         return view('shop.challenge-detail', compact('challenge', 'category', 'relatedChallenges'));
     }
 
-    // 4. TRANG TẤT CẢ THỬ THÁCH VỚI TÌM KIẾM
     public function challenges(Request $request)
     {
-        $keyword = $request->get('keyword');
-        $query = Challenge::query();
-
-        if ($keyword) {
-            $query->where('title', 'like', '%' . $keyword . '%');
-        }
-
-        $challenges = $query->paginate(12); // Phân trang 12 item mỗi trang
+        $keyword = trim((string) $request->input('keyword', $request->input('query', '')));
+        $challenges = $this->buildChallengeSearchQuery($keyword)
+            ->paginate(12)
+            ->withQueryString();
 
         return view('shop.pages.challenges', compact('challenges', 'keyword'));
+    }
+
+    protected function buildChallengeSearchQuery(string $keyword)
+    {
+        return Challenge::query()
+            ->when($keyword !== '', function ($query) use ($keyword) {
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('title', 'like', '%' . $keyword . '%')
+                        ->orWhere('description', 'like', '%' . $keyword . '%');
+                });
+            })
+            ->latest();
     }
 }

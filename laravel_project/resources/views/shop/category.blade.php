@@ -22,11 +22,6 @@
     <section>
         <h3 class="fw-bold mb-4">Danh sách thử thách {{ $category->name }}</h3>
 
-<<<<<<< HEAD
-<!-- PHẦN THỬ THÁCH: CHỌN CẤP ĐỘ -->
-<section>
-    <h3 class="fw-bold mb-4"> Chọn cấp độ thử thách</h3>
-=======
         <div class="row g-4">
             @foreach ($challenges as $c)
                 <div class="col-md-6 col-lg-4">
@@ -34,7 +29,6 @@
                         <img src="{{ asset('images/' . $c->difficulty . '.jpg') }}" class="card-img-top"
                             style="height: 150px; object-fit: cover;"
                             onerror="this.src='{{ asset('images/default.jpg') }}'">
->>>>>>> origin/feature/challenge
 
                         <div class="card-body d-flex flex-column text-center">
                             <div class="mb-2">

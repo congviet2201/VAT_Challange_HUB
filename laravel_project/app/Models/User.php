@@ -9,12 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasFactory;
-<<<<<<< HEAD
-
 
     protected $table = 'users';
-=======
->>>>>>> origin/feature/challenge
 
     protected $fillable = [
         'name',
@@ -22,11 +18,7 @@ class User extends Authenticatable
         'password',
         'avatar',
         'role',
-<<<<<<< HEAD
         'is_active',
-=======
-        'is_active'
->>>>>>> origin/feature/challenge
     ];
 
     protected $hidden = [
@@ -65,7 +57,3 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'created_by');
     }
 }
-<<<<<<< HEAD
-}
-=======
->>>>>>> origin/feature/challenge
