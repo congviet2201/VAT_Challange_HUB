@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Challenge Hub</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
@@ -85,51 +84,47 @@
     </style>
 </head>
 <body>
-
-    <!-- Sidebar Navigation -->
     <nav class="sidebar">
-        <div class="navbar-brand">🎯 Admin Panel</div>
+        <div class="navbar-brand">Admin Panel</div>
         
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.challenges.index') }}">
-                    <i class="bi bi-chat-square-text"></i> Quản Lý Thử Thách
+                    <i class="bi bi-chat-square-text"></i> Quản lý thử thách
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
-                    <i class="bi bi-people"></i> Quản Lý User
+                    <i class="bi bi-people"></i> Quản lý người dùng
                 </a>
             </li>
             <li class="nav-item border-top pt-3 mt-3">
                 <a class="nav-link" href="{{ route('home') }}">
-                    <i class="bi bi-house"></i> Quay Về Trang Chủ
+                    <i class="bi bi-house"></i> Quay về trang chủ
                 </a>
             </li>
             <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="nav-link w-100 text-start border-0">
-                        <i class="bi bi-box-arrow-right"></i> Đăng Xuất
+                        <i class="bi bi-box-arrow-right"></i> Đăng xuất
                     </button>
                 </form>
             </li>
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <main>
-        <!-- Alert Messages -->
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>✅ Thành công!</strong> {{ session('success') }}
+                <strong>Thành công!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>❌ Lỗi!</strong> {{ session('error') }}
+                <strong>Lỗi!</strong> {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
@@ -137,7 +132,6 @@
         @yield('content')
     </main>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

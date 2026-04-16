@@ -1,41 +1,38 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
-        <!-- LOGO -->
         <a class="navbar-brand fw-bold fs-3 text-primary" href="{{ route('home') }}">
             Challenge Hub
         </a>
 
-        <!-- TOGGLER CHO MOBILE -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- MENU & SEARCH -->
         <div class="collapse navbar-collapse" id="navbarContent">
-            <!-- SEARCH BAR: Tìm kiếm thử thách (ẩn trên mobile) -->
-            <form class="d-none d-lg-flex mx-auto">
-                <input class="form-control form-control-lg" type="search" placeholder="Tìm kiếm thử thách...">
+            <form class="mx-auto flex-grow-1" action="{{ route('search') }}" method="GET">
+                <input class="form-control form-control-lg" type="search" name="query" value="{{ request('query') }}" placeholder="Tìm kiếm thử thách...">
             </form>
 
-            <!-- MENU: Giới thiệu, Liên hệ, Đăng nhập/Đăng ký/Tên user -->
             <div class="ms-auto d-flex gap-3 align-items-center">
                 <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
                 <a href="{{ route('contact') }}" class="text-dark text-decoration-none">Liên hệ</a>
 
-                <!-- KIỂM TRA ĐĂNG NHẬP -->
                 @if (Auth::check())
-                    <!-- Admin Panel Button - Chỉ hiển thị nếu là admin -->
                     @if (Auth::user()->role === 'admin')
                         <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm fw-bold">
-                            <i class="bi bi-gear"></i> Quản Lý
+                            <i class="bi bi-gear"></i> Quản lý
                         </a>
                     @elseif (Auth::user()->role === 'useradmin')
                         <a href="{{ route('useradmin.groups.index') }}" class="btn btn-primary btn-sm fw-bold">
                             <i class="bi bi-people"></i> Nhóm
                         </a>
+                    @else
+                        <a href="{{ route('user.groups.index') }}" class="btn btn-primary btn-sm fw-bold">
+                            <i class="bi bi-people"></i> Nhóm
+                        </a>
                     @endif
-                    
-                    <span class="text-dark">👤 {{ Auth::user()->name }}</span>
+
+                    <span class="text-dark">{{ Auth::user()->name }}</span>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
                         @csrf
                         <button type="submit" class="btn btn-danger btn-sm">Đăng xuất</button>
