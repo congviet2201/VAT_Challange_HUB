@@ -58,7 +58,7 @@
 
                             <!-- Thời gian -->
                             @if ($c->daily_time > 0)
-                                <small class="text-muted mb-3">⏱ {{ $c->daily_time }} phút/ngày</small>
+                                <small class="text-muted mb-3">⏱ {{ $c->daily_time }}/ngày</small>
                             @endif
 
                             <!-- Nút -->

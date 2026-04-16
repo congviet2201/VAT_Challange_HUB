@@ -33,7 +33,7 @@
                                     <span class="badge bg-danger">🔴 Khó</span>
                                 @endif
                             </p>
-                            <p><strong>⏱️ Thời Gian:</strong> {{ $challenge->daily_time }} phút/ngày</p>
+                            <p><strong>⏱️ Thời Gian:</strong> {{ $challenge->daily_time }}/ngày</p>
                         </div>
                     </div>
                 </div>
@@ -86,9 +86,9 @@
                                     <td class="fw-bold">{{ $progress->user->name }}</td>
                                     <td class="text-center">
                                         <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar" role="progressbar" 
-                                                 style="width: {{ $progress->progress ?? 0 }}%;" 
-                                                 aria-valuenow="{{ $progress->progress ?? 0 }}" 
+                                            <div class="progress-bar" role="progressbar"
+                                                 style="width: {{ $progress->progress ?? 0 }}%;"
+                                                 aria-valuenow="{{ $progress->progress ?? 0 }}"
                                                  aria-valuemin="0" aria-valuemax="100">
                                                 {{ $progress->progress ?? 0 }}%
                                             </div>

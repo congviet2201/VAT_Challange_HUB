@@ -61,7 +61,7 @@
                 <div class="row text-center mt-4">
                     <div class="col-sm-6">
                         <h6 class="text-muted">⏱ Thời gian hàng ngày</h6>
-                        <h4 class="fw-bold">{{ $challenge->daily_time }} phút</h4>
+                        <h4 class="fw-bold">{{ $challenge->daily_time }}/ngày</h4>
                     </div>
                     <div class="col-sm-6">
                         <h6 class="text-muted">📅 Bắt đầu từ</h6>

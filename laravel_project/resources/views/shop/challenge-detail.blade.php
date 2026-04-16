@@ -42,7 +42,7 @@
                         @endif
                     </div>
                     <div class="col-sm-6">
-                        <strong>⏱ Thời gian:</strong> {{ $challenge->daily_time }} phút/ngày
+                        <strong>⏱ Thời gian:</strong> {{ $challenge->daily_time }}/ngày
                     </div>
                 </div>
 

@@ -47,7 +47,7 @@
                                 <span class="badge bg-danger">🔴 Khó</span>
                             @endif
                         </td>
-                        <td>{{ $challenge->daily_time }} phút</td>
+                        <td>{{ $challenge->daily_time }}/ngày</td>
                         <td class="text-center">
                             <span class="badge bg-primary fs-6">{{ $challenge->total_users }}</span>
                         </td>
