@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ChallengeHubSeeder extends Seeder
 {
@@ -14,9 +15,10 @@ class ChallengeHubSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
-                'password' => '123456',
+                'password' => Hash::make('123456'),
                 'avatar' => null,
                 'role' => 'admin',
+                'is_active' => true,
             ]
         ]);
 
