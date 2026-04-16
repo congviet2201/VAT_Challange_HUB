@@ -87,6 +87,20 @@
             font-weight: 500;
         }
 
+        /* TASK CARDS */
+        .bg-light-success {
+            background-color: #f0fdf4 !important;
+        }
+
+        .complete-task-btn {
+            transition: all 0.3s ease;
+        }
+
+        .complete-task-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         /* FOOTER */
         footer {
             background-color: #0b1120;
@@ -134,6 +148,8 @@
             }
         }
     </style>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 

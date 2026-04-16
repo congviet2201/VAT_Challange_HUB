@@ -10,9 +10,9 @@ class Task extends Model
 
     protected $fillable = [
         'challenge_id',
+        'order',
         'title',
-        'description',
-        'order'
+        'description'
     ];
 
     public function challenge()

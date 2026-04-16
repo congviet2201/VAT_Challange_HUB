@@ -9,9 +9,8 @@ class TaskCompletion extends Model
     protected $table = 'task_completions';
 
     protected $fillable = [
-        'task_id',
         'user_id',
-        'challenge_id',
+        'task_id',
         'completed_at'
     ];
 
@@ -19,18 +18,13 @@ class TaskCompletion extends Model
         'completed_at' => 'datetime'
     ];
 
-    public function task()
-    {
-        return $this->belongsTo(Task::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function challenge()
+    public function task()
     {
-        return $this->belongsTo(Challenge::class);
+        return $this->belongsTo(Task::class);
     }
 }
