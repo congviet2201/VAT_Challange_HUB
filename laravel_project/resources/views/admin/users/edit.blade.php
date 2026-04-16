@@ -1,4 +1,5 @@
 @extends('admin.layout.app')
+{{-- Trang chỉnh sửa thông tin người dùng trong Admin --}}
 
 @section('content')
 

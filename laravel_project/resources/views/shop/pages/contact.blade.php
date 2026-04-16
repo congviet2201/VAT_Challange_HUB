@@ -1,6 +1,8 @@
 @extends('shop.layout.app')
+{{-- Trang Liên hệ dùng layout chính của shop --}}
 
 @section('content')
+{{-- Bắt đầu nội dung chính của trang --}}
 
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
@@ -11,11 +13,13 @@
 
 <div class="row">
     <div class="col-lg-8 mx-auto">
+        {{-- Tiêu đề liên hệ --}}
         <div class="text-center mb-5">
             <h1 class="fw-bold mb-3">Liên hệ với chúng tôi</h1>
             <p class="text-muted fs-5">Chúng tôi sẵn sàng lắng nghe ý kiến của bạn</p>
         </div>
 
+        {{-- Thông tin nhanh --}}
         <div class="row g-4 mb-5">
             <div class="col-md-6">
                 <div class="card text-center p-4">
@@ -39,9 +43,11 @@
             </div>
         </div>
 
+        {{-- Form gửi tin nhắn --}}
         <div class="card p-5">
             <h3 class="fw-bold mb-4">Gửi tin nhắn cho chúng tôi</h3>
 
+            {{-- Hiển thị lỗi validation --}}
             @if($errors->any())
                 <div class="alert alert-danger" role="alert">
                     <strong>Lỗi!</strong>
@@ -53,6 +59,7 @@
                 </div>
             @endif
 
+            {{-- Thông báo thành công --}}
             @if(session('success'))
                 <div class="alert alert-success" role="alert">
                     {{ session('success') }}
@@ -132,6 +139,7 @@
             </form>
         </div>
 
+        {{-- Thông tin phụ --}}
         <div class="alert alert-light border mt-5 p-4" role="alert">
             <h5 class="fw-bold mb-2">Thời gian phản hồi</h5>
             <p class="mb-0">

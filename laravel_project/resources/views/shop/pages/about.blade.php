@@ -1,6 +1,8 @@
 @extends('shop.layout.app')
+{{-- Trang Giới thiệu dùng layout chính của shop --}}
 
 @section('content')
+{{-- Bắt đầu nội dung chính của trang --}}
 
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
@@ -11,11 +13,13 @@
 
 <div class="row">
     <div class="col-lg-8 mx-auto">
+        {{-- Tiêu đề giới thiệu --}}
         <div class="text-center mb-5">
             <h1 class="fw-bold mb-3">Giới thiệu Challenge Hub</h1>
             <p class="text-muted fs-5">Nền tảng học tập và phát triển kỹ năng qua các thử thách thực tế</p>
         </div>
 
+        {{-- Nội dung chính giới thiệu --}}
         <div class="card mb-4">
             <div class="card-body p-5">
                 <h3 class="fw-bold mb-4">Về chúng tôi</h3>
@@ -88,6 +92,7 @@
             </div>
         </div>
 
+        {{-- Call to action --}}
         <div class="alert alert-info text-center" role="alert">
             <h5 class="fw-bold mb-2">Bạn đã sẵn sàng chưa?</h5>
             <p class="mb-3">Tham gia hàng ngàn người học tập khác và bắt đầu hành trình phát triển kỹ năng của bạn</p>

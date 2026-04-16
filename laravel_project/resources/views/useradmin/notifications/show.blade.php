@@ -1,4 +1,5 @@
 @extends('useradmin.layout.app')
+{{-- Trang xem chi tiết thông báo cho UserAdmin --}}
 
 @section('content')
 

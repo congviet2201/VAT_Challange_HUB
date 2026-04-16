@@ -1,6 +1,9 @@
 @extends('shop.layout.app')
+{{-- Trang danh sách nhóm thử thách dành cho người dùng --}}
 
 @section('content')
+{{-- Bắt đầu nội dung chính của trang --}}
+
     <section class="mb-4">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
@@ -17,6 +20,7 @@
                 <div class="col-md-6 col-xl-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body d-flex flex-column">
+                            {{-- Thông tin nhóm --}}
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <div>
                                     <h4 class="fw-bold mb-1">{{ $group->name }}</h4>
@@ -31,15 +35,18 @@
                                 @endif
                             </div>
 
+                            {{-- Mô tả nhóm --}}
                             <p class="text-muted flex-grow-1">
                                 {{ $group->description ?: 'Nhóm này chưa có mô tả.' }}
                             </p>
 
+                            {{-- Số thành viên và số thử thách --}}
                             <div class="d-flex justify-content-between small text-muted mb-3">
                                 <span>{{ $group->users_count }} thành viên</span>
                                 <span>{{ $group->challenges_count }} thử thách</span>
                             </div>
 
+                            {{-- Các nút hành động --}}
                             <div class="d-grid gap-2">
                                 <a href="{{ route('user.groups.show', $group->id) }}" class="btn btn-outline-primary">
                                     Xem chi tiết

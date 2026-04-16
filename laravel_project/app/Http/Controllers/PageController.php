@@ -6,19 +6,32 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    // Trang Giới thiệu
+    /**
+     * Show the about page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function about()
     {
         return view('shop.pages.about');
     }
 
-    // Trang Liên hệ
+    /**
+     * Show the contact page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function contact()
     {
         return view('shop.pages.contact');
     }
 
-    // Gửi form liên hệ
+    /**
+     * Handle the contact form submission.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendContact(Request $request)
     {
         $validated = $request->validate([
@@ -28,8 +41,8 @@ class PageController extends Controller
             'message' => 'required|string|min:10'
         ]);
 
-        // Có thể gửi email hoặc lưu vào database tùy theo yêu cầu
-        // Tạm để giữ đơn giản, chỉ trả về toast success
+        // Dữ liệu hợp lệ, có thể gửi email hoặc lưu dữ liệu nếu muốn.
+        // Ở đây giữ đơn giản và trả về thông báo thành công.
 
         return back()->with('success', 'Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm.');
     }
