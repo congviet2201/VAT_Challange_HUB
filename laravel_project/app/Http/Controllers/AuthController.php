@@ -31,11 +31,15 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => null,
-            'role' => $request->role
+            'role' => $request->role,
+            'is_active' => 1
         ]);
 
-        // Tạm thời bỏ try-catch để hiện lỗi mail thật ra màn hình
-        Mail::to($user->email)->send(new WelcomeMail($user));
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user));
+        } catch (\Exception $e) {
+            Log::error('Failed to send welcome email: ' . $e->getMessage());
+        }
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công!');
     }
@@ -52,7 +56,9 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        $remember = $request->has('remember');
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/')->with('success', 'Đăng nhập thành công!');
         }

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenge Hub</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -33,10 +32,9 @@
             padding: 20px 0;
         }
 
-        /* HEADER */
         .navbar {
             background-color: white !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand {
@@ -45,7 +43,6 @@
             color: #007bff !important;
         }
 
-        /* CARD */
         .card {
             border: none;
             border-radius: 8px;
@@ -54,7 +51,7 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-img-top {
@@ -63,7 +60,6 @@
             border-radius: 8px 8px 0 0;
         }
 
-        /* BUTTONS */
         .btn {
             border-radius: 6px;
             font-weight: 500;
@@ -80,14 +76,12 @@
             border-color: #0056b3;
         }
 
-        /* BADGES */
         .badge {
             border-radius: 20px;
             padding: 0.5rem 0.75rem;
             font-weight: 500;
         }
 
-        /* FOOTER */
         footer {
             background-color: #0b1120;
             color: white;
@@ -123,7 +117,6 @@
             color: #b0b0b0;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .navbar form {
                 display: none;
@@ -136,19 +129,37 @@
     </style>
 </head>
 <body>
-
-    <!-- HEADER (navigation bar) -->
     @include('shop.header')
 
-    <!-- NỘI DUNG CHÍNH -->
+    <div class="container mt-3">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Thành công!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Lỗi!</strong> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if(session('info'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Thông tin!</strong> {{ session('info') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+    </div>
+
     <main class="container">
         @yield('content')
     </main>
 
-    <!-- FOOTER -->
     @include('shop.footer')
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -103,6 +103,7 @@ class ChallengeController extends Controller
 
         return view('shop.challenge-progress', compact('challenge', 'category', 'progress'));
     }
+<<<<<<< HEAD
 
     public function index(Request $request)
 {
@@ -118,4 +119,6 @@ class ChallengeController extends Controller
 
     return view('shop.pages.challenges', compact('challenges', 'keyword'));
 }
+=======
+>>>>>>> origin/feature/challenge
 }

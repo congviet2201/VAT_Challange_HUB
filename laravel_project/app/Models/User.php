@@ -9,9 +9,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasFactory;
+<<<<<<< HEAD
 
 
     protected $table = 'users';
+=======
+>>>>>>> origin/feature/challenge
 
     protected $fillable = [
         'name',
@@ -19,7 +22,11 @@ class User extends Authenticatable
         'password',
         'avatar',
         'role',
+<<<<<<< HEAD
         'is_active',
+=======
+        'is_active'
+>>>>>>> origin/feature/challenge
     ];
 
     protected $hidden = [
@@ -37,17 +44,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(ChallengeProgress::class);
     }
-    // app/Models/User.php
 
-public function groups()
-{
-    // Một người dùng có thể tham gia nhiều nhóm thông qua bảng trung gian group_members
-    return $this->belongsToMany(Group::class, 'group_members', 'user_id', 'group_id');
-}
-// app/Models/User.php
+    public function userChallenges()
+    {
+        return $this->hasMany(UserChallenge::class, 'user_id');
+    }
 
-public function userChallenges()
-{
-    return $this->hasMany(UserChallenge::class, 'user_id');
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_user')->withTimestamps();
+    }
+
+    public function createdGroups()
+    {
+        return $this->hasMany(Group::class, 'created_by');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'created_by');
+    }
 }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> origin/feature/challenge

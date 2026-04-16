@@ -15,10 +15,21 @@ class UserChallenge extends Model
         'completed_days',
         'streak'
     ];
-    // app/Models/UserChallenge.php
 
+<<<<<<< HEAD
+=======
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+>>>>>>> origin/feature/challenge
     public function challenge()
     {
         return $this->belongsTo(Challenge::class, 'challenge_id');
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/feature/challenge
 }

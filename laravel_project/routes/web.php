@@ -3,11 +3,15 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
+use App\Http\Controllers\User\GroupController as UserGroupController;
+use App\Http\Controllers\UserAdmin\GroupController;
+use App\Http\Controllers\UserAdmin\NotificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\AuthController;
 use App\Models\UserChallenge;
-use App\Http\Controllers\UserController;
 
 
 
@@ -23,7 +27,8 @@ Route::get('/category/{id}', [HomeController::class, 'category'])->name('categor
 
 // Chi tiết thử thách (xem thông tin)
 Route::get('/challenge/{id}', [HomeController::class, 'challengeDetail'])->name('challenge.detail');
-
+// Tìm kiếm thử thách
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 // Bắt đầu thử thách (tạo progress và chuyển sang trang progress)
 Route::post('/challenge/{challenge}/start', [ChallengeController::class, 'start'])->name('challenge.start')->middleware('auth');
 
@@ -44,6 +49,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::post('/checkin', [ChallengeController::class, 'checkin'])->middleware('auth');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/groups', [UserGroupController::class, 'index'])->name('user.groups.index');
+    Route::get('/groups/{group}', [UserGroupController::class, 'show'])->name('user.groups.show');
+    Route::post('/groups/{group}/join', [UserGroupController::class, 'join'])->name('user.groups.join');
+    Route::post('/groups/{group}/leave', [UserGroupController::class, 'leave'])->name('user.groups.leave');
+});
+
 Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
@@ -55,14 +67,17 @@ Route::get('/dashboard', function () {
 
 
 // Nhóm các Route dành cho Admin lại một chỗ cho gọn
-// Đảm bảo dòng này đúng địa chỉ file
+ // Đảm bảo dòng này đúng địa chỉ file
 
 // Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    // Viết thẳng đường dẫn bạn muốn vào đây
+    // Quản lý user
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
-
-    // Đường dẫn cho nút Khóa/Mở
+    Route::get('/admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
+
 });
