@@ -2,7 +2,6 @@
 
 @section('content')
 
-<!-- Breadcrumb -->
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
@@ -12,16 +11,14 @@
 
 <div class="row">
     <div class="col-lg-8 mx-auto">
-        <!-- Tiêu đề -->
         <div class="text-center mb-5">
-            <h1 class="fw-bold mb-3">📚 Giới thiệu Challenge Hub</h1>
+            <h1 class="fw-bold mb-3">Giới thiệu Challenge Hub</h1>
             <p class="text-muted fs-5">Nền tảng học tập và phát triển kỹ năng qua các thử thách thực tế</p>
         </div>
 
-        <!-- Nội dung giới thiệu -->
         <div class="card mb-4">
             <div class="card-body p-5">
-                <h3 class="fw-bold mb-4">🎯 Về chúng tôi</h3>
+                <h3 class="fw-bold mb-4">Về chúng tôi</h3>
                 <p class="lh-lg mb-4">
                     Challenge Hub là một nền tảng học tập hiện đại, được thiết kế để giúp bạn phát triển kỹ năng
                     thông qua các thử thách thực tiễn. Chúng tôi tin rằng cách tốt nhất để học là thực hành,
@@ -30,15 +27,15 @@
 
                 <hr class="my-5">
 
-                <h3 class="fw-bold mb-4">✨ Tính năng nổi bật</h3>
+                <h3 class="fw-bold mb-4">Tính năng nổi bật</h3>
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="d-flex gap-3 mb-4">
                             <div class="flex-shrink-0">
-                                <h4>🎓</h4>
+                                <h4>Học</h4>
                             </div>
                             <div>
-                                <h5>Đa dạng khoá học</h5>
+                                <h5>Đa dạng thử thách</h5>
                                 <p class="text-muted small">Nhiều thử thách từ cơ bản đến nâng cao trong các lĩnh vực khác nhau</p>
                             </div>
                         </div>
@@ -46,7 +43,7 @@
                     <div class="col-md-6">
                         <div class="d-flex gap-3 mb-4">
                             <div class="flex-shrink-0">
-                                <h4>📊</h4>
+                                <h4>Theo dõi</h4>
                             </div>
                             <div>
                                 <h5>Theo dõi tiến độ</h5>
@@ -57,18 +54,18 @@
                     <div class="col-md-6">
                         <div class="d-flex gap-3 mb-4">
                             <div class="flex-shrink-0">
-                                <h4>🏆</h4>
+                                <h4>Thành tựu</h4>
                             </div>
                             <div>
                                 <h5>Đạt thành tựu</h5>
-                                <p class="text-muted small">Hoàn thành các thử thách và nhận công nhân từ cộng đồng</p>
+                                <p class="text-muted small">Hoàn thành các thử thách và nhận công nhận từ cộng đồng</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="d-flex gap-3 mb-4">
                             <div class="flex-shrink-0">
-                                <h4>👥</h4>
+                                <h4>Cộng đồng</h4>
                             </div>
                             <div>
                                 <h5>Cộng đồng hỗ trợ</h5>
@@ -80,7 +77,7 @@
 
                 <hr class="my-5">
 
-                <h3 class="fw-bold mb-4">🚀 Bắt đầu ngay</h3>
+                <h3 class="fw-bold mb-4">Bắt đầu ngay</h3>
                 <p class="lh-lg">
                     Sẵn sàng để bắt đầu hành trình học tập của bạn?
                     <a href="{{ route('home') }}" class="text-decoration-none fw-bold">Khám phá các thử thách</a>
@@ -91,12 +88,11 @@
             </div>
         </div>
 
-        <!-- Call to Action -->
         <div class="alert alert-info text-center" role="alert">
             <h5 class="fw-bold mb-2">Bạn đã sẵn sàng chưa?</h5>
             <p class="mb-3">Tham gia hàng ngàn người học tập khác và bắt đầu hành trình phát triển kỹ năng của bạn</p>
             <a href="{{ route('home') }}" class="btn btn-primary btn-lg">
-                🎯 Khám phá thử thách
+                Khám phá thử thách
             </a>
         </div>
     </div>

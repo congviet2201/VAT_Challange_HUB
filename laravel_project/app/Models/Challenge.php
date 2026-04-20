@@ -26,4 +26,9 @@ class Challenge extends Model
     {
         return $this->hasMany(ChallengeProgress::class);
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_challenge')->withTimestamps();
+    }
 }
