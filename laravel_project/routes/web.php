@@ -12,6 +12,7 @@ use App\Http\Controllers\UserAdmin\NotificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserChallenge;
+use App\Http\Controllers\GoalController;
 
 
 
@@ -80,4 +81,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
 
+});
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
+    Route::post('/goals/store', [GoalController::class, 'store'])->name('goals.store');
 });

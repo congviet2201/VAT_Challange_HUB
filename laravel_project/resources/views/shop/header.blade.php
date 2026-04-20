@@ -30,7 +30,9 @@
                 <a href="{{ route('challenges') }}" class="text-dark text-decoration-none">Thử thách</a>
                 <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
                 <a href="{{ route('contact') }}" class="text-dark text-decoration-none">Liên hệ</a>
-
+                <a href="{{ route('goals.create') }}" class="btn btn-success btn-sm fw-bold">
+                    <i class="bi bi-bullseye"></i> Mục tiêu
+                </a>
                 @if (Auth::check())
                     @if (Auth::user()->role === 'admin')
                         <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm fw-bold">
