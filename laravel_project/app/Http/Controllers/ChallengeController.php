@@ -12,8 +12,6 @@ use App\Models\Checkin;
 
 class ChallengeController extends Controller
 {
-<<<<<<< HEAD
-=======
     public function checkin(Request $request)
     {
 
@@ -70,7 +68,6 @@ class ChallengeController extends Controller
         return back()->with('success', 'Check-in thành công!');
     }
 
->>>>>>> NgocAnh/Goals
     // Bắt đầu thử thách
     public function start(Challenge $challenge)
     {

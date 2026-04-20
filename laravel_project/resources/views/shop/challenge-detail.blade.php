@@ -34,11 +34,7 @@
                         @endif
                     </div>
                     <div class="col-sm-6">
-<<<<<<< HEAD
-                        <strong>⏱ Thời gian:</strong> {{ $challenge->daily_time }}/ngày
-=======
                         <strong>Thời gian:</strong> {{ $challenge->daily_time }} phút/ngày
->>>>>>> NgocAnh/Goals
                     </div>
                 </div>
 
@@ -55,13 +51,7 @@
                         <button type="submit" class="btn btn-primary btn-lg" id="startChallengeBtn">Bắt đầu thử thách</button>
                     </form>
                 @else
-<<<<<<< HEAD
-                    <a href="{{ route('auth.login') }}" class="btn btn-primary btn-lg">
-                        ✨ Bắt đầu thử thách
-                    </a>
-=======
                     <a href="{{ route('auth.login') }}" class="btn btn-primary btn-lg">Bắt đầu thử thách</a>
->>>>>>> NgocAnh/Goals
                 @endif
                 <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary btn-lg">← Quay lại</a>
             </div>

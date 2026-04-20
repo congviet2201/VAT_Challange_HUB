@@ -48,11 +48,7 @@
                             </p>
 
                             @if ($c->daily_time > 0)
-<<<<<<< HEAD
-                                <small class="text-muted mb-3">⏱ {{ $c->daily_time }}/ngày</small>
-=======
                                 <small class="text-muted mb-3">{{ $c->daily_time }} phút/ngày</small>
->>>>>>> NgocAnh/Goals
                             @endif
 
                             <a href="{{ route('challenge.detail', $c->id) }}" class="btn btn-primary w-100 mt-auto">

@@ -52,13 +52,8 @@
 
                 <div class="row text-center mt-4">
                     <div class="col-sm-6">
-<<<<<<< HEAD
-                        <h6 class="text-muted">⏱ Thời gian hàng ngày</h6>
-                        <h4 class="fw-bold">{{ $challenge->daily_time }}/ngày</h4>
-=======
                         <h6 class="text-muted">Thời gian hằng ngày</h6>
                         <h4 class="fw-bold">{{ $challenge->daily_time }} phút</h4>
->>>>>>> NgocAnh/Goals
                     </div>
                     <div class="col-sm-6">
                         <h6 class="text-muted">Bắt đầu từ</h6>
@@ -68,58 +63,6 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-        <!-- Danh sách Tasks -->
-        <div class="card mb-4">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">📋 Các bước hoàn thành thử thách</h5>
-            </div>
-            <div class="card-body">
-                @if($allTasks->count() > 0)
-                    <div class="row g-3">
-                        @foreach($allTasks as $task)
-                            <div class="col-md-6">
-                                <div class="card h-100 border {{ in_array($task->id, $completedTaskIds) ? 'border-success bg-light-success' : 'border-secondary' }}">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-start mb-2">
-                                            <div>
-                                                <h6 class="card-title mb-1">
-                                                    @if(in_array($task->id, $completedTaskIds))
-                                                        <span class="badge bg-success me-2">✅</span>
-                                                    @else
-                                                        <span class="badge bg-secondary me-2">{{ $task->order }}</span>
-                                                    @endif
-                                                    {{ $task->title }}
-                                                </h6>
-                                                <p class="small text-muted mb-2">{{ $task->description }}</p>
-                                            </div>
-                                        </div>
-
-                                        @if(!in_array($task->id, $completedTaskIds))
-                                            <button type="button" class="btn btn-sm btn-primary w-100 complete-task-btn"
-                                                    data-challenge-id="{{ $challenge->id }}"
-                                                    data-task-id="{{ $task->id }}">
-                                                <i class="bi bi-check-circle"></i> Đánh dấu hoàn thành
-                                            </button>
-                                        @else
-                                            <span class="badge bg-success w-100 py-2">Đã hoàn thành</span>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="alert alert-warning">
-                        <i class="bi bi-exclamation-triangle"></i> Chưa có tasks cho thử thách này
-                    </div>
-                @endif
-            </div>
-        </div>
-
-        <!-- Đánh giá & Điều hướng -->
-=======
->>>>>>> NgocAnh/Goals
         <div class="d-grid gap-2 d-md-flex mb-4">
             <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary btn-lg">← Quay lại</a>
             <a href="{{ route('challenge.detail', $challenge->id) }}" class="btn btn-outline-primary btn-lg">Chi tiết</a>
