@@ -1,3 +1,6 @@
+@extends('shop.layout.app')
+
+@section('content')
 <!DOCTYPE html>
 <html>
 <head>
