@@ -12,6 +12,65 @@ use App\Models\Checkin;
 
 class ChallengeController extends Controller
 {
+<<<<<<< HEAD
+=======
+    public function checkin(Request $request)
+    {
+
+        $userId = Auth::id();
+        $challengeId = $request->challenge_id;
+        $today = now()->toDateString();
+
+        // 1. Kiểm tra check-in hôm nay chưa
+        $exists = Checkin::where('user_id', $userId)
+            ->where('challenge_id', $challengeId)
+            ->where('date', $today)
+            ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'Bạn đã check-in hôm nay rồi!');
+        }
+
+        // 2. Tạo bản ghi Checkin
+        Checkin::create([
+            'user_id' => $userId,
+            'challenge_id' => $challengeId,
+            'date' => $today,
+            'status' => 'done'
+        ]);
+
+        // 3. Cập nhật tiến trình (Dùng Model ChallengeProgress cho đồng bộ)
+        $uc = ChallengeProgress::where('user_id', $userId)
+            ->where('challenge_id', $challengeId)
+            ->first();
+
+        if ($uc) {
+            $uc->completed_days += 1;
+
+            // Giả sử mỗi thử thách mặc định 30 ngày
+            $totalDays = $uc->challenge->duration_days ?? 30;
+            $uc->progress = min(($uc->completed_days / $totalDays) * 100, 100);
+
+            // 4. Tính streak (chuỗi ngày liên tiếp)
+            $yesterday = now()->subDay()->toDateString();
+            $checkedYesterday = Checkin::where('user_id', $userId)
+                ->where('challenge_id', $challengeId)
+                ->where('date', $yesterday)
+                ->exists();
+
+            if ($checkedYesterday) {
+                $uc->streak += 1;
+            } else {
+                $uc->streak = 1;
+            }
+
+            $uc->save();
+        }
+
+        return back()->with('success', 'Check-in thành công!');
+    }
+
+>>>>>>> NgocAnh/Goals
     // Bắt đầu thử thách
     public function start(Challenge $challenge)
     {
@@ -36,7 +95,7 @@ class ChallengeController extends Controller
         }
 
         return redirect()->route('challenge.progress', $challenge->id)
-            ->with('success', '🎉 Bắt đầu thử thách thành công!');
+            ->with('success', ' Bắt đầu thử thách thành công!');
     }
 
     // Tạo tasks cho challenge
@@ -248,5 +307,8 @@ class ChallengeController extends Controller
 
         return back()->with('success', 'Check-in thành công!');
     }
+
+
+
 }
 

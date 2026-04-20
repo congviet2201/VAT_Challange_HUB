@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body class="bg-primary bg-gradient d-flex justify-content-center align-items-center" style="height:100vh;">
 
 <div class="card shadow p-4" style="width: 400px; border-radius:15px;">
-
     <h3 class="text-center mb-3">Đăng ký</h3>
 
     @if(session('success'))
@@ -45,7 +45,7 @@
             <label class="form-label">Vai trò</label>
             <select name="role" class="form-select">
                 <option value="user">Người dùng</option>
-                <option value="useradmin">User Admin</option>
+                <option value="useradmin">Quản trị nhóm</option>
             </select>
         </div>
 
@@ -55,7 +55,6 @@
     <div class="text-center mt-3">
         <a href="/login">Đã có tài khoản?</a>
     </div>
-
 </div>
 
 </body>

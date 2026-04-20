@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenge Hub</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #007bff;
@@ -33,10 +33,9 @@
             padding: 20px 0;
         }
 
-        /* HEADER */
         .navbar {
             background-color: white !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand {
@@ -45,7 +44,25 @@
             color: #007bff !important;
         }
 
-        /* CARD */
+        .search-input-group .input-group-text {
+            border-radius: 999px 0 0 999px;
+        }
+
+        .search-input-group .form-control {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .search-input-group .btn {
+            border-radius: 0 999px 999px 0;
+        }
+
+        .search-input-group:focus-within .input-group-text,
+        .search-input-group:focus-within .form-control,
+        .search-input-group:focus-within .btn {
+            border-color: #86b7fe;
+        }
+
         .card {
             border: none;
             border-radius: 8px;
@@ -54,7 +71,7 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
         }
 
         .card-img-top {
@@ -63,7 +80,6 @@
             border-radius: 8px 8px 0 0;
         }
 
-        /* BUTTONS */
         .btn {
             border-radius: 6px;
             font-weight: 500;
@@ -80,13 +96,13 @@
             border-color: #0056b3;
         }
 
-        /* BADGES */
         .badge {
             border-radius: 20px;
             padding: 0.5rem 0.75rem;
             font-weight: 500;
         }
 
+<<<<<<< HEAD
         /* TASK CARDS */
         .bg-light-success {
             background-color: #f0fdf4 !important;
@@ -102,6 +118,8 @@
         }
 
         /* FOOTER */
+=======
+>>>>>>> NgocAnh/Goals
         footer {
             background-color: #0b1120;
             color: white;
@@ -137,12 +155,14 @@
             color: #b0b0b0;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .navbar form {
-                display: none;
+        @media (max-width: 991px) {
+            .search-form {
+                margin: 1rem 0;
+                padding: 0;
             }
+        }
 
+        @media (max-width: 768px) {
             .card {
                 margin-bottom: 15px;
             }
@@ -152,43 +172,37 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-
-    <!-- HEADER (navigation bar) -->
     @include('shop.header')
 
-    <!-- ALERT MESSAGES -->
     <div class="container mt-3">
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>✅ Thành công!</strong> {{ session('success') }}
+                <strong>Thành công!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>❌ Lỗi!</strong> {{ session('error') }}
+                <strong>Lỗi!</strong> {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
         @if(session('info'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>ℹ️ Thông tin!</strong> {{ session('info') }}
+                <strong>Thông tin!</strong> {{ session('info') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
     </div>
 
-    <!-- NỘI DUNG CHÍNH -->
     <main class="container">
         @yield('content')
     </main>
 
-    <!-- FOOTER -->
     @include('shop.footer')
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

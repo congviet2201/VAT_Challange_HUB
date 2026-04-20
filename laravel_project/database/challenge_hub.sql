@@ -12,8 +12,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-INSERT INTO users (name, email, password)
-VALUES ('Admin', 'admin@gmail.com', '123456');
+INSERT INTO users (name, email, password, role)
+VALUES ('Admin', 'admin@gmail.com', '$2y$12$k5CIYNQnlfhuUmBh9ebb3.OjkxaI06oz6hi77tm9zSDogeAdUdjmG', 'admin');
 
 
 -- CATEGORIES
@@ -251,20 +251,23 @@ CREATE TABLE ai_logs (
 -- GROUPS
 CREATE TABLE groups (
     id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
+    description TEXT NULL,
     created_by INT,
+    is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- GROUP_MEMBERS
-CREATE TABLE group_members (
+-- GROUP_USER
+CREATE TABLE group_user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     group_id INT,
     user_id INT,
-    role ENUM('member','leader') DEFAULT 'member',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     UNIQUE (group_id, user_id),
 
@@ -272,16 +275,31 @@ CREATE TABLE group_members (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- GROUP_CHALLENGE
+CREATE TABLE group_challenge (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    group_id INT,
+    challenge_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    UNIQUE (group_id, challenge_id),
+
+    FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (challenge_id) REFERENCES challenges(id) ON DELETE CASCADE
+);
+
 -- NOTIFICATIONS
 CREATE TABLE notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_id INT,
     group_id INT,
-    type ENUM('reminder','group','system') DEFAULT 'system',
-    content TEXT,
+    created_by INT,
+    title VARCHAR(255) NOT NULL,
+    message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
 

@@ -16,10 +16,13 @@ class UserChallenge extends Model
         'streak'
     ];
 
+
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 
     public function challenge()
     {
