@@ -133,12 +133,15 @@ class ChallengeController extends Controller
             return response()->json(['error' => 'Task không hợp lệ'], 400);
         }
 
-        // Kiểm tra ràng buộc thời gian 10 giây
+    // Kiểm tra ràng buộc thời gian 10 giây
+        //Tìm trong bảng TaskCompletion (bảng lưu lịch sử các task đã xong)
+        // xem lần cuối cùng người dùng này nhấn "Hoàn thành" là khi nào.
         $lastCompletion = TaskCompletion::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->first();
 
         if ($lastCompletion && $lastCompletion->created_at->addSeconds(10) > now()) {
+            // tính điểm hiện tại và mốc "được phép" để báo cho người dùng biết họ cần đợi thêm chính xác bao nhiêu giây nữa (diffInSeconds).
             $remainingSeconds = intval($lastCompletion->created_at->addSeconds(10)->diffInSeconds(now()));
             return response()->json([
                 'error' => "Vui lòng chờ {$remainingSeconds} giây trước khi hoàn thành task tiếp theo"
@@ -159,12 +162,14 @@ class ChallengeController extends Controller
             ]);
 
             // Cập nhật progress
+            // tìm trong bảng Chall user_id đã đang thực hiện call_id nào
             $progress = ChallengeProgress::where('user_id', $user->id)
                 ->where('challenge_id', $challenge->id)
                 ->first();
-
+            // nếu tìm thấy lấy tất cả tasks của challenge này
             if ($progress) {
                 $allTasks = $challenge->tasks()->count();
+            // chỉ lấy task đã hoàn thành
                 $completedCount = TaskCompletion::where('user_id', $user->id)
                     ->whereIn('task_id', $challenge->tasks()->pluck('id'))
                     ->count();
