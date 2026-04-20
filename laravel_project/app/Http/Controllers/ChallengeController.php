@@ -12,63 +12,9 @@ use App\Models\Checkin;
 
 class ChallengeController extends Controller
 {
-    public function checkin(Request $request)
-    {
-
-        $userId = Auth::id();
-        $challengeId = $request->challenge_id;
-        $today = now()->toDateString();
-
-        // 1. Kiểm tra check-in hôm nay chưa
-        $exists = Checkin::where('user_id', $userId)
-            ->where('challenge_id', $challengeId)
-            ->where('date', $today)
-            ->exists();
-
-        if ($exists) {
-            return back()->with('error', 'Bạn đã check-in hôm nay rồi!');
-        }
-
-        // 2. Tạo bản ghi Checkin
-        Checkin::create([
-            'user_id' => $userId,
-            'challenge_id' => $challengeId,
-            'date' => $today,
-            'status' => 'done'
-        ]);
-
-        // 3. Cập nhật tiến trình (Dùng Model ChallengeProgress cho đồng bộ)
-        $uc = ChallengeProgress::where('user_id', $userId)
-            ->where('challenge_id', $challengeId)
-            ->first();
-
-        if ($uc) {
-            $uc->completed_days += 1;
-
-            // Giả sử mỗi thử thách mặc định 30 ngày
-            $totalDays = $uc->challenge->duration_days ?? 30;
-            $uc->progress = min(($uc->completed_days / $totalDays) * 100, 100);
-
-            // 4. Tính streak (chuỗi ngày liên tiếp)
-            $yesterday = now()->subDay()->toDateString();
-            $checkedYesterday = Checkin::where('user_id', $userId)
-                ->where('challenge_id', $challengeId)
-                ->where('date', $yesterday)
-                ->exists();
-
-            if ($checkedYesterday) {
-                $uc->streak += 1;
-            } else {
-                $uc->streak = 1;
-            }
-
-            $uc->save();
-        }
-
-        return back()->with('success', 'Check-in thành công!');
-    }
-
-    // Bắt đầu thử thách
+    /**
+     * Bắt đầu thử thách
+     */
     public function start(Challenge $challenge)
     {
         $user = Auth::user();
@@ -92,19 +38,17 @@ class ChallengeController extends Controller
         }
 
         return redirect()->route('challenge.progress', $challenge->id)
-            ->with('success', ' Bắt đầu thử thách thành công!');
+            ->with('success', 'Bắt đầu thử thách thành công!');
     }
 
-    // Tạo tasks cho challenge
+    /**
+     * Tạo tasks mặc định cho challenge
+     */
     private function createTasksForChallenge(Challenge $challenge)
     {
-        // Kiểm tra xem đã có tasks chưa
         if ($challenge->tasks()->count() > 0) {
             return;
         }
-
-        // Mỗi challenge có 10 tasks
-        $taskCount = 10;
 
         $taskTitles = [
             1 => '📚 Bước 1: Học lý thuyết',
@@ -132,7 +76,7 @@ class ChallengeController extends Controller
             10 => 'Tổng hợp lại toàn bộ bài học'
         ];
 
-        for ($i = 1; $i <= $taskCount; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             Task::create([
                 'challenge_id' => $challenge->id,
                 'order' => $i,
@@ -142,7 +86,9 @@ class ChallengeController extends Controller
         }
     }
 
-    // Trang tiến độ thử thách
+    /**
+     * Trang tiến độ thử thách
+     */
     public function progress(Challenge $challenge)
     {
         if (!Auth::check()) {
@@ -150,32 +96,29 @@ class ChallengeController extends Controller
         }
 
         $user = Auth::user();
-
         $progress = ChallengeProgress::where('user_id', $user->id)
             ->where('challenge_id', $challenge->id)
             ->firstOrFail();
 
         $category = $challenge->category;
-
-        // Lấy tất cả tasks của challenge
         $allTasks = $challenge->tasks()->orderBy('order')->get();
-
-        // Lấy tasks đã hoàn thành của user này
         $completedTaskIds = TaskCompletion::where('user_id', $user->id)
             ->whereIn('task_id', $allTasks->pluck('id'))
             ->pluck('task_id')
             ->toArray();
 
-        // Tính tiến độ từ tasks
+        // Cập nhật lại % tiến độ dựa trên số task đã hoàn thành
         if ($allTasks->count() > 0) {
-            $progress->progress = round((\count($completedTaskIds) / $allTasks->count()) * 100);
+            $progress->progress = round((count($completedTaskIds) / $allTasks->count()) * 100);
             $progress->save();
         }
 
         return view('shop.challenge-progress', compact('challenge', 'category', 'progress', 'allTasks', 'completedTaskIds'));
     }
 
-    // Hoàn thành task
+    /**
+     * Hoàn thành từng task nhỏ
+     */
     public function completeTask(Request $request, Challenge $challenge, Task $task)
     {
         if (!Auth::check()) {
@@ -184,56 +127,46 @@ class ChallengeController extends Controller
 
         $user = Auth::user();
 
-        // Kiểm tra task có thuộc challenge này không
         if ($task->challenge_id !== $challenge->id) {
             return response()->json(['error' => 'Task không hợp lệ'], 400);
         }
 
-    // Kiểm tra ràng buộc thời gian 10 giây
-        //Tìm trong bảng TaskCompletion (bảng lưu lịch sử các task đã xong)
-        // xem lần cuối cùng người dùng này nhấn "Hoàn thành" là khi nào.
+        // Kiểm tra ràng buộc thời gian 10 giây
         $lastCompletion = TaskCompletion::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->first();
 
         if ($lastCompletion && $lastCompletion->created_at->addSeconds(10) > now()) {
-            // tính điểm hiện tại và mốc "được phép" để báo cho người dùng biết họ cần đợi thêm chính xác bao nhiêu giây nữa (diffInSeconds).
             $remainingSeconds = intval($lastCompletion->created_at->addSeconds(10)->diffInSeconds(now()));
             return response()->json([
                 'error' => "Vui lòng chờ {$remainingSeconds} giây trước khi hoàn thành task tiếp theo"
             ], 429);
         }
 
-        // Kiểm tra xem user đã hoàn thành task này chưa
         $completion = TaskCompletion::where('user_id', $user->id)
             ->where('task_id', $task->id)
             ->first();
 
         if (!$completion) {
-            // Tạo bản ghi hoàn thành task
             TaskCompletion::create([
                 'user_id' => $user->id,
                 'task_id' => $task->id,
                 'completed_at' => now()
             ]);
 
-            // Cập nhật progress
-            // tìm trong bảng Chall user_id đã đang thực hiện call_id nào
             $progress = ChallengeProgress::where('user_id', $user->id)
                 ->where('challenge_id', $challenge->id)
                 ->first();
-            // nếu tìm thấy lấy tất cả tasks của challenge này
+
             if ($progress) {
-                $allTasks = $challenge->tasks()->count();
-            // chỉ lấy task đã hoàn thành
+                $totalTasks = $challenge->tasks()->count();
                 $completedCount = TaskCompletion::where('user_id', $user->id)
                     ->whereIn('task_id', $challenge->tasks()->pluck('id'))
                     ->count();
 
-                $newProgress = round(($completedCount / $allTasks) * 100);
+                $newProgress = round(($completedCount / $totalTasks) * 100);
                 $progress->progress = $newProgress;
 
-                // Hoàn thành challenge nếu đạt 100%
                 if ($newProgress >= 100) {
                     $progress->completed_at = now();
                 }
@@ -251,9 +184,11 @@ class ChallengeController extends Controller
         return response()->json(['error' => 'Task đã hoàn thành rồi'], 400);
     }
 
+    /**
+     * Check-in hàng ngày (Hàm duy nhất)
+     */
     public function checkin(Request $request)
     {
-        // Sửa lỗi đỏ ở auth()->id() bằng cách dùng Auth::id()
         $userId = Auth::id();
         $challengeId = $request->challenge_id;
         $today = now()->toDateString();
@@ -286,7 +221,7 @@ class ChallengeController extends Controller
             'status' => 'done'
         ]);
 
-        // 4. Cập nhật tiến trình (Dùng Model ChallengeProgress cho đồng bộ)
+        // 4. Cập nhật tiến trình và tính Streak
         $uc = ChallengeProgress::where('user_id', $userId)
             ->where('challenge_id', $challengeId)
             ->first();
@@ -294,18 +229,28 @@ class ChallengeController extends Controller
         if ($uc) {
             $uc->completed_days += 1;
 
-            // Giả sử mỗi thử thách mặc định 30 ngày
+            // Tính toán % tiến độ (mặc định 30 ngày nếu không có duration_days)
             $totalDays = $uc->challenge->duration_days ?? 30;
             $uc->progress = min(($uc->completed_days / $totalDays) * 100, 100);
 
+            // Tính streak (chuỗi ngày liên tiếp)
+            $yesterday = now()->subDay()->toDateString();
+            $checkedYesterday = Checkin::where('user_id', $userId)
+                ->where('challenge_id', $challengeId)
+                ->where('date', $yesterday)
+                ->exists();
+
+            if ($checkedYesterday) {
+                $uc->streak += 1;
+            } else {
+                $uc->streak = 1;
+            }
 
             $uc->save();
         }
 
         return back()->with('success', 'Check-in thành công!');
     }
-
-
-
 }
+
 
