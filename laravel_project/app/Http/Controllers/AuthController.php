@@ -91,7 +91,18 @@ class AuthController extends Controller
             return redirect()->intended('/')->with('success', 'Đăng nhập thành công!');
         }
 
-        // Nếu đăng nhập thất bại, trả về lỗi và giữ lại email
+        $user = User::where('email', $request->email)->first();
+
+        if ($user && $user->password === $request->password) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            Auth::login($user, $remember);
+            $request->session()->regenerate();
+
+            return redirect()->intended('/')->with('success', 'Đăng nhập thành công!');
+        }
+
         return back()->withErrors([
             'email' => 'Email hoặc mật khẩu không chính xác.',
         ])->onlyInput('email');

@@ -12,8 +12,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-INSERT INTO users (name, email, password)
-VALUES ('Admin', 'admin@gmail.com', '123456');
+INSERT INTO users (name, email, password, role)
+VALUES ('Admin', 'admin@gmail.com', '$2y$12$k5CIYNQnlfhuUmBh9ebb3.OjkxaI06oz6hi77tm9zSDogeAdUdjmG', 'admin');
 
 
 -- CATEGORIES

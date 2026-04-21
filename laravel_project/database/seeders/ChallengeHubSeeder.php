@@ -54,14 +54,7 @@ class ChallengeHubSeeder extends Seeder
                 'role' => 'user',
                 'is_active' => 1,
             ],
-            [
-                'name' => 'Người Dùng 3',
-                'email' => 'user3@gmail.com',
-                'password' => Hash::make('password'),
-                'avatar' => null,
-                'role' => 'user',
-                'is_active' => 1,
-            ],
+
         ]);
 
         // Insert Categories
