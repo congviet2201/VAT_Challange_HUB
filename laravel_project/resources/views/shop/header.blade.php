@@ -61,7 +61,7 @@
                     </form>
                 @else
                     {{-- Menu cho khách chưa đăng nhập --}}
-                    <a href="{{ route('auth.login') }}" class="btn btn-primary btn-sm">Đăng nhập</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Đăng nhập</a>
                     <a href="{{ route('auth.register') }}" class="btn btn-outline-primary btn-sm">Đăng ký</a>
                 @endif
             </div>

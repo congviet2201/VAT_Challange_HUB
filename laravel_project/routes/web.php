@@ -61,8 +61,9 @@ Route::post('/contact', [PageController::class, 'sendContact'])->name('contact.s
 // ==========================================
 
 // Hiển thị form đăng nhập (chỉ cho người chưa đăng nhập)
-Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login')->middleware('guest');
-
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login')   // 👈 BẮT BUỘC cho middleware
+    ->middleware('guest');
 // Xử lý đăng nhập (chỉ cho người chưa đăng nhập)
 Route::post('/login', [AuthController::class, 'login'])->name('login.store')->middleware('guest');
 
@@ -169,7 +170,5 @@ Route::middleware(['auth', 'useradmin'])->group(function () {
 // ==========================================
 // MỤC TIÊU - Cần đăng nhập
 // ==========================================
-Route::middleware('auth')->group(function () {
-    Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
-    Route::post('/goals/store', [GoalController::class, 'store'])->name('goals.store');
-});
+Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
+Route::post('/goals/store', [GoalController::class, 'store'])->name('goals.store');
