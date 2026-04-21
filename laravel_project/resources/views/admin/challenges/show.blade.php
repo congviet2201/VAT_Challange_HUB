@@ -1,4 +1,5 @@
 @extends('admin.layout.app')
+{{-- Trang xem chi tiết thử thách trong Admin --}}
 
 @section('content')
 

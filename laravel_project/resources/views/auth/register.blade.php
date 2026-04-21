@@ -1,5 +1,5 @@
 @extends('shop.layout.app')
-{{-- Kế thừa layout chính để giữ header, footer và style đồng nhất --}}
+{{-- Kế thừa layout chính của shop để giữ header và footer đồng nhất --}}
 
 @section('content')
 {{-- Bắt đầu nội dung chính của trang --}}
@@ -9,14 +9,14 @@
             {{-- Tiêu đề trang --}}
             <h3 class="text-center mb-3">Đăng ký</h3>
 
-            {{-- Thông báo thành công --}}
+            {{-- Hiển thị thông báo thành công --}}
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
 
-            {{-- Hiển thị lỗi validation nếu có --}}
+            {{-- Hiển thị lỗi validation --}}
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">

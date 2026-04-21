@@ -1,5 +1,8 @@
+{{-- Layout chính cho khu vực Admin --}}
+{{-- File này chứa cấu trúc và sidebar dùng chung cho tất cả trang admin --}}
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,18 +86,21 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="sidebar">
         <div class="navbar-brand">Admin Panel</div>
-        
+
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.challenges.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }}"
+                    href="{{ route('admin.challenges.index') }}">
                     <i class="bi bi-chat-square-text"></i> Quản lý thử thách
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
+                    href="{{ route('admin.users.index') }}">
                     <i class="bi bi-people"></i> Quản lý người dùng
                 </a>
             </li>
@@ -115,14 +121,14 @@
     </nav>
 
     <main>
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Thành công!</strong> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Lỗi!</strong> {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -134,4 +140,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

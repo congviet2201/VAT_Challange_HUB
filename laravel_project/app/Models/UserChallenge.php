@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model UserChallenge - Lưu trữ thử thách mà người dùng đã tham gia
+ *
+ * Mỗi bản ghi là một thử thách đang được theo dõi bởi một người dùng.
+ */
 class UserChallenge extends Model
 {
     protected $table = 'user_challenges';
@@ -13,7 +18,7 @@ class UserChallenge extends Model
         'challenge_id',
         'progress',
         'completed_days',
-        'streak'
+        'streak',
     ];
 
 
@@ -28,5 +33,4 @@ class UserChallenge extends Model
     {
         return $this->belongsTo(Challenge::class, 'challenge_id');
     }
-
 }

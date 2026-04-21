@@ -89,6 +89,36 @@ class ChallengeHubSeeder extends Seeder
                 'description' => 'Thiết lập các quy tắc nhỏ mỗi ngày (như dậy sớm, thiền, viết nhật ký, sắp xếp gọn gàng) nhằm tạo ra sự thay đổi bền vững, kỷ luật tự giác và lối sống có tổ chức hơn.',
                 'image' => 'habit.jpg',
             ],
+            [
+                'name' => 'Tài chính',
+                'description' => 'Quản lý tài chính cá nhân thông minh, lập kế hoạch tiết kiệm, đầu tư và xây dựng tài sản lâu dài để đạt được sự ổn định và tự do tài chính.',
+                'image' => 'taichinh.jpg',
+            ],
+            [
+                'name' => 'Mối quan hệ',
+                'description' => 'Xây dựng và duy trì các mối quan hệ lành mạnh với gia đình, bạn bè và đồng nghiệp thông qua giao tiếp hiệu quả, lắng nghe và thể hiện sự quan tâm.',
+                'image' => 'moiquanhe.jpg',
+            ],
+            [
+                'name' => 'Nghệ thuật',
+                'description' => 'Khám phá và phát triển khả năng sáng tạo thông qua hội họa, âm nhạc, viết lách hoặc các hình thức nghệ thuật khác để nuôi dưỡng tâm hồn và thể hiện bản thân.',
+                'image' => 'nghethuat.jpg',
+            ],
+            [
+                'name' => 'Công nghệ',
+                'description' => 'Theo kịp xu hướng công nghệ, học lập trình, sử dụng công cụ số và ứng dụng công nghệ vào cuộc sống để nâng cao hiệu quả và mở rộng cơ hội.',
+                'image' => 'congnghe.jpg',
+            ],
+            [
+                'name' => 'Môi trường',
+                'description' => 'Tham gia bảo vệ môi trường thông qua các hành động như tái chế, tiết kiệm năng lượng, trồng cây và nâng cao nhận thức về bảo vệ hành tinh.',
+                'image' => 'moitruong.jpg',
+            ],
+            [
+                'name' => 'Du lịch',
+                'description' => 'Khám phá thế giới, trải nghiệm văn hóa mới và mở mang tầm nhìn thông qua các chuyến đi, học hỏi từ những nền văn hóa khác nhau.',
+                'image' => 'dulich.jpg',
+            ],
         ];
 
         foreach ($categories as $category) {
@@ -136,6 +166,48 @@ class ChallengeHubSeeder extends Seeder
             ['category_id' => 6, 'difficulty' => 'hard', 'title' => 'Lối sống tỉnh thức', 'description' => 'Thiết lập và tuân thủ tuyệt đối lịch trình sinh hoạt khoa học, loại bỏ hoàn toàn các thói quen xấu.', 'daily_time' => 60, 'image' => null],
             ['category_id' => 6, 'difficulty' => 'easy', 'title' => 'Sạch sẽ gọn gàng', 'description' => 'Dành 15 phút để sắp xếp gọn gàng nơi làm việc hoặc phòng để tạo không gian tích cực.', 'daily_time' => 15, 'image' => null],
             ['category_id' => 6, 'difficulty' => 'medium', 'title' => 'Nhật ký tấm lòng', 'description' => 'Viết nhật ký, ghi lại những điều biết ơn hoặc phản tư lại ngày qua để tăng tự nhận thức.', 'daily_time' => 15, 'image' => null],
+
+            // 💰 TÀI CHÍNH (7)
+            ['category_id' => 7, 'difficulty' => 'easy', 'title' => 'Theo dõi chi tiêu', 'description' => 'Ghi lại tất cả chi tiêu trong ngày và phân loại để hiểu rõ nguồn tiền ra.', 'daily_time' => 15, 'image' => null],
+            ['category_id' => 7, 'difficulty' => 'medium', 'title' => 'Lập kế hoạch tiết kiệm', 'description' => 'Thiết lập mục tiêu tiết kiệm hàng tháng và lập kế hoạch chi tiêu hợp lý.', 'daily_time' => 30, 'image' => null],
+            ['category_id' => 7, 'difficulty' => 'hard', 'title' => 'Đầu tư thông minh', 'description' => 'Nghiên cứu và thực hiện các khoản đầu tư nhỏ như chứng khoán hoặc quỹ tương hỗ.', 'daily_time' => 60, 'image' => null],
+            ['category_id' => 7, 'difficulty' => 'easy', 'title' => 'Tăng thu nhập', 'description' => 'Tìm kiếm cơ hội tăng thu nhập phụ như freelance hoặc bán hàng online.', 'daily_time' => 45, 'image' => null],
+            ['category_id' => 7, 'difficulty' => 'medium', 'title' => 'Quản lý nợ', 'description' => 'Lập kế hoạch trả nợ hiệu quả và tránh nợ xấu để cải thiện điểm tín dụng.', 'daily_time' => 30, 'image' => null],
+
+            // 👥 MỐI QUAN HỆ (8)
+            ['category_id' => 8, 'difficulty' => 'easy', 'title' => 'Liên lạc thường xuyên', 'description' => 'Gọi điện hoặc nhắn tin hỏi thăm người thân, bạn bè ít nhất một lần mỗi tuần.', 'daily_time' => 10, 'image' => null],
+            ['category_id' => 8, 'difficulty' => 'medium', 'title' => 'Xây dựng mạng lưới', 'description' => 'Tham gia các sự kiện networking hoặc kết nối với ít nhất 2 người mới trong lĩnh vực của bạn.', 'daily_time' => 60, 'image' => null],
+            ['category_id' => 8, 'difficulty' => 'hard', 'title' => 'Giải quyết xung đột', 'description' => 'Đối diện và giải quyết một xung đột trong mối quan hệ một cách xây dựng.', 'daily_time' => 45, 'image' => null],
+            ['category_id' => 8, 'difficulty' => 'easy', 'title' => 'Lắng nghe tích cực', 'description' => 'Dành thời gian lắng nghe người khác chia sẻ mà không phán xét hoặc ngắt lời.', 'daily_time' => 20, 'image' => null],
+            ['category_id' => 8, 'difficulty' => 'medium', 'title' => 'Thể hiện sự quan tâm', 'description' => 'Làm một việc nhỏ để thể hiện sự quan tâm đến người thân hoặc bạn bè.', 'daily_time' => 15, 'image' => null],
+
+            // 🎨 NGHỆ THUẬT (9)
+            ['category_id' => 9, 'difficulty' => 'easy', 'title' => 'Vẽ tranh đơn giản', 'description' => 'Dành 15 phút vẽ một bức tranh đơn giản hoặc phác thảo ý tưởng sáng tạo.', 'daily_time' => 15, 'image' => null],
+            ['category_id' => 9, 'difficulty' => 'medium', 'title' => 'Học nhạc cụ', 'description' => 'Luyện tập chơi một nhạc cụ hoặc hát một bài hát mới mỗi ngày.', 'daily_time' => 30, 'image' => null],
+            ['category_id' => 9, 'difficulty' => 'hard', 'title' => 'Tạo tác phẩm nghệ thuật', 'description' => 'Hoàn thành một tác phẩm nghệ thuật như tranh vẽ, âm nhạc hoặc thơ ca.', 'daily_time' => 90, 'image' => null],
+            ['category_id' => 9, 'difficulty' => 'easy', 'title' => 'Thưởng thức nghệ thuật', 'description' => 'Xem một bộ phim, nghe một bản nhạc hoặc đọc một cuốn sách về nghệ thuật.', 'daily_time' => 60, 'image' => null],
+            ['category_id' => 9, 'difficulty' => 'medium', 'title' => 'Viết sáng tạo', 'description' => 'Viết một câu chuyện ngắn, bài thơ hoặc nhật ký sáng tạo mỗi ngày.', 'daily_time' => 20, 'image' => null],
+
+            // 💻 CÔNG NGHỆ (10)
+            ['category_id' => 10, 'difficulty' => 'easy', 'title' => 'Học lập trình cơ bản', 'description' => 'Dành 30 phút học một khái niệm lập trình mới hoặc thực hành code đơn giản.', 'daily_time' => 30, 'image' => null],
+            ['category_id' => 10, 'difficulty' => 'medium', 'title' => 'Xây dựng dự án nhỏ', 'description' => 'Tạo một ứng dụng web đơn giản hoặc script tự động hóa công việc.', 'daily_time' => 90, 'image' => null],
+            ['category_id' => 10, 'difficulty' => 'hard', 'title' => 'Đóng góp mã nguồn mở', 'description' => 'Tham gia dự án mã nguồn mở trên GitHub và đóng góp code hoặc báo cáo lỗi.', 'daily_time' => 120, 'image' => null],
+            ['category_id' => 10, 'difficulty' => 'easy', 'title' => 'Tìm hiểu công nghệ mới', 'description' => 'Đọc tin tức công nghệ hoặc xem video về xu hướng công nghệ mới.', 'daily_time' => 30, 'image' => null],
+            ['category_id' => 10, 'difficulty' => 'medium', 'title' => 'Tự động hóa công việc', 'description' => 'Tạo script hoặc ứng dụng để tự động hóa một công việc lặp lại.', 'daily_time' => 60, 'image' => null],
+
+            // 🌍 MÔI TRƯỜNG (11)
+            ['category_id' => 11, 'difficulty' => 'easy', 'title' => 'Tái chế rác thải', 'description' => 'Phân loại rác thải và tái chế đúng cách trong ngày hôm nay.', 'daily_time' => 10, 'image' => null],
+            ['category_id' => 11, 'difficulty' => 'medium', 'title' => 'Tiết kiệm năng lượng', 'description' => 'Thực hiện các hành động tiết kiệm điện, nước và giảm phát thải carbon.', 'daily_time' => 15, 'image' => null],
+            ['category_id' => 11, 'difficulty' => 'hard', 'title' => 'Bảo vệ môi trường', 'description' => 'Tham gia chiến dịch bảo vệ môi trường hoặc trồng cây xanh trong cộng đồng.', 'daily_time' => 120, 'image' => null],
+            ['category_id' => 11, 'difficulty' => 'easy', 'title' => 'Sử dụng phương tiện xanh', 'description' => 'Đi bộ, đạp xe hoặc sử dụng phương tiện công cộng thay vì ô tô cá nhân.', 'daily_time' => 30, 'image' => null],
+            ['category_id' => 11, 'difficulty' => 'medium', 'title' => 'Giảm rác thải nhựa', 'description' => 'Tránh sử dụng đồ nhựa dùng một lần và tìm giải pháp thay thế bền vững.', 'daily_time' => 20, 'image' => null],
+
+            // ✈️ DU LỊCH (12)
+            ['category_id' => 12, 'difficulty' => 'easy', 'title' => 'Khám phá địa phương', 'description' => 'Tham quan một địa điểm mới trong thành phố hoặc khu vực của bạn.', 'daily_time' => 60, 'image' => null],
+            ['category_id' => 12, 'difficulty' => 'medium', 'title' => 'Du lịch ngắn ngày', 'description' => 'Lập kế hoạch và thực hiện một chuyến du lịch ngắn ngày đến nơi gần đó.', 'daily_time' => 480, 'image' => null],
+            ['category_id' => 12, 'difficulty' => 'hard', 'title' => 'Du lịch dài ngày', 'description' => 'Tham gia một chuyến du lịch dài ngày để trải nghiệm văn hóa mới.', 'daily_time' => 0, 'image' => null],
+            ['category_id' => 12, 'difficulty' => 'easy', 'title' => 'Học ngoại ngữ du lịch', 'description' => 'Học 5-10 từ vựng hoặc câu cơ bản trong ngôn ngữ của điểm đến.', 'daily_time' => 15, 'image' => null],
+            ['category_id' => 12, 'difficulty' => 'medium', 'title' => 'Lập kế hoạch du lịch', 'description' => 'Nghiên cứu và lập kế hoạch chi tiết cho một chuyến du lịch trong tương lai.', 'daily_time' => 45, 'image' => null],
         ];
 
         foreach ($challenges as $challenge) {

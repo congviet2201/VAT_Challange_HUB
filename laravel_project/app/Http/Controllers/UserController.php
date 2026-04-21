@@ -10,18 +10,24 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Quản lý danh sách người dùng theo vai trò.
+     *
+     * Admin nhìn thấy tất cả người dùng và trưởng nhóm.
+     * Useradmin chỉ thấy người dùng tham gia thử thách do họ tạo.
+     */
     public function index()
     {
         $auth = Auth::user();
 
         if ($auth->role === 'admin') {
-            // ADMIN: Lấy tất cả UserAdmin và User (loại trừ chính mình)
+            // ADMIN: lấy tất cả UserAdmin và User, trừ chính mình
             $users = User::where('id', '!=', $auth->id)
                          ->whereIn('role', ['user', 'useradmin'])
                          ->get();
         }
-        else if ($auth->role === 'useradmin') {
-            // USERADMIN: Chỉ lấy User đang tham gia thử thách do mình tạo
+        elseif ($auth->role === 'useradmin') {
+            // USERADMIN: chỉ lấy những user tham gia thử thách do chính họ tạo
             $users = User::whereHas('userChallenges.challenge', function($query) use ($auth) {
                 $query->where('created_by', $auth->id);
             })->where('role', 'user')->distinct()->get();
@@ -60,7 +66,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        // Không cho edit tài khoản admin của chính mình
+        // Không cho phép chỉnh sửa tài khoản của chính mình
         if ($user->id === Auth::id()) {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Không thể chỉnh sửa tài khoản của chính mình!');
@@ -114,5 +120,25 @@ class UserController extends Controller
 
         $status = $user->is_active ? 'mở khóa' : 'khóa';
         return back()->with('success', "✅ Đã $status tài khoản {$user->name} thành công!");
+    }
+
+    /**
+     * Hiển thị trang profile cho người dùng đã đăng nhập.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function profile()
+    {
+        $user = Auth::user();
+        $progressItems = $user->challengeProgress()
+            ->with('challenge.category')
+            ->orderByDesc('progress')
+            ->get();
+
+        $activeCount = $progressItems->where('progress', '<', 100)->count();
+        $completedCount = $progressItems->where('progress', '>=', 100)->count();
+        $totalCount = $progressItems->count();
+
+        return view('shop.profile', compact('user', 'progressItems', 'activeCount', 'completedCount', 'totalCount'));
     }
 }

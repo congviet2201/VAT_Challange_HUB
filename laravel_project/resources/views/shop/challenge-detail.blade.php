@@ -1,7 +1,10 @@
 @extends('shop.layout.app')
+{{-- Kế thừa layout chính của shop --}}
 
 @section('content')
+{{-- Bắt đầu nội dung chính của trang --}}
 
+{{-- Breadcrumb navigation --}}
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
@@ -10,18 +13,28 @@
     </ol>
 </nav>
 
+{{-- Layout chính với 2 cột --}}
 <div class="row g-4">
+    {{-- Cột chính chứa thông tin thử thách --}}
     <div class="col-lg-8">
         <div class="card h-100">
-            <img src="{{ asset('images/' . $challenge->difficulty . '.jpg') }}" class="card-img-top" style="height: 300px; object-fit: cover;" onerror="this.src='{{ asset('images/default.jpg') }}'">
+            {{-- Hình ảnh thử thách theo độ khó --}}
+            <img src="{{ asset('images/' . $challenge->difficulty . '.jpg') }}"
+                 class="card-img-top"
+                 style="height: 300px; object-fit: cover;"
+                 onerror="this.src='{{ asset('images/default.jpg') }}'
+                 alt="Thử thách độ khó: {{ $challenge->difficulty }}">
 
             <div class="card-body">
+                {{-- Badge hiển thị danh mục --}}
                 <a href="{{ route('category.show', $category->id) }}" class="badge bg-info mb-3">
                     {{ $category->name }}
                 </a>
 
+                {{-- Tiêu đề thử thách --}}
                 <h1 class="fw-bold mb-4">{{ $challenge->title }}</h1>
 
+                {{-- Thông tin cơ bản --}}
                 <div class="row mb-4">
                     <div class="col-sm-6">
                         <strong>Cấp độ:</strong>
@@ -40,54 +53,73 @@
 
                 <hr>
 
+                {{-- Mô tả chi tiết --}}
                 <h4 class="fw-bold mb-3">Mô tả thử thách</h4>
                 <p class="lh-lg mb-4">{{ $challenge->description }}</p>
 
                 <hr>
 
+                {{-- Nút hành động --}}
                 @if (Auth::check())
+                    {{-- Nếu đã đăng nhập, hiển thị form bắt đầu thử thách --}}
                     <form action="{{ route('challenge.start', $challenge->id) }}" method="POST" style="display: inline;">
                         @csrf
                         <button type="submit" class="btn btn-primary btn-lg" id="startChallengeBtn">Bắt đầu thử thách</button>
                     </form>
                 @else
+                    {{-- Nếu chưa đăng nhập, chuyển đến trang login --}}
                     <a href="{{ route('auth.login') }}" class="btn btn-primary btn-lg">Bắt đầu thử thách</a>
                 @endif
+                {{-- Nút quay lại danh mục --}}
                 <a href="{{ route('category.show', $category->id) }}" class="btn btn-secondary btn-lg">← Quay lại</a>
             </div>
         </div>
     </div>
 
+    {{-- Cột sidebar bên phải --}}
     <div class="col-lg-4">
+        {{-- Card thông tin danh mục --}}
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">{{ $category->name }}</h5>
             </div>
             <div class="card-body">
-                <img src="{{ asset('images/' . $category->image) }}" class="img-fluid rounded mb-3" style="height: 120px; object-fit: cover;" onerror="this.src='{{ asset('images/default.jpg') }}'">
+                {{-- Hình ảnh danh mục --}}
+                <img src="{{ asset('images/' . $category->image) }}"
+                     class="img-fluid rounded mb-3"
+                     style="height: 120px; object-fit: cover;"
+                     onerror="this.src='{{ asset('images/default.jpg') }}'
+                     alt="{{ $category->name }}">
+                {{-- Mô tả danh mục --}}
                 <p>{{ $category->description }}</p>
+                {{-- Nút xem tất cả thử thách trong danh mục --}}
                 <a href="{{ route('category.show', $category->id) }}" class="btn btn-outline-primary w-100">
                     Xem tất cả thử thách
                 </a>
             </div>
         </div>
 
+        {{-- Card thử thách liên quan --}}
         @if($relatedChallenges->count() > 0)
             <div class="card">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">Thử thách khác</h5>
                 </div>
                 <div class="card-body">
+                    {{-- Vòng lặp qua các thử thách liên quan --}}
                     @foreach($relatedChallenges as $related)
                         <div class="mb-3 pb-3 border-bottom">
+                            {{-- Tiêu đề thử thách liên quan --}}
                             <h6 class="mb-2">
                                 <a href="{{ route('challenge.detail', $related->id) }}" class="text-decoration-none">
                                     {{ $related->title }}
                                 </a>
                             </h6>
+                            {{-- Mô tả ngắn --}}
                             <p class="text-muted small mb-2">
                                 {{ substr($related->description, 0, 70) }}...
                             </p>
+                            {{-- Thông tin độ khó và thời gian --}}
                             <div class="d-flex justify-content-between small mb-2">
                                 <span class="badge
                                     @if($related->difficulty == 'easy') bg-success
@@ -99,6 +131,7 @@
                                 </span>
                                 <small>{{ $related->daily_time }}p</small>
                             </div>
+                            {{-- Nút xem chi tiết --}}
                             <a href="{{ route('challenge.detail', $related->id) }}" class="btn btn-sm btn-outline-primary w-100">
                                 Chi tiết
                             </a>

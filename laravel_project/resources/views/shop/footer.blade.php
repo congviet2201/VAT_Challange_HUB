@@ -1,11 +1,14 @@
+{{-- Footer của trang shop --}}
 <footer class="mt-auto py-5">
     <div class="container">
         <div class="row g-4">
+            {{-- Cột 1: Giới thiệu --}}
             <div class="col-md-3">
                 <h5 class="fw-bold mb-3">Challenge Hub</h5>
                 <p class="text-muted small lh-lg">Hệ thống quản lý thử thách giúp bạn phát triển bản thân và đạt được mục tiêu của mình.</p>
             </div>
 
+            {{-- Cột 2: Danh mục --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Danh mục</h6>
                 <ul class="list-unstyled small">
@@ -16,6 +19,7 @@
                 </ul>
             </div>
 
+            {{-- Cột 3: Thông tin --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Thông tin</h6>
                 <ul class="list-unstyled small">
@@ -26,11 +30,13 @@
                 </ul>
             </div>
 
+            {{-- Cột 4: Liên hệ --}}
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">Liên hệ</h6>
                 <p class="text-muted small mb-2">contact@challengehub.vn</p>
                 <p class="text-muted small mb-2">0123 456 789</p>
                 <p class="text-muted small mb-3">Hà Nội, Việt Nam</p>
+                {{-- Liên kết mạng xã hội --}}
                 <div class="d-flex gap-3 small">
                     <a href="#" class="text-muted">Facebook</a>
                     <a href="#" class="text-muted">TikTok</a>
@@ -39,8 +45,10 @@
             </div>
         </div>
 
+        {{-- Đường kẻ ngang --}}
         <hr class="my-4 text-muted">
 
+        {{-- Copyright --}}
         <p class="text-center text-muted small mb-0">© 2026 Challenge Hub. Tất cả quyền được bảo lưu.</p>
     </div>
 </footer>
