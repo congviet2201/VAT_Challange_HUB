@@ -48,7 +48,7 @@
                         </a>
                     @endif
 
-                    <span class="text-dark">{{ Auth::user()->name }}</span>
+                    <a href="{{ route('profile') }}" class="text-dark text-decoration-none">{{ Auth::user()->name }}</a>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline-block">
                         @csrf
                         <button type="submit" class="btn btn-danger btn-sm">Đăng xuất</button>

@@ -40,7 +40,7 @@
     </div>
 
     {{-- Phân trang - chỉ hiển thị nếu có nhiều trang --}}
-    {{-- @if($categories->hasPages())
+    @if($categories->hasPages())
         <div class="d-flex justify-content-center mt-5">
             <nav aria-label="Danh mục thử thách pagination">
                 <ul class="pagination pagination-lg">
@@ -92,8 +92,10 @@
         <div class="text-center mt-3 text-muted">
             <small>Hiển thị {{ $categories->firstItem() }}-{{ $categories->lastItem() }} trong tổng số {{ $categories->total() }} danh mục</small>
         </div>
-    @endif --}}
-</div>
+    @endif
+
+    </div>
+
 
 {{-- CSS tùy chỉnh cho pagination --}}
 <style>
