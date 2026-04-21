@@ -15,14 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-
-        // Seed categories and challenges
+        // Seed categories and challenges using the ChallengeHubSeeder
+        // This includes: Admin user, UserAdmin accounts, regular users, categories, and all challenges
         $this->call(ChallengeHubSeeder::class);
     }
 }

@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function showRegister()
     {
-        return view('auth.register');
+        return view('shop.auth.register');
     }
 
     /**

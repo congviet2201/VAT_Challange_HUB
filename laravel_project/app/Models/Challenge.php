@@ -62,4 +62,9 @@ class Challenge extends Model
     {
         return $this->belongsToMany(Group::class, 'group_challenge')->withTimestamps();
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

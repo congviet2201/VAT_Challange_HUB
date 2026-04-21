@@ -51,11 +51,11 @@
                         <p class="card-text text-muted small">{{ Str::limit($challenge->description, 100) }}</p>
                         <div class="mb-3">
                             <small class="text-secondary">
-                                <i class="bi bi-clock"></i> {{ $challenge->daily_time }} phút/ngày
+                                <i class="bi bi-clock"></i> {{ $challenge->daily_time }}/ngày
                             </small>
                         </div>
                         <div>
-                            <form action="{{ route('useradmin.groups.remove-challenge', [$group->id, $challenge->id]) }}" 
+                            <form action="{{ route('useradmin.groups.remove-challenge', [$group->id, $challenge->id]) }}"
                                   method="POST" style="display: inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-danger"

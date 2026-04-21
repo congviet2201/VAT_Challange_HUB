@@ -27,7 +27,6 @@ class HomeController extends Controller
         // Lấy tất cả danh mục và phân trang (6 danh mục/trang)
         $categories = Category::paginate(6);
 
-        // Trả về view 'shop.home' với dữ liệu categories
         return view('shop.home', compact('categories'));
     }
 
