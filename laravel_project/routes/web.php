@@ -10,6 +10,10 @@
 |
 */
 
+// THÊM DÒNG NÀY VÀO ĐẦU FILE WEB.PHP
+use Illuminate\Support\Facades\Route;
+// THÊM DÒNG NÀY VÀO ĐẦU FILE WEB.PHP
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ChallengeController;
@@ -19,7 +23,6 @@ use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
 use App\Http\Controllers\User\GroupController as UserGroupController;
 use App\Http\Controllers\UserAdmin\GroupController;
 use App\Http\Controllers\UserAdmin\NotificationController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserChallenge;
 
@@ -29,6 +32,9 @@ use App\Models\UserChallenge;
 
 // Trang chủ - Hiển thị danh sách danh mục thử thách
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Trang thử thách - Hiển thị tất cả thử thách hoặc thử thách theo danh mục
+Route::get('/challenges', [HomeController::class, 'challenges'])->name('challenges');
 
 // Trang danh mục - Hiển thị thử thách trong một danh mục cụ thể
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('category.show');
@@ -158,4 +164,12 @@ Route::middleware(['auth', 'useradmin'])->group(function () {
     Route::post('/useradmin/notifications', [NotificationController::class, 'store'])->name('useradmin.notifications.store');
     Route::get('/useradmin/notifications/{notification}', [NotificationController::class, 'show'])->name('useradmin.notifications.show');
     Route::delete('/useradmin/notifications/{notification}', [NotificationController::class, 'destroy'])->name('useradmin.notifications.destroy');
+});
+
+// ==========================================
+// MỤC TIÊU - Cần đăng nhập
+// ==========================================
+Route::middleware('auth')->group(function () {
+    Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
+    Route::post('/goals/store', [GoalController::class, 'store'])->name('goals.store');
 });

@@ -24,9 +24,11 @@
 
             {{-- Menu bên phải --}}
             <div class="ms-auto d-flex gap-3 align-items-center">
-                {{-- Link tĩnh --}}
+                <a href="{{ route('challenges') }}" class="text-dark text-decoration-none">Thử thách</a>
                 <a href="{{ route('about') }}" class="text-dark text-decoration-none">Giới thiệu</a>
                 <a href="{{ route('contact') }}" class="text-dark text-decoration-none">Liên hệ</a>
+                <a href="{{ route('goals.create') }}" class="btn btn-success btn-sm fw-bold">
+                    <i class="bi bi-bullseye"></i> Mục tiêu</a>
 
                 {{-- Menu cho người dùng đã đăng nhập --}}
                 @if (Auth::check())
