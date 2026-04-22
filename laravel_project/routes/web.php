@@ -81,6 +81,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 // Bắt đầu thử thách (tạo tiến độ và chuyển đến trang theo dõi)
 Route::post('/challenge/{challenge}/start', [ChallengeController::class, 'start'])->name('challenge.start')->middleware('auth');
+Route::post('/challenge/{challenge}/ai-roadmap', [ChallengeController::class, 'generateAiRoadmap'])->name('challenge.ai-roadmap')->middleware('auth');
+Route::post('/challenge/{challenge}/ai-tasks/{task}/complete', [ChallengeController::class, 'completeAiTask'])->name('challenge.ai-task.complete')->middleware('auth');
 
 // Trang theo dõi tiến độ thử thách
 Route::get('/challenge/{challenge}/progress', [ChallengeController::class, 'progress'])->name('challenge.progress')->middleware('auth');

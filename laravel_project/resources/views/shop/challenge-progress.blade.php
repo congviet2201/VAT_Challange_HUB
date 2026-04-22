@@ -21,6 +21,13 @@
     </div>
 @endif
 
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
 {{-- Layout chính với 2 cột --}}
 <div class="row g-4">
     {{-- Cột chính chứa thông tin thử thách --}}
@@ -124,6 +131,12 @@
                     </div>
                 </div>
 
+                @if($aiTaskCount > 0)
+                    <p class="text-muted small mb-3">
+                        {{ $completedAiTaskCount }}/{{ $aiTaskCount }} task AI đã hoàn thành
+                    </p>
+                @endif
+
                 {{-- Trạng thái tiến độ --}}
                 @if($progress->progress == 0)
                     <p class="mb-3">
@@ -146,22 +159,11 @@
                 @endif
 
                 {{-- Thanh progress bar --}}
-                <div class="progress mb-3" style="height: 25px;">
-                    <div class="progress-bar
-                        {{-- Thay đổi màu theo tiến độ --}}
-                        @if($progress->progress < 50)
-                            bg-warning
-                        @elseif($progress->progress < 100)
-                            bg-info
-                        @else
-                            bg-success
-                        @endif
-                </div>
-
                 <div class="progress mt-3" style="height: 10px; border-radius: 5px;">
                     <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated 
                         @if($progress->progress < 50) bg-warning @elseif($progress->progress < 100) bg-info @else bg-success @endif" 
-                        role="progressbar" style="width: {{ $progress->progress }}%;">
+                        role="progressbar" style="width: {{ $progress->progress }}%;"
+                        aria-valuenow="{{ $progress->progress }}" aria-valuemin="0" aria-valuemax="100">
                     </div>
                 </div>
             </div>
@@ -182,6 +184,127 @@
                 <li class="list-group-item">{{ $suggestion }}</li>
             @endforeach
         </ul>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">Lộ trình AI cá nhân hóa</h5>
+    </div>
+    <div class="card-body">
+        <p class="text-muted">
+            Nhập trình độ hiện tại của bạn để AI phân tích challenge này và tạo các task phù hợp riêng cho bạn.
+        </p>
+
+        <form action="{{ route('challenge.ai-roadmap', $challenge->id) }}" method="POST" class="mb-4">
+            @csrf
+            <label for="current_level" class="form-label fw-semibold">Trình độ hiện tại</label>
+            <textarea
+                id="current_level"
+                name="current_level"
+                rows="3"
+                class="form-control @error('current_level') is-invalid @enderror"
+                placeholder="Ví dụ: Tôi mới biết căn bản, từ vựng còn yếu và nghe chưa tốt."
+            >{{ old('current_level', $latestAiPlan->current_level ?? '') }}</textarea>
+            @error('current_level')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+
+            <button type="submit" class="btn btn-dark mt-3">
+                {{ $latestAiPlan ? 'Tạo lại lộ trình AI' : 'Tạo lộ trình AI' }}
+            </button>
+        </form>
+
+        @if($latestAiPlan)
+            <div class="border rounded p-3 bg-light mb-3">
+                <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                    <div>
+                        <div class="small text-muted mb-1">Nguồn kế hoạch</div>
+                        <span class="badge {{ $latestAiPlan->source === 'openai' ? 'bg-success' : 'bg-secondary' }}">
+                            {{ $latestAiPlan->source === 'openai' ? 'OpenAI' : 'Fallback local' }}
+                        </span>
+                    </div>
+                    <div class="text-muted small">
+                        Cập nhật: {{ $latestAiPlan->created_at->format('d/m/Y H:i') }}
+                    </div>
+                </div>
+
+                @if($latestAiPlan->summary)
+                    <p class="mt-3 mb-0">{{ $latestAiPlan->summary }}</p>
+                @endif
+            </div>
+
+            <div class="list-group">
+                @foreach($latestAiPlan->tasks as $task)
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">{{ $task->order }}. {{ $task->title }}</div>
+                                @if($task->description)
+                                    <div class="text-muted mt-1">{{ $task->description }}</div>
+                                @endif
+
+                                @if($task->completed_at)
+                                    <div class="mt-2">
+                                        <span class="badge bg-success">Đã hoàn thành</span>
+                                        <span class="small text-muted ms-2">
+                                            {{ $task->completed_at->format('d/m/Y H:i') }}
+                                        </span>
+                                    </div>
+
+                                    @if($task->proof_image_path)
+                                        <div class="mt-3">
+                                            <div class="small text-muted mb-2">Ảnh minh chứng</div>
+                                            <img
+                                                src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($task->proof_image_path) }}"
+                                                alt="Ảnh minh chứng cho {{ $task->title }}"
+                                                class="img-fluid rounded border"
+                                                style="max-width: 220px;"
+                                            >
+                                        </div>
+                                    @endif
+                                @else
+                                    <form
+                                        action="{{ route('challenge.ai-task.complete', [$challenge->id, $task->id]) }}"
+                                        method="POST"
+                                        enctype="multipart/form-data"
+                                        class="mt-3"
+                                    >
+                                        @csrf
+                                        <label for="proof_image_{{ $task->id }}" class="form-label small fw-semibold">
+                                            Tải ảnh minh chứng
+                                        </label>
+                                        <input
+                                            id="proof_image_{{ $task->id }}"
+                                            type="file"
+                                            name="proof_image"
+                                            accept="image/*"
+                                            class="form-control form-control-sm"
+                                            required
+                                        >
+                                        <button type="submit" class="btn btn-success btn-sm mt-2">
+                                            Hoàn thành task
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
+                            <div class="text-end small text-muted">
+                                @if($task->estimated_minutes)
+                                    <div>{{ $task->estimated_minutes }} phút</div>
+                                @endif
+                                @if($task->due_in_days)
+                                    <div>Hoàn thành trong {{ $task->due_in_days }} ngày</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="alert alert-light border mb-0">
+                Bạn chưa tạo lộ trình AI cho challenge này.
+            </div>
+        @endif
     </div>
 </div>
 

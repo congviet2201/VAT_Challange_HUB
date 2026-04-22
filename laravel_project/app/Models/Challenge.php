@@ -67,4 +67,9 @@ class Challenge extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function aiPlans()
+    {
+        return $this->hasMany(ChallengeAiPlan::class);
+    }
 }
