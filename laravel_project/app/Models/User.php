@@ -30,8 +30,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'is_active' => 'boolean',
     ];
-
-
     public function challengeProgress()
     {
         return $this->hasMany(ChallengeProgress::class);

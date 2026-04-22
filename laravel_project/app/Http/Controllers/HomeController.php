@@ -14,7 +14,6 @@ class HomeController extends Controller
 
         return view('shop.home', compact('categories'));
     }
-
     public function category($id)
     {
         $category = Category::findOrFail($id);
@@ -32,7 +31,6 @@ class HomeController extends Controller
 
         return view('shop.pages.challenges', compact('challenges', 'keyword'));
     }
-
     public function challengeDetail($id)
     {
         $challenge = Challenge::findOrFail($id);

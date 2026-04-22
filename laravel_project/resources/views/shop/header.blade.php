@@ -17,7 +17,7 @@
                     <input
                         class="form-control border-start-0 ps-0"
                         type="search"
-                        name="keyword"
+                        name="query"
                         value="{{ request('keyword', request('query')) }}"
                         placeholder="Tìm kiếm thử thách..."
                         aria-label="Tìm kiếm thử thách"
@@ -30,7 +30,7 @@
                 <a href="{{ route('challenges') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Thử thách</a>
                 <a href="{{ route('about') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Giới thiệu</a>
                 <a href="{{ route('contact') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Liên hệ</a>
-                <a href="{{ route('goals.index') }}" class="btn btn-success btn-sm px-2 py-1">Mục tiêu</a>
+                <a href="{{ route('goals.index') }}" class="btn btn-success btn-sm px-2 py-1"><i class="bi bi-bullseye"></i> Mục tiêu</a>
                 @if (Auth::check())
                     @if (Auth::user()->role === 'admin')
                         <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm px-2 py-1">
