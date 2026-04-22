@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserChallenge;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\SubGoalController;
 
 
 
@@ -55,12 +56,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/{group}', [UserGroupController::class, 'show'])->name('user.groups.show');
     Route::post('/groups/{group}/join', [UserGroupController::class, 'join'])->name('user.groups.join');
     Route::post('/groups/{group}/leave', [UserGroupController::class, 'leave'])->name('user.groups.leave');
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 });
 
 Route::get('/dashboard', function () {
     $userChallenges = UserChallenge::where('user_id', Auth::id())->get();
     return view('dashboard', compact('userChallenges'));
-})->middleware('auth');
+})->name('dashboard')->middleware('auth');
 
 
 
@@ -68,7 +70,7 @@ Route::get('/dashboard', function () {
 
 
 // Nhóm các Route dành cho Admin lại một chỗ cho gọn
- // Đảm bảo dòng này đúng địa chỉ file
+// Đảm bảo dòng này đúng địa chỉ file
 
 // Nhóm này chỉ dùng middleware để bảo mật, không dùng prefix hay name chung nữa
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -80,12 +82,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{user}', [UserController::class, 'update'])->name('admin.users.update');
     Route::post('/admin/users/{id}/toggle', [UserController::class, 'toggleStatus'])->name('admin.users.toggle');
-
 });
 
 
 
 Route::middleware('auth')->group(function () {
+    Route::post('/api/goals', [GoalController::class, 'store']);
+    Route::post('/api/sub-goals/{id}/proof', [SubGoalController::class, 'submitProof']);
+    Route::post('/api/sub-goals/{id}/complete', [SubGoalController::class, 'complete']);
+    Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
     Route::get('/goals/create', [GoalController::class, 'create'])->name('goals.create');
     Route::post('/goals/store', [GoalController::class, 'store'])->name('goals.store');
+    Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+    Route::post('/api/goals/generate-subgoals', [GoalController::class, 'generateSubGoals']);
+    Route::post('/api/goals/check-completion', [GoalController::class, 'checkGoalCompletion']);
 });
