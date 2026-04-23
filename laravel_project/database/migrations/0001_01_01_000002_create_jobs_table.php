@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: database/migrations/0001_01_01_000002_create_jobs_table.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 use Illuminate\Database\Migrations\Migration;

@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/Goal.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -33,14 +33,14 @@ protected $casts = [
 protected $table = 'goals';
 
 /**
- * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ * Hàm user(): xử lý nghiệp vụ theo tên hàm.
  */
 public function user()
 {
     return $this->belongsTo(User::class, 'user_id');
 }
 /**
- * HĂ m category(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ * Hàm category(): xử lý nghiệp vụ theo tên hàm.
  */
 public function category()
 {
@@ -48,7 +48,7 @@ public function category()
 }
 
 /**
- * HĂ m subGoals(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ * Hàm subGoals(): xử lý nghiệp vụ theo tên hàm.
  */
 public function subGoals()
 {

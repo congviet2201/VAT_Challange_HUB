@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Mail/WelcomeMail.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Mail/WelcomeMail.php
+ * Lớp xử lý gửi email chào mừng tới người dùng sau khi đăng ký thành công.
  */
 
 namespace App\Mail;
@@ -20,7 +20,7 @@ class WelcomeMail extends Mailable
     public $user; // Dòng này quan trọng để hiển thị tên user trong mail
 
     /**
-     * HĂ m __construct(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm __construct(): xử lý nghiệp vụ theo tên hàm.
      */
     public function __construct($user)
     {
@@ -28,7 +28,7 @@ class WelcomeMail extends Mailable
     }
 
     /**
-     * HĂ m build(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm build(): xử lý nghiệp vụ theo tên hàm.
      */
     public function build()
     {

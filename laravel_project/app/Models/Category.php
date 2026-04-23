@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Models/Category.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Models/Category.php
+ * Định nghĩa cấu trúc bảng danh mục (categories) và các mối quan hệ.
  */
 
 namespace App\Models;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * Ví dụ: Học tập, Sức khỏe, Phát triển bản thân, v.v.
  */
 /**
- * Lá»›p Category: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp Category: mô tả vai trò chính của file.
  */
 class Category extends Model
 {
@@ -43,7 +43,7 @@ class Category extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     /**
-     * HĂ m challenges(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenges(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenges()
     {

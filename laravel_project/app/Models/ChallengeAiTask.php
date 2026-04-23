@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Models/ChallengeAiTask.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Models/ChallengeAiTask.php
+ * Định nghĩa cấu trúc bảng lưu từng nhiệm vụ cụ thể (task) do AI tạo ra.
  */
 
 namespace App\Models;
@@ -31,7 +31,7 @@ class ChallengeAiTask extends Model
     ];
 
     /**
-     * HĂ m plan(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm plan(): xử lý nghiệp vụ theo tên hàm.
      */
     public function plan()
     {

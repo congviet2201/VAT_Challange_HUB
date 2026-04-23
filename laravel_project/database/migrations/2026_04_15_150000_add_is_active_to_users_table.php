@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: database/migrations/2026_04_15_150000_add_is_active_to_users_table.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 use Illuminate\Database\Migrations\Migration;

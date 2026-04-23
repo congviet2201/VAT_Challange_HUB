@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Middleware/IsAdmin.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Middleware;

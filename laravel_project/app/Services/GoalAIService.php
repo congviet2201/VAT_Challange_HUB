@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Services/GoalAIService.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Services;
@@ -20,7 +20,7 @@ use Throwable;
  * - Parse và validate JSON sub-goals trước khi trả về controller
  */
 /**
- * Lá»›p GoalAIService: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp GoalAIService: mô tả vai trò chính của file.
  */
 class GoalAIService
 {
@@ -31,7 +31,7 @@ class GoalAIService
      * @return array{sub_goals: array<int, array<string, mixed>>, raw_response: string}
      */
     /**
-     * HĂ m generateSubGoalsFromAI(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm generateSubGoalsFromAI(): xử lý nghiệp vụ theo tên hàm.
      */
     public function generateSubGoalsFromAI(string|array $goalInput): array
     {

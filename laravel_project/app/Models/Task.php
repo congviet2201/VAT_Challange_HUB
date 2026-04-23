@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/Task.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -23,7 +23,7 @@ class Task extends Model
     ];
 
     /**
-     * HĂ m challenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenge()
     {
@@ -31,7 +31,7 @@ class Task extends Model
     }
 
     /**
-     * HĂ m completions(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm completions(): xử lý nghiệp vụ theo tên hàm.
      */
     public function completions()
     {

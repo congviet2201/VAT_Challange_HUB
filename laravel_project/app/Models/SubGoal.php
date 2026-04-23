@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/SubGoal.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
  * - Đóng gói logic hoàn thành sub-goal và đồng bộ goal cha.
  */
 /**
- * Lá»›p SubGoal: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp SubGoal: mô tả vai trò chính của file.
  */
 class SubGoal extends Model
 {
@@ -38,7 +38,7 @@ class SubGoal extends Model
     ];
 
     /**
-     * HĂ m goal(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm goal(): xử lý nghiệp vụ theo tên hàm.
      */
     public function goal()
     {
@@ -46,7 +46,7 @@ class SubGoal extends Model
     }
 
     /**
-     * HĂ m proofs(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm proofs(): xử lý nghiệp vụ theo tên hàm.
      */
     public function proofs()
     {
@@ -54,7 +54,7 @@ class SubGoal extends Model
     }
 
     /**
-     * HĂ m hasProof(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm hasProof(): xử lý nghiệp vụ theo tên hàm.
      */
     public function hasProof()
     {

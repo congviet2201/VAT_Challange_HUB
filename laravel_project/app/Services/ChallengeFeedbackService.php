@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Services/ChallengeFeedbackService.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Services;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
  * bộ quy tắc "AI-like" nội bộ để giữ tính năng hoạt động ổn định.
  */
 /**
- * Lá»›p ChallengeFeedbackService: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp ChallengeFeedbackService: mô tả vai trò chính của file.
  */
 class ChallengeFeedbackService
 {

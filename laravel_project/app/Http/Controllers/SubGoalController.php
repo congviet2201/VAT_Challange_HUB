@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Http/Controllers/SubGoalController.php
- * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ * Mục đích file: app/Http/Controllers/SubGoalController.php
+ * Xử lý các thao tác hoàn thành nhiệm vụ phụ (Sub-goal) và lưu minh chứng.
  */
 
 namespace App\Http\Controllers;
@@ -12,21 +12,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Xử lý luồng nộp minh chứng và hoàn thành Sub-goal.
+ * Lớp SubGoalController: Chịu trách nhiệm xử lý các tác vụ xoay quanh Mục tiêu phụ (SubGoal).
+ * Cụ thể là nhận minh chứng (bằng văn bản hoặc hình ảnh) do người dùng nộp lên, kiểm tra logic ràng buộc,
+ * đánh dấu hoàn thành cho mục tiêu phụ này và tự động đồng bộ tiến độ với Mục tiêu lớn (Goal).
  *
  * Phụ thuộc chính:
  * - Models: SubGoal, SubGoalProof
- * - Auth để ràng buộc quyền sở hữu dữ liệu theo user đăng nhập
- */
-/**
- * Lớp SubGoalController: Chịu trách nhiệm xử lý các tác vụ xoay quanh Mục tiêu phụ (SubGoal).
- * Cụ thể là nhận minh chứng (chữ, hình ảnh) từ người dùng nộp lên, kiểm tra logic ràng buộc,
- * và đánh dấu hoàn thành cho mục tiêu phụ này.
+ * - Auth: để ràng buộc quyền sở hữu dữ liệu theo người dùng đang đăng nhập
  */
 class SubGoalController extends Controller
 {
     /**
-     * Lưu proof cho một sub-goal.
+     * Hàm submitProof(): Xử lý việc nộp minh chứng cho một mục tiêu phụ cụ thể.
+     * Kiểm tra trạng thái mục tiêu phụ (nếu đã hoàn thành thì không cho nộp nữa) và lưu nội dung minh chứng vào CSDL.
      */
     public function submitProof(Request $request, int $id)
     {
@@ -61,7 +59,8 @@ class SubGoalController extends Controller
     }
 
     /**
-     * Hoàn thành sub-goal và đồng bộ trạng thái goal cha.
+     * Hàm complete(): Xử lý xác nhận hoàn thành mục tiêu phụ và đồng bộ trạng thái lên mục tiêu cha.
+     * Ràng buộc: Mỗi mục tiêu lớn chỉ được hoàn thành tối đa 1 mục tiêu phụ trong một ngày. Yêu cầu đã nộp minh chứng trước đó.
      */
     public function complete(Request $request, int $id)
     {

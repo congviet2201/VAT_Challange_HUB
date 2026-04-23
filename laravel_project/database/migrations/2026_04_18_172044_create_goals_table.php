@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: database/migrations/2026_04_18_172044_create_goals_table.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 use Illuminate\Database\Migrations\Migration;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     /**
-     * HĂ m up(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm up(): xử lý nghiệp vụ theo tên hàm.
      */
     public function up(): void {
         Schema::create('goals', function (Blueprint $table) {
@@ -26,7 +26,7 @@ return new class extends Migration {
     }
 
     /**
-     * HĂ m down(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm down(): xử lý nghiệp vụ theo tên hàm.
      */
     public function down(): void {
         Schema::dropIfExists('goals');

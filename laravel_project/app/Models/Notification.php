@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/Notification.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -23,7 +23,7 @@ class Notification extends Model
     ];
 
     /**
-     * HĂ m group(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm group(): xử lý nghiệp vụ theo tên hàm.
      */
     public function group()
     {
@@ -31,7 +31,7 @@ class Notification extends Model
     }
 
     /**
-     * HĂ m creator(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm creator(): xử lý nghiệp vụ theo tên hàm.
      */
     public function creator()
     {

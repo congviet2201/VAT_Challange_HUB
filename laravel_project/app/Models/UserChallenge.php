@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/UserChallenge.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -28,7 +28,7 @@ class UserChallenge extends Model
 
 
     /**
-     * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
      */
     public function user()
     {
@@ -37,7 +37,7 @@ class UserChallenge extends Model
 
 
     /**
-     * HĂ m challenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenge()
     {

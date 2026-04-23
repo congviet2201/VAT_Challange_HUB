@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Models/ChallengeAiPlan.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Models/ChallengeAiPlan.php
+ * Định nghĩa cấu trúc bảng lưu kế hoạch AI cá nhân hóa cho từng user và challenge.
  */
 
 namespace App\Models;
@@ -24,7 +24,7 @@ class ChallengeAiPlan extends Model
     ];
 
     /**
-     * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
      */
     public function user()
     {
@@ -32,7 +32,7 @@ class ChallengeAiPlan extends Model
     }
 
     /**
-     * HĂ m challenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenge()
     {
@@ -40,7 +40,7 @@ class ChallengeAiPlan extends Model
     }
 
     /**
-     * HĂ m tasks(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm tasks(): xử lý nghiệp vụ theo tên hàm.
      */
     public function tasks()
     {

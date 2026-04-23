@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/TaskCompletion.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -26,7 +26,7 @@ class TaskCompletion extends Model
     ];
 
     /**
-     * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
      */
     public function user()
     {
@@ -34,7 +34,7 @@ class TaskCompletion extends Model
     }
 
     /**
-     * HĂ m task(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm task(): xử lý nghiệp vụ theo tên hàm.
      */
     public function task()
     {

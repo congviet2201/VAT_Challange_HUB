@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Models/Challenge.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Models/Challenge.php
+ * Định nghĩa cấu trúc bảng challenges và các mối quan hệ.
  */
 
 namespace App\Models;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * Ví dụ: "Đọc sách 30 phút mỗi ngày", "Tập thể dục buổi sáng", v.v.
  */
 /**
- * Lá»›p Challenge: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp Challenge: mô tả vai trò chính của file.
  */
 class Challenge extends Model
 {
@@ -43,7 +43,7 @@ class Challenge extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     /**
-     * HĂ m category(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm category(): xử lý nghiệp vụ theo tên hàm.
      */
     public function category()
     {
@@ -57,7 +57,7 @@ class Challenge extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     /**
-     * HĂ m progress(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm progress(): xử lý nghiệp vụ theo tên hàm.
      */
     public function progress()
     {
@@ -72,7 +72,7 @@ class Challenge extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     /**
-     * HĂ m groups(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm groups(): xử lý nghiệp vụ theo tên hàm.
      */
     public function groups()
     {
@@ -80,7 +80,7 @@ class Challenge extends Model
     }
 
     /**
-     * HĂ m tasks(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm tasks(): xử lý nghiệp vụ theo tên hàm.
      */
     public function tasks()
     {
@@ -88,7 +88,7 @@ class Challenge extends Model
     }
 
     /**
-     * HĂ m aiPlans(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm aiPlans(): xử lý nghiệp vụ theo tên hàm.
      */
     public function aiPlans()
     {

@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/Group.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -23,7 +23,7 @@ class Group extends Model
     ];
 
     /**
-     * HĂ m creator(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm creator(): xử lý nghiệp vụ theo tên hàm.
      */
     public function creator()
     {
@@ -31,7 +31,7 @@ class Group extends Model
     }
 
     /**
-     * HĂ m users(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm users(): xử lý nghiệp vụ theo tên hàm.
      */
     public function users()
     {
@@ -39,7 +39,7 @@ class Group extends Model
     }
 
     /**
-     * HĂ m notifications(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm notifications(): xử lý nghiệp vụ theo tên hàm.
      */
     public function notifications()
     {
@@ -47,7 +47,7 @@ class Group extends Model
     }
 
     /**
-     * HĂ m challenges(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenges(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenges()
     {

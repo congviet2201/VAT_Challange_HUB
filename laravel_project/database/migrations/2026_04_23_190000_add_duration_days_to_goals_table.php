@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: database/migrations/2026_04_23_190000_add_duration_days_to_goals_table.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 use Illuminate\Database\Migrations\Migration;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * HĂ m up(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm up(): xử lý nghiệp vụ theo tên hàm.
      */
     public function up(): void
     {
@@ -21,7 +21,7 @@ return new class extends Migration
     }
 
     /**
-     * HĂ m down(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm down(): xử lý nghiệp vụ theo tên hàm.
      */
     public function down(): void
     {

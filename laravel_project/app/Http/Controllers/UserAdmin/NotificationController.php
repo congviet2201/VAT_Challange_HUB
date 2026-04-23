@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Http/Controllers/UserAdmin/NotificationController.php
- * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ * Mục đích file: app/Http/Controllers/UserAdmin/NotificationController.php
+ * Quản lý việc soạn và gửi thông báo của quản trị viên (UserAdmin) tới các nhóm mà họ quản lý.
  */
 
 namespace App\Http\Controllers\UserAdmin;
@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Controller quản lý thông báo của useradmin theo từng nhóm phụ trách.
+ * Lớp NotificationController: Chịu trách nhiệm quản lý thông báo của UserAdmin theo từng nhóm phụ trách.
+ * Cung cấp các tính năng: xem danh sách thông báo đã gửi, gửi thông báo mới cho nhóm, xem chi tiết và xóa thông báo.
  */
 class NotificationController extends Controller
 {

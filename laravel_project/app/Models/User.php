@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Models/User.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Models;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
 /**
- * Lá»›p User: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp User: mô tả vai trò chính của file.
  */
 class User extends Authenticatable
 {
@@ -38,7 +38,7 @@ class User extends Authenticatable
         'is_active' => 'boolean',
     ];
     /**
-     * HĂ m challengeProgress(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challengeProgress(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challengeProgress()
     {
@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     /**
-     * HĂ m userChallenges(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm userChallenges(): xử lý nghiệp vụ theo tên hàm.
      */
     public function userChallenges()
     {
@@ -54,7 +54,7 @@ class User extends Authenticatable
     }
 
     /**
-     * HĂ m groups(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm groups(): xử lý nghiệp vụ theo tên hàm.
      */
     public function groups()
     {
@@ -62,7 +62,7 @@ class User extends Authenticatable
     }
 
     /**
-     * HĂ m createdGroups(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm createdGroups(): xử lý nghiệp vụ theo tên hàm.
      */
     public function createdGroups()
     {
@@ -70,7 +70,7 @@ class User extends Authenticatable
     }
 
     /**
-     * HĂ m notifications(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm notifications(): xử lý nghiệp vụ theo tên hàm.
      */
     public function notifications()
     {

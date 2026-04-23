@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Models/ChallengeFeedbackHistory.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Mục đích file: app/Models/ChallengeFeedbackHistory.php
+ * Định nghĩa cấu trúc bảng lưu lịch sử phản hồi AI cho từng user và challenge.
  */
 
 namespace App\Models;
@@ -31,7 +31,7 @@ class ChallengeFeedbackHistory extends Model
     ];
 
     /**
-     * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
      */
     public function user()
     {
@@ -39,7 +39,7 @@ class ChallengeFeedbackHistory extends Model
     }
 
     /**
-     * HĂ m challenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenge()
     {

@@ -1,7 +1,7 @@
 <?php
 /**
- * File purpose: app/Http/Controllers/GoalController.php
- * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ * Mục đích file: app/Http/Controllers/GoalController.php
+ * Quản lý toàn bộ vòng đời của một Mục tiêu (Goal) và tự động hóa chia nhỏ mục tiêu bằng AI.
  */
 
 namespace App\Http\Controllers;
@@ -19,22 +19,20 @@ use Illuminate\Support\Facades\Schema;
 use Throwable;
 
 /**
- * Điều phối toàn bộ luồng Mục tiêu chính (Goal) và Mục tiêu phụ (Sub-goal).
+ * Lớp GoalController: Chịu trách nhiệm xử lý toàn bộ các thao tác liên quan đến Mục tiêu lớn (Goal).
+ * Bao gồm tạo mục tiêu mới, sử dụng AI để tự động sinh ra lộ trình gồm các mục tiêu phụ (SubGoals) theo từng ngày.
+ * Quản lý tiến độ, nộp minh chứng hoàn thành cho các mục tiêu phụ và kiểm tra tổng kết mục tiêu.
  *
  * Phụ thuộc chính:
  * - Eloquent models: Goal, SubGoal, SubGoalProof, Category
  * - Dịch vụ AI: GoalAIService
  * - Hạ tầng: DB transaction, Auth, Validation, Logging
  */
-/**
- * Lớp GoalController: Chịu trách nhiệm xử lý toàn bộ các thao tác liên quan đến Mục tiêu (Goal).
- * Bao gồm tạo mục tiêu mới, sử dụng AI để tự động tạo ra các mục tiêu phụ (SubGoals) theo ngày,
- * và quản lý tiến độ, nộp minh chứng cho các mục tiêu phụ này.
- */
 class GoalController extends Controller
 {
     /**
-     * Hiển thị danh sách goal của người dùng hiện tại.
+     * Hàm index(): Lấy và hiển thị danh sách toàn bộ các Mục tiêu (Goal) của người dùng hiện tại đang đăng nhập.
+     * Dữ liệu được lấy kèm theo thông tin Danh mục (category) và các Mục tiêu phụ (subGoals).
      */
     public function index()
     {
@@ -47,7 +45,8 @@ class GoalController extends Controller
     }
 
     /**
-     * Trả về form tạo goal.
+     * Hàm create(): Trả về giao diện Form để người dùng tạo mới một Mục tiêu (Goal).
+     * Lấy sẵn danh sách các Danh mục (Category) để hiển thị trong mục chọn loại mục tiêu.
      */
     public function create()
     {
@@ -56,16 +55,11 @@ class GoalController extends Controller
     }
 
     /**
-     * Lưu goal và sinh sub-goals bằng AI.
-     *
-     * Hỗ trợ cả 2 luồng:
-     * - API: tạo 1 goal.
-     * - Web form: tạo nhiều goal trong 1 request.
-     */
-    /**
      * Hàm store(): Lưu Mục tiêu mới do người dùng tạo và gọi AI để tạo Mục tiêu phụ.
-     * Sử dụng Transaction để đảm bảo tính toàn vẹn: nếu gọi AI thất bại thì Mục tiêu cũng không được lưu.
-     * Hỗ trợ hai luồng: API (tạo 1 mục tiêu, trả về JSON) và Web Form (tạo nhiều mục tiêu cùng lúc).
+     * Sử dụng Transaction để đảm bảo tính toàn vẹn: nếu gọi AI thất bại hoặc lưu lỗi thì quá trình tạo Mục tiêu cũng bị hủy (rollback).
+     * Hỗ trợ hai luồng riêng biệt: 
+     * - Dành cho API: Tạo 1 mục tiêu, trả về chuỗi JSON thông tin.
+     * - Dành cho Web Form: Hỗ trợ tạo nhiều mục tiêu cùng một lúc, gửi lại phản hồi kèm redirect giao diện.
      */
     public function store(Request $request)
     {
@@ -205,7 +199,8 @@ class GoalController extends Controller
     }
 
     /**
-     * Hiển thị chi tiết goal cùng danh sách sub-goals.
+     * Hàm show(): Hiển thị chi tiết của một Mục tiêu lớn cùng với danh sách các Mục tiêu phụ (Sub-goals) thuộc về nó.
+     * Kiểm tra quyền sở hữu (người dùng chỉ được phép xem mục tiêu của chính mình tạo).
      */
     public function show(Goal $goal)
     {
@@ -219,7 +214,8 @@ class GoalController extends Controller
     }
 
     /**
-     * API sinh lại sub-goals cho một goal cụ thể.
+     * Hàm generateSubGoals() (Dành cho API): Gọi lại AI để sinh mới/chạy lại danh sách Mục tiêu phụ (Sub-goals).
+     * Thường được dùng khi có lỗi trước đó hoặc người dùng muốn tạo lại lộ trình phụ.
      */
     public function generateSubGoals(Request $request)
     {
@@ -261,7 +257,8 @@ class GoalController extends Controller
     }
 
     /**
-     * API legacy: nộp proof trực tiếp từ GoalController.
+     * Hàm submitProof() (API legacy): Nhận dữ liệu nộp minh chứng (dạng hình ảnh hoặc văn bản)
+     * từ người dùng cho một Mục tiêu phụ cụ thể. Sau khi validate, tạo mới một bản ghi SubGoalProof.
      */
     public function submitProof(Request $request)
     {
@@ -287,7 +284,9 @@ class GoalController extends Controller
     }
 
     /**
-     * API legacy: hoàn thành sub-goal trực tiếp từ GoalController.
+     * Hàm completeSubGoal() (API legacy): Đánh dấu một Mục tiêu phụ là đã hoàn thành.
+     * Yêu cầu bắt buộc là Mục tiêu phụ đó phải có ít nhất một minh chứng (proof) đã nộp.
+     * Sau khi hoàn thành mục tiêu phụ, tiến hành kiểm tra luôn xem mục tiêu lớn đã hoàn thành chưa.
      */
     public function completeSubGoal(Request $request)
     {
@@ -316,7 +315,8 @@ class GoalController extends Controller
     }
 
     /**
-     * Kiểm tra trạng thái hoàn thành của goal sau khi cập nhật sub-goal.
+     * Hàm checkGoalCompletion() (API): Kiểm tra lại trạng thái tổng thể của Mục tiêu lớn.
+     * Tính toán xem tất cả các Mục tiêu phụ của nó đã hoàn thành hết chưa, nếu xong hết thì chuyển trạng thái Mục tiêu lớn thành 'completed'.
      */
     public function checkGoalCompletion(Request $request)
     {

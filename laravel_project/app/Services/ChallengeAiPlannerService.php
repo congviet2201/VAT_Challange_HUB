@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Services/ChallengeAiPlannerService.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Services;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
  * - Persist vào challenge_ai_plans và challenge_ai_tasks.
  */
 /**
- * Lá»›p ChallengeAiPlannerService: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp ChallengeAiPlannerService: mô tả vai trò chính của file.
  */
 class ChallengeAiPlannerService
 {
