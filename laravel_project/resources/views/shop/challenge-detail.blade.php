@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/shop/challenge-detail.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 @extends('shop.layout.app')
 
 @section('content')

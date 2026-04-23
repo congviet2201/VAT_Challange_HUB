@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/AuthController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers;
 
@@ -19,6 +23,9 @@ use Illuminate\Support\Facades\Log;
  * - Laravel Auth/Hash
  * - WelcomeMail cho email chào mừng
  */
+/**
+ * Lá»›p AuthController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ */
 class AuthController extends Controller
 {
     /**
@@ -36,6 +43,9 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * HĂ m register(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function register(Request $request)
     {
@@ -84,6 +94,9 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    /**
+     * HĂ m login(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function login(Request $request)
     {
         // Xác thực dữ liệu người dùng
@@ -110,6 +123,9 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * HĂ m logout(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function logout(Request $request)
     {

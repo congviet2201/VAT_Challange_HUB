@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/UserAdmin/NotificationController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers\UserAdmin;
 
@@ -14,6 +18,9 @@ use Illuminate\Support\Facades\Auth;
 class NotificationController extends Controller
 {
     // Hiển thị danh sách thông báo của UserAdmin
+    /**
+     * HĂ m index(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function index()
     {
         $auth = Auth::user();
@@ -27,6 +34,9 @@ class NotificationController extends Controller
     }
 
     // Form gửi thông báo
+    /**
+     * HĂ m create(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function create()
     {
         $auth = Auth::user();
@@ -39,6 +49,9 @@ class NotificationController extends Controller
     }
 
     // Lưu thông báo
+    /**
+     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -67,6 +80,9 @@ class NotificationController extends Controller
     }
 
     // Xem chi tiết thông báo
+    /**
+     * HĂ m show(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function show(Notification $notification)
     {
         if ($notification->created_by !== Auth::id()) {
@@ -79,6 +95,9 @@ class NotificationController extends Controller
     }
 
     // Xóa thông báo
+    /**
+     * HĂ m destroy(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function destroy(Notification $notification)
     {
         if ($notification->created_by !== Auth::id()) {

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/SubGoal.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Models;
 
@@ -13,6 +17,9 @@ use Illuminate\Support\Facades\DB;
  * Trách nhiệm:
  * - Quản lý quan hệ với Goal và Proof.
  * - Đóng gói logic hoàn thành sub-goal và đồng bộ goal cha.
+ */
+/**
+ * Lá»›p SubGoal: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
  */
 class SubGoal extends Model
 {
@@ -30,16 +37,25 @@ class SubGoal extends Model
         'status' => 'string',
     ];
 
+    /**
+     * HĂ m goal(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function goal()
     {
         return $this->belongsTo(Goal::class);
     }
 
+    /**
+     * HĂ m proofs(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function proofs()
     {
         return $this->hasMany(SubGoalProof::class);
     }
 
+    /**
+     * HĂ m hasProof(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function hasProof()
     {
         return $this->proofs()->exists();

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/Notification.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Models;
 
@@ -18,11 +22,17 @@ class Notification extends Model
         'message',
     ];
 
+    /**
+     * HĂ m group(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function group()
     {
         return $this->belongsTo(Group::class);
     }
 
+    /**
+     * HĂ m creator(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/Admin/ChallengeController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers\Admin;
 
@@ -13,6 +17,9 @@ use App\Http\Controllers\Controller;
  * Chức năng:
  * - Quản lý vòng đời challenge (CRUD)
  * - Tổng hợp thống kê người tham gia / hoàn thành challenge
+ */
+/**
+ * Lá»›p ChallengeController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
  */
 class ChallengeController extends Controller
 {

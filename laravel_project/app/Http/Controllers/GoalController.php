@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/GoalController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers;
 
@@ -21,6 +25,9 @@ use Throwable;
  * - Eloquent models: Goal, SubGoal, SubGoalProof, Category
  * - Dịch vụ AI: GoalAIService
  * - Hạ tầng: DB transaction, Auth, Validation, Logging
+ */
+/**
+ * Lá»›p GoalController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
  */
 class GoalController extends Controller
 {
@@ -52,6 +59,9 @@ class GoalController extends Controller
      * Hỗ trợ cả 2 luồng:
      * - API: tạo 1 goal.
      * - Web form: tạo nhiều goal trong 1 request.
+     */
+    /**
+     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function store(Request $request)
     {

@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/admin/challenges/edit.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 @extends('admin.layout.app')
 {{-- Trang chỉnh sửa thử thách trong Admin --}}
 

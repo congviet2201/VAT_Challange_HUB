@@ -1,4 +1,9 @@
 <?php
+/**
+ * File purpose: app/Models/Goal.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
+
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -27,15 +32,24 @@ protected $casts = [
 
 protected $table = 'goals';
 
+/**
+ * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ */
 public function user()
 {
     return $this->belongsTo(User::class, 'user_id');
 }
+/**
+ * HĂ m category(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ */
 public function category()
 {
     return $this->belongsTo(Category::class, 'category_id');
 }
 
+/**
+ * HĂ m subGoals(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+ */
 public function subGoals()
 {
     return $this->hasMany(SubGoal::class);

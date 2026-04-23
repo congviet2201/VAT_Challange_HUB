@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/User/GroupController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers\User;
 
@@ -13,6 +17,9 @@ use Illuminate\Support\Facades\Auth;
  */
 class GroupController extends Controller
 {
+    /**
+     * HĂ m index(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function index()
     {
         $user = Auth::user();
@@ -28,6 +35,9 @@ class GroupController extends Controller
         return view('shop.groups.index', compact('groups', 'joinedGroupIds'));
     }
 
+    /**
+     * HĂ m show(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function show(Group $group)
     {
         $user = Auth::user();
@@ -43,6 +53,9 @@ class GroupController extends Controller
         return view('shop.groups.show', compact('group', 'isMember'));
     }
 
+    /**
+     * HĂ m join(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function join(Group $group)
     {
         if (!$group->is_active) {
@@ -60,6 +73,9 @@ class GroupController extends Controller
         return back()->with('success', "Tham gia nhóm {$group->name} thành công!");
     }
 
+    /**
+     * HĂ m leave(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function leave(Group $group)
     {
         $user = Auth::user();

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/ChallengeController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers;
 
@@ -23,6 +27,9 @@ use App\Services\ChallengeFeedbackService;
  * Phụ thuộc chính:
  * - Models: Challenge, ChallengeProgress, Checkin, ChallengeAiPlan, ChallengeAiTask
  * - Services: ChallengeAiPlannerService, ChallengeFeedbackService
+ */
+/**
+ * Lá»›p ChallengeController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
  */
 class ChallengeController extends Controller
 {

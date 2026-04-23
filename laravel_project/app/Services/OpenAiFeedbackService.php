@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Services/OpenAiFeedbackService.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Services;
 

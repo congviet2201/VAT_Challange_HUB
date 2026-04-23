@@ -1,3 +1,8 @@
+/**
+ * File purpose: public/js/goals/script.js
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic JavaScript.
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     let index = 1;

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/ChallengeAiTask.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Models;
 
@@ -26,6 +30,9 @@ class ChallengeAiTask extends Model
         'completed_at' => 'datetime',
     ];
 
+    /**
+     * HĂ m plan(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function plan()
     {
         return $this->belongsTo(ChallengeAiPlan::class, 'challenge_ai_plan_id');

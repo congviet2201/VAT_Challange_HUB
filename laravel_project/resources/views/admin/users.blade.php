@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/admin/users.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 @extends('admin.layout.app')
 {{-- Trang quản lý người dùng trong Admin --}}
 

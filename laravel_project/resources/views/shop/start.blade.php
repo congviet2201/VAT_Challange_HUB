@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/shop/start.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 @extends('layouts.app')
 
 @section('content')

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Services/GoalAIService.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Services;
 
@@ -15,6 +19,9 @@ use Throwable;
  * - Gọi endpoint chat completions của LM Studio
  * - Parse và validate JSON sub-goals trước khi trả về controller
  */
+/**
+ * Lá»›p GoalAIService: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ */
 class GoalAIService
 {
     /**
@@ -22,6 +29,9 @@ class GoalAIService
      *
      * @param string|array $goalInput Chuỗi tự do hoặc mảng context goal.
      * @return array{sub_goals: array<int, array<string, mixed>>, raw_response: string}
+     */
+    /**
+     * HĂ m generateSubGoalsFromAI(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function generateSubGoalsFromAI(string|array $goalInput): array
     {

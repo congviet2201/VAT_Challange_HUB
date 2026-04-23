@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/TaskCompletion.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Models;
 
@@ -21,11 +25,17 @@ class TaskCompletion extends Model
         'completed_at' => 'datetime'
     ];
 
+    /**
+     * HĂ m user(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * HĂ m task(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function task()
     {
         return $this->belongsTo(Task::class);

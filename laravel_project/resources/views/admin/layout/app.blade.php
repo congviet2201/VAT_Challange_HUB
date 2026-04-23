@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/admin/layout/app.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 {{-- Layout chính cho khu vực Admin --}}
 {{-- File này chứa cấu trúc và sidebar dùng chung cho tất cả trang admin --}}
 <!DOCTYPE html>

@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/emails/welcome.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 <!DOCTYPE html>
 <html>
 <head>

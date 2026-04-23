@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/shop/groups/show.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 @extends('shop.layout.app')
 {{-- Trang chi tiết nhóm thử thách dành cho người dùng --}}
 

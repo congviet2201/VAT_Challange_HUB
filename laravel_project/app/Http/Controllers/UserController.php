@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/UserController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers;
 
@@ -17,6 +21,9 @@ use Illuminate\Support\Facades\Hash;
  * - Khóa/mở khóa tài khoản
  * - Hiển thị profile và thống kê tiến độ challenge
  */
+/**
+ * Lá»›p UserController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ */
 class UserController extends Controller
 {
     /**
@@ -24,6 +31,9 @@ class UserController extends Controller
      *
      * Admin nhìn thấy tất cả người dùng và trưởng nhóm.
      * Useradmin chỉ thấy người dùng tham gia thử thách do họ tạo.
+     */
+    /**
+     * HĂ m index(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function index()
     {
@@ -47,11 +57,17 @@ class UserController extends Controller
         return view('admin.users', compact('users'));
     }
 
+    /**
+     * HĂ m create(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function create()
     {
         return view('admin.users.create');
     }
 
+    /**
+     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -73,6 +89,9 @@ class UserController extends Controller
             ->with('success', '✅ Tạo tài khoản người dùng thành công!');
     }
 
+    /**
+     * HĂ m edit(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function edit(User $user)
     {
         // Không cho phép chỉnh sửa tài khoản của chính mình
@@ -84,6 +103,9 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
+    /**
+     * HĂ m update(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function update(Request $request, User $user)
     {
         // Không cho edit tài khoản admin của chính mình
@@ -114,6 +136,9 @@ class UserController extends Controller
             ->with('success', '✅ Cập nhật thông tin người dùng thành công!');
     }
 
+    /**
+     * HĂ m toggleStatus(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function toggleStatus($id)
     {
         $user = User::findOrFail($id);

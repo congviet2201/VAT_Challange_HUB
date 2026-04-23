@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/UserAdmin/GroupController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers\UserAdmin;
 
@@ -17,6 +21,9 @@ use Illuminate\Support\Facades\Auth;
  * - Quản lý thành viên trong nhóm
  * - Quản lý danh sách challenge gán vào nhóm
  */
+/**
+ * Lá»›p GroupController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ */
 class GroupController extends Controller
 {
     public function index()
@@ -27,11 +34,17 @@ class GroupController extends Controller
         return view('useradmin.groups.index', compact('groups'));
     }
 
+    /**
+     * HĂ m create(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function create()
     {
         return view('useradmin.groups.create');
     }
 
+    /**
+     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,6 +63,9 @@ class GroupController extends Controller
             ->with('success', '✅ Tạo nhóm thành công!');
     }
 
+    /**
+     * HĂ m edit(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function edit(Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -61,6 +77,9 @@ class GroupController extends Controller
         return view('useradmin.groups.edit', compact('group'));
     }
 
+    /**
+     * HĂ m update(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function update(Request $request, Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -83,6 +102,9 @@ class GroupController extends Controller
             ->with('success', '✅ Cập nhật nhóm thành công!');
     }
 
+    /**
+     * HĂ m toggleStatus(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function toggleStatus(Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -98,6 +120,9 @@ class GroupController extends Controller
     }
 
     // Hiển thị danh sách users để thêm vào nhóm
+    /**
+     * HĂ m addUserIndex(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function addUserIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -116,6 +141,9 @@ class GroupController extends Controller
     }
 
     // Thêm user vào nhóm
+    /**
+     * HĂ m addUser(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function addUser(Request $request, Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -136,6 +164,9 @@ class GroupController extends Controller
     }
 
     // Xem chi tiết nhóm và danh sách thành viên
+    /**
+     * HĂ m show(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function show(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -148,6 +179,9 @@ class GroupController extends Controller
     }
 
     // Xóa user khỏi nhóm
+    /**
+     * HĂ m removeUser(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function removeUser(Group $group, User $user)
     {
         if ($group->created_by !== Auth::id()) {
@@ -160,6 +194,9 @@ class GroupController extends Controller
     }
 
     // Hiển thị danh sách thử thách trong nhóm
+    /**
+     * HĂ m challengeIndex(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function challengeIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -172,6 +209,9 @@ class GroupController extends Controller
     }
 
     // Hiển thị form thêm thử thách vào nhóm
+    /**
+     * HĂ m addChallengeIndex(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function addChallengeIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -190,6 +230,9 @@ class GroupController extends Controller
     }
 
     // Thêm thử thách vào nhóm
+    /**
+     * HĂ m addChallenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function addChallenge(Request $request, Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -210,6 +253,9 @@ class GroupController extends Controller
     }
 
     // Xóa thử thách khỏi nhóm
+    /**
+     * HĂ m removeChallenge(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     */
     public function removeChallenge(Group $group, $challengeId)
     {
         if ($group->created_by !== Auth::id()) {

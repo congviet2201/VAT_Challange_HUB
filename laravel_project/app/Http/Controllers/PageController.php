@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/PageController.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Http\Controllers;
 
@@ -34,6 +38,9 @@ class PageController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * HĂ m sendContact(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
      */
     public function sendContact(Request $request)
     {

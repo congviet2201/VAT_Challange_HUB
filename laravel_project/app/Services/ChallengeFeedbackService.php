@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Services/ChallengeFeedbackService.php
+ * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ */
 
 namespace App\Services;
 
@@ -12,6 +16,9 @@ use Illuminate\Support\Facades\Log;
  *
  * Nếu cấu hình OpenAI có sẵn, sẽ gọi AI thật sự. Nếu không, sẽ sử dụng
  * bộ quy tắc "AI-like" nội bộ để giữ tính năng hoạt động ổn định.
+ */
+/**
+ * Lá»›p ChallengeFeedbackService: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
  */
 class ChallengeFeedbackService
 {

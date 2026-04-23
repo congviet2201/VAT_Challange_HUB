@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/shop/footer.blade.php --}}
+{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
+
 {{-- Footer của trang shop --}}
 <footer class="mt-auto py-5 bg-dark text-white">
     <div class="container">
