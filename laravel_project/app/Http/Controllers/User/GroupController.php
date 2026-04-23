@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/User/GroupController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers\User;
@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Auth;
 class GroupController extends Controller
 {
     /**
-     * HĂ m index(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm index(): Hiển thị danh sách tất cả các nhóm đang hoạt động (is_active = true) trên hệ thống.
+     * Lấy thêm thông tin người tạo nhóm, số lượng thành viên, số lượng thử thách.
+     * Đồng thời, lấy danh sách ID các nhóm mà User hiện tại đã tham gia để kiểm tra hiển thị nút "Tham gia".
      */
     public function index()
     {
@@ -36,7 +38,8 @@ class GroupController extends Controller
     }
 
     /**
-     * HĂ m show(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm show(): Hiển thị thông tin chi tiết của một nhóm, kèm theo danh sách thử thách và thành viên.
+     * Nếu nhóm không hoạt động, chỉ các thành viên cũ trong nhóm mới được phép xem thông tin.
      */
     public function show(Group $group)
     {
@@ -54,7 +57,9 @@ class GroupController extends Controller
     }
 
     /**
-     * HĂ m join(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm join(): Xử lý logic cho người dùng tham gia vào một nhóm.
+     * Kiểm tra trạng thái hoạt động của nhóm và người dùng đã tham gia chưa.
+     * Sử dụng syncWithoutDetaching để tránh trùng lặp.
      */
     public function join(Group $group)
     {
@@ -74,7 +79,8 @@ class GroupController extends Controller
     }
 
     /**
-     * HĂ m leave(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm leave(): Xử lý logic khi người dùng muốn rời khỏi nhóm.
+     * Kiểm tra xem người dùng có thực sự trong nhóm không, sau đó dùng detach để xóa liên kết.
      */
     public function leave(Group $group)
     {

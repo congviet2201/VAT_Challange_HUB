@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/Admin/ChallengeController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers\Admin;
@@ -19,7 +19,9 @@ use App\Http\Controllers\Controller;
  * - Tổng hợp thống kê người tham gia / hoàn thành challenge
  */
 /**
- * Lá»›p ChallengeController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp ChallengeController (dành cho Admin): Cung cấp các công cụ quản lý Thử thách.
+ * Cho phép Admin tạo, sửa, xóa, và theo dõi tiến độ tham gia/hoàn thành của người dùng
+ * trong toàn bộ hệ thống.
  */
 class ChallengeController extends Controller
 {

@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/GoalController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers;
@@ -27,7 +27,9 @@ use Throwable;
  * - Hạ tầng: DB transaction, Auth, Validation, Logging
  */
 /**
- * Lá»›p GoalController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp GoalController: Chịu trách nhiệm xử lý toàn bộ các thao tác liên quan đến Mục tiêu (Goal).
+ * Bao gồm tạo mục tiêu mới, sử dụng AI để tự động tạo ra các mục tiêu phụ (SubGoals) theo ngày,
+ * và quản lý tiến độ, nộp minh chứng cho các mục tiêu phụ này.
  */
 class GoalController extends Controller
 {
@@ -61,7 +63,9 @@ class GoalController extends Controller
      * - Web form: tạo nhiều goal trong 1 request.
      */
     /**
-     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm store(): Lưu Mục tiêu mới do người dùng tạo và gọi AI để tạo Mục tiêu phụ.
+     * Sử dụng Transaction để đảm bảo tính toàn vẹn: nếu gọi AI thất bại thì Mục tiêu cũng không được lưu.
+     * Hỗ trợ hai luồng: API (tạo 1 mục tiêu, trả về JSON) và Web Form (tạo nhiều mục tiêu cùng lúc).
      */
     public function store(Request $request)
     {

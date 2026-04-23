@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * HĂ m up(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
-     */
+
     public function up(): void
     {
         if (! Schema::hasColumn('goals', 'status')) {

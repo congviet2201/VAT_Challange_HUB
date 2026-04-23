@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/ChallengeController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers;
@@ -29,7 +29,9 @@ use App\Services\ChallengeFeedbackService;
  * - Services: ChallengeAiPlannerService, ChallengeFeedbackService
  */
 /**
- * Lá»›p ChallengeController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp ChallengeController: Điều phối toàn bộ các tương tác của người dùng với một Thử thách (Challenge).
+ * Bao gồm các tác vụ: bắt đầu tham gia thử thách, điểm danh (check-in) hàng ngày, 
+ * tạo lộ trình bằng AI dựa trên trình độ, và nộp minh chứng để hoàn thành các nhiệm vụ AI.
  */
 class ChallengeController extends Controller
 {

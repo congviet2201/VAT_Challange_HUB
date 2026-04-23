@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/UserController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers;
@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Hash;
  * - Hiển thị profile và thống kê tiến độ challenge
  */
 /**
- * Lá»›p UserController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp UserController: Controller này quản lý toàn bộ các chức năng liên quan đến tài khoản người dùng,
+ * bao gồm việc thêm, sửa, khóa tài khoản bởi Admin, và hiển thị trang thông tin cá nhân (Profile) cho từng người dùng.
  */
 class UserController extends Controller
 {
@@ -33,7 +34,10 @@ class UserController extends Controller
      * Useradmin chỉ thấy người dùng tham gia thử thách do họ tạo.
      */
     /**
-     * HĂ m index(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm index(): Hiển thị danh sách người dùng tùy theo quyền hạn của người đang đăng nhập.
+     * - Nếu là Admin: Thấy toàn bộ người dùng và nhóm trưởng (ngoại trừ bản thân).
+     * - Nếu là Useradmin: Chỉ thấy những người dùng đang tham gia vào thử thách do mình tạo ra.
+     * - Trả về trang quản lý người dùng kèm danh sách đã được lọc.
      */
     public function index()
     {
@@ -58,7 +62,7 @@ class UserController extends Controller
     }
 
     /**
-     * HĂ m create(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm create(): Trả về giao diện form để tạo mới một tài khoản người dùng hoặc UserAdmin.
      */
     public function create()
     {
@@ -66,7 +70,9 @@ class UserController extends Controller
     }
 
     /**
-     * HĂ m store(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm store(): Nhận và xử lý dữ liệu từ form tạo tài khoản mới.
+     * Kiểm tra tính hợp lệ của dữ liệu (email không trùng lặp, mật khẩu tối thiểu 6 ký tự...).
+     * Sau đó mã hóa mật khẩu và tạo tài khoản mới trong cơ sở dữ liệu, mặc định ở trạng thái đang hoạt động (is_active = 1).
      */
     public function store(Request $request)
     {
@@ -90,7 +96,8 @@ class UserController extends Controller
     }
 
     /**
-     * HĂ m edit(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm edit(): Hiển thị giao diện chỉnh sửa thông tin của một người dùng cụ thể.
+     * Tính năng bảo vệ: Không cho phép Admin hoặc UserAdmin tự chỉnh sửa tài khoản của chính mình qua đường dẫn này.
      */
     public function edit(User $user)
     {
@@ -104,7 +111,9 @@ class UserController extends Controller
     }
 
     /**
-     * HĂ m update(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm update(): Nhận và xử lý dữ liệu để cập nhật thông tin người dùng.
+     * Cập nhật thông tin cơ bản (tên, email, vai trò).
+     * Chỉ cập nhật mật khẩu nếu người quản trị có nhập mật khẩu mới.
      */
     public function update(Request $request, User $user)
     {
@@ -137,7 +146,9 @@ class UserController extends Controller
     }
 
     /**
-     * HĂ m toggleStatus(): xá»­ lĂ½ nghiá»‡p vá»¥ theo tĂªn hĂ m.
+     * Hàm toggleStatus(): Bật hoặc tắt trạng thái hoạt động (is_active) của tài khoản.
+     * Nếu tài khoản đang mở thì sẽ bị khóa, và ngược lại.
+     * Không cho phép tự khóa tài khoản của chính mình để tránh lỗi không thể đăng nhập lại.
      */
     public function toggleStatus($id)
     {

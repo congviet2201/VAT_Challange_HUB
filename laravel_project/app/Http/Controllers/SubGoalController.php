@@ -1,7 +1,7 @@
 <?php
 /**
  * File purpose: app/Http/Controllers/SubGoalController.php
- * Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic xá»­ lĂ½.
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
 
 namespace App\Http\Controllers;
@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Auth;
  * - Auth để ràng buộc quyền sở hữu dữ liệu theo user đăng nhập
  */
 /**
- * Lá»›p SubGoalController: mĂ´ táº£ vai trĂ² chĂ­nh cá»§a file.
+ * Lớp SubGoalController: Chịu trách nhiệm xử lý các tác vụ xoay quanh Mục tiêu phụ (SubGoal).
+ * Cụ thể là nhận minh chứng (chữ, hình ảnh) từ người dùng nộp lên, kiểm tra logic ràng buộc,
+ * và đánh dấu hoàn thành cho mục tiêu phụ này.
  */
 class SubGoalController extends Controller
 {
