@@ -7,8 +7,18 @@ use App\Models\SubGoalProof;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Xử lý luồng nộp minh chứng và hoàn thành Sub-goal.
+ *
+ * Phụ thuộc chính:
+ * - Models: SubGoal, SubGoalProof
+ * - Auth để ràng buộc quyền sở hữu dữ liệu theo user đăng nhập
+ */
 class SubGoalController extends Controller
 {
+    /**
+     * Lưu proof cho một sub-goal.
+     */
     public function submitProof(Request $request, int $id)
     {
         $userId = Auth::id();
@@ -41,6 +51,9 @@ class SubGoalController extends Controller
         ], 201);
     }
 
+    /**
+     * Hoàn thành sub-goal và đồng bộ trạng thái goal cha.
+     */
     public function complete(Request $request, int $id)
     {
         $userId = Auth::id();

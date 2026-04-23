@@ -7,8 +7,22 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
+/**
+ * Dịch vụ tích hợp LM Studio để sinh sub-goals theo từng main goal cụ thể.
+ *
+ * Trách nhiệm chính:
+ * - Chuẩn hóa đầu vào goal (title/description/duration)
+ * - Gọi endpoint chat completions của LM Studio
+ * - Parse và validate JSON sub-goals trước khi trả về controller
+ */
 class GoalAIService
 {
+    /**
+     * Sinh danh sách sub-goals từ AI cho một goal cụ thể.
+     *
+     * @param string|array $goalInput Chuỗi tự do hoặc mảng context goal.
+     * @return array{sub_goals: array<int, array<string, mixed>>, raw_response: string}
+     */
     public function generateSubGoalsFromAI(string|array $goalInput): array
     {
         // Tăng thời gian thực thi tối đa của PHP lên 5 phút (300 giây) 
@@ -91,6 +105,9 @@ class GoalAIService
         throw new RuntimeException('LM Studio returned invalid JSON: ' . $lastRawContent);
     }
 
+    /**
+     * Chuẩn hóa thông điệp lỗi từ LM Studio để hiển thị thân thiện hơn.
+     */
     private function lmStudioErrorMessage(string $errorBody, int $status): string
     {
         $decoded = json_decode($errorBody, true);
@@ -113,6 +130,9 @@ class GoalAIService
         return 'LM Studio trả lỗi HTTP ' . $status . '. ' . $inner;
     }
 
+    /**
+     * Chuẩn hóa dữ liệu goal đầu vào, đảm bảo luôn có duration hợp lệ.
+     */
     private function normalizeGoalInput(string|array $goalInput): array
     {
         if (is_string($goalInput)) {
@@ -130,6 +150,9 @@ class GoalAIService
         ];
     }
 
+    /**
+     * Xây prompt ràng buộc sub-goals theo đúng mục tiêu chính hiện tại.
+     */
     private function buildPrompt(array $goalContext): string
     {
         $title = $goalContext['title'] !== '' ? $goalContext['title'] : 'Mục tiêu chưa đặt tên';
@@ -153,6 +176,9 @@ Strict rules:
 Output JSON only.";
     }
 
+    /**
+     * Parse và validate cấu trúc JSON AI trả về.
+     */
     private function parseSubGoals(string $rawContent, int $durationDays): ?array
     {
         $decoded = json_decode($rawContent, true);

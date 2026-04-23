@@ -14,8 +14,19 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Throwable;
 
+/**
+ * Điều phối toàn bộ luồng Mục tiêu chính (Goal) và Mục tiêu phụ (Sub-goal).
+ *
+ * Phụ thuộc chính:
+ * - Eloquent models: Goal, SubGoal, SubGoalProof, Category
+ * - Dịch vụ AI: GoalAIService
+ * - Hạ tầng: DB transaction, Auth, Validation, Logging
+ */
 class GoalController extends Controller
 {
+    /**
+     * Hiển thị danh sách goal của người dùng hiện tại.
+     */
     public function index()
     {
         $goals = Goal::where('user_id', Auth::id())
@@ -26,12 +37,22 @@ class GoalController extends Controller
         return view('goals.index', compact('goals'));
     }
 
+    /**
+     * Trả về form tạo goal.
+     */
     public function create()
     {
         $categories = Category::all(); // lấy dữ liệu
         return view('goals.create', compact('categories'));
     }
 
+    /**
+     * Lưu goal và sinh sub-goals bằng AI.
+     *
+     * Hỗ trợ cả 2 luồng:
+     * - API: tạo 1 goal.
+     * - Web form: tạo nhiều goal trong 1 request.
+     */
     public function store(Request $request)
     {
         $isApiRequest = $request->is('api/*') || $request->expectsJson();
@@ -169,6 +190,9 @@ class GoalController extends Controller
         return back()->with('success', 'Đã tạo mục tiêu và generate sub-goals!');
     }
 
+    /**
+     * Hiển thị chi tiết goal cùng danh sách sub-goals.
+     */
     public function show(Goal $goal)
     {
         if ($goal->user_id !== Auth::id()) {
@@ -180,6 +204,9 @@ class GoalController extends Controller
         return view('goals.show', compact('goal', 'subGoals'));
     }
 
+    /**
+     * API sinh lại sub-goals cho một goal cụ thể.
+     */
     public function generateSubGoals(Request $request)
     {
         $request->validate([
@@ -219,6 +246,9 @@ class GoalController extends Controller
         ]);
     }
 
+    /**
+     * API legacy: nộp proof trực tiếp từ GoalController.
+     */
     public function submitProof(Request $request)
     {
         $request->validate([
@@ -242,6 +272,9 @@ class GoalController extends Controller
         return response()->json(['success' => true, 'message' => 'Proof submitted successfully']);
     }
 
+    /**
+     * API legacy: hoàn thành sub-goal trực tiếp từ GoalController.
+     */
     public function completeSubGoal(Request $request)
     {
         $request->validate([
@@ -268,6 +301,9 @@ class GoalController extends Controller
         return response()->json(['success' => true, 'message' => 'Sub-goal completed']);
     }
 
+    /**
+     * Kiểm tra trạng thái hoàn thành của goal sau khi cập nhật sub-goal.
+     */
     public function checkGoalCompletion(Request $request)
     {
         $request->validate([

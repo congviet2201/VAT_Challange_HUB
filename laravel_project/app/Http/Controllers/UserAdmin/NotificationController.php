@@ -8,6 +8,9 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller quản lý thông báo của useradmin theo từng nhóm phụ trách.
+ */
 class NotificationController extends Controller
 {
     // Hiển thị danh sách thông báo của UserAdmin

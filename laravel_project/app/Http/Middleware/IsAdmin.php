@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Middleware kiểm tra quyền truy cập admin.
+ */
 class IsAdmin
 {
     /**

@@ -9,6 +9,14 @@ use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller quản lý nhóm dành cho useradmin.
+ *
+ * Phạm vi:
+ * - CRUD nhóm do useradmin tạo
+ * - Quản lý thành viên trong nhóm
+ * - Quản lý danh sách challenge gán vào nhóm
+ */
 class GroupController extends Controller
 {
     public function index()

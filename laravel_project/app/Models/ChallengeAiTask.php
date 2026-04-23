@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model đại diện cho từng task do AI sinh ra trong một ChallengeAiPlan.
+ */
 class ChallengeAiTask extends Model
 {
     protected $table = 'challenge_ai_tasks';

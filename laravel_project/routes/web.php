@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Khai báo toàn bộ HTTP routes của ứng dụng:
+ * - Public pages (home/search/challenge detail)
+ * - Auth routes
+ * - Challenge + AI roadmap routes
+ * - Admin/UserAdmin panels
+ * - Goal/Sub-goal APIs
+ */
 use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChallengeController;

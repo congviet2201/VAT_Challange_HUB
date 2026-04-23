@@ -23,6 +23,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 @endif
+
+@if(!empty($hasCompletedAiTaskToday))
+    <div class="alert alert-warning" role="alert">
+        Bạn đã hoàn thành 1 task hôm nay. Các task còn lại sẽ mở vào ngày mai.
+    </div>
+@endif
 <div class="row g-4">
     <div class="col-lg-8">
         <div class="card mb-4 border-0 shadow-sm">
@@ -253,10 +259,15 @@
                                             name="proof_image"
                                             accept="image/*"
                                             class="form-control form-control-sm"
+                                            @if(!empty($hasCompletedAiTaskToday)) disabled @endif
                                             required
                                         >
-                                        <button type="submit" class="btn btn-success btn-sm mt-2">
-                                            Hoàn thành task
+                                        <button type="submit" class="btn btn-success btn-sm mt-2" @if(!empty($hasCompletedAiTaskToday)) disabled @endif>
+                                            @if(!empty($hasCompletedAiTaskToday))
+                                                Đã khóa đến ngày mai
+                                            @else
+                                                Hoàn thành task
+                                            @endif
                                         </button>
                                     </form>
                                 @endif

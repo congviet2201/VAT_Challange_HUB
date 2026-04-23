@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Khai báo các lệnh Artisan tùy biến chạy trong môi trường CLI.
+ */
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
