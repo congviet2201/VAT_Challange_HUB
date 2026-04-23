@@ -9,14 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('goals', function (Blueprint $table) {
-            $table->unsignedInteger('duration_days')->default(30)->after('description');
+            if (! Schema::hasColumn('goals', 'duration_days')) {
+                $table->unsignedInteger('duration_days')->default(30)->after('description');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('goals', function (Blueprint $table) {
-            $table->dropColumn('duration_days');
+            if (Schema::hasColumn('goals', 'duration_days')) {
+                $table->dropColumn('duration_days');
+            }
         });
     }
 };

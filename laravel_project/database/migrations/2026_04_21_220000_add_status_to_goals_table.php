@@ -10,7 +10,8 @@ return new class extends Migration
     {
         Schema::table('goals', function (Blueprint $table) {
             if (!Schema::hasColumn('goals', 'status')) {
-                $table->enum('status', ['pending', 'completed'])->default('pending')->after('description');
+                // Sửa lại dòng này trong migration
+$table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending')->after('description');
             }
         });
     }
