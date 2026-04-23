@@ -25,7 +25,7 @@ class GoalAIService
      */
     public function generateSubGoalsFromAI(string|array $goalInput): array
     {
-        // Tăng thời gian thực thi tối đa của PHP lên 5 phút (300 giây) 
+        // Tăng thời gian thực thi tối đa của PHP lên 5 phút (300 giây)
         // để chờ Local AI sinh xong văn bản mà không bị sập
         set_time_limit(300);
 
@@ -38,25 +38,14 @@ class GoalAIService
         $model = (string) config('services.lmstudio.model', 'local-model');
         $connectTimeout = max((int) config('services.lmstudio.connect_timeout', 10), 1);
         $timeout = max((int) config('services.lmstudio.timeout', 180), $connectTimeout);
-        
+
         try {
+            $payload = $this->buildRequestPayload($prompt, $model, $chatEndpoint);
+
             $response = Http::withToken($token)
                 ->connectTimeout($connectTimeout)
                 ->timeout($timeout)
-                ->post($requestUrl, [
-                    'model' => $model,
-                    'messages' => [
-                        [
-                            'role' => 'system',
-                            'content' => 'You are a helpful assistant. You must output ONLY a valid JSON array. No explanations, no markdown formatting.'
-                        ],
-                        [
-                            'role' => 'user',
-                            'content' => $prompt,
-                        ],
-                    ],
-                    'temperature' => 0.2,
-                ]);
+                ->post($requestUrl, $payload);
         } catch (Throwable $e) {
             Log::error('LM Studio transport error', [
                 'url' => $requestUrl,
@@ -67,8 +56,8 @@ class GoalAIService
 
             throw new RuntimeException(
                 'Không thể kết nối đến LM Studio tại ' . $requestUrl .
-                '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT. Chi tiết: ' .
-                $e->getMessage()
+                    '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT. Chi tiết: ' .
+                    $e->getMessage()
             );
         }
 
@@ -82,7 +71,7 @@ class GoalAIService
 
         $payload = $response->json();
         $lastRawContent = trim((string) data_get($payload, 'choices.0.message.content', ''));
-        
+
         // Làm sạch JSON trong trường hợp AI trả về markdown code blocks
         $lastRawContent = preg_replace('/```json/i', '', $lastRawContent);
         $lastRawContent = preg_replace('/```/i', '', $lastRawContent);
@@ -171,9 +160,38 @@ Strict rules:
 3) Return a JSON array only, no markdown and no explanation.
 4) Each item must include: title, description, day.
 5) day must be an integer between 1 and {$durationDays}.
-6) Do not reference other goals or other users.
+6) Each day must appear only once.
+7) Do not reference other goals or other users.
 
 Output JSON only.";
+    }
+
+    /**
+     * Build request payload for the configured LM Studio endpoint.
+     */
+    private function buildRequestPayload(string $prompt, string $model, string $chatEndpoint): array
+    {
+        if (str_starts_with($chatEndpoint, '/api/v1/chat')) {
+            return [
+                'model' => $model,
+                'input' => $prompt,
+            ];
+        }
+
+        return [
+            'model' => $model,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'You are a helpful assistant. You must output ONLY a valid JSON array. No explanations, no markdown formatting.',
+                ],
+                [
+                    'role' => 'user',
+                    'content' => $prompt,
+                ],
+            ],
+            'temperature' => 0.2,
+        ];
     }
 
     /**
@@ -187,6 +205,8 @@ Output JSON only.";
         }
 
         $normalized = [];
+        $seenDays = [];
+
         foreach ($decoded as $item) {
             if (
                 ! is_array($item) ||
@@ -199,6 +219,11 @@ Output JSON only.";
             if ($day < 1 || $day > $durationDays) {
                 return null;
             }
+
+            if (in_array($day, $seenDays, true)) {
+                return null;
+            }
+            $seenDays[] = $day;
 
             $normalized[] = [
                 'title' => (string) $item['title'],
