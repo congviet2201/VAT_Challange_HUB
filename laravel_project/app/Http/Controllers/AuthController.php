@@ -91,7 +91,6 @@ class AuthController extends Controller
             return redirect()->intended('/')->with('success', 'Đăng nhập thành công!');
         }
 
-        // Nếu đăng nhập thất bại, trả về lỗi và giữ lại email
         return back()->withErrors([
             'email' => 'Email hoặc mật khẩu không chính xác.',
         ])->onlyInput('email');

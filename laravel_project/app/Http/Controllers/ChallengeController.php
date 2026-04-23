@@ -9,28 +9,19 @@ use App\Models\Challenge;
 use App\Models\ChallengeAiPlan;
 use App\Models\ChallengeAiTask;
 use App\Models\ChallengeProgress;
-use App\Models\Task;
-use App\Models\TaskCompletion;
 use App\Models\Checkin;
 use App\Services\ChallengeAiPlannerService;
 use App\Services\ChallengeFeedbackService;
 
 class ChallengeController extends Controller
 {
-    /**
-     * Handle daily checkin for a challenge.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function checkin(Request $request)
     {
-        // Lấy ID người dùng đã đăng nhập
         $userId = Auth::id();
         $challengeId = $request->challenge_id;
         $today = now()->toDateString();
 
-        // 1. Kiểm tra xem người dùng đã check-in hôm nay chưa
+        // 1. Kiểm tra check-in hôm nay chưa
         $exists = Checkin::where('user_id', $userId)
             ->where('challenge_id', $challengeId)
             ->where('date', $today)
@@ -40,7 +31,7 @@ class ChallengeController extends Controller
             return back()->with('error', 'Bạn đã check-in hôm nay rồi!');
         }
 
-        // 2. Tạo bản ghi checkin mới
+        // 2. Tạo bản ghi Checkin
         Checkin::create([
             'user_id' => $userId,
             'challenge_id' => $challengeId,
@@ -48,7 +39,7 @@ class ChallengeController extends Controller
             'status' => 'done'
         ]);
 
-        // 3. Cập nhật tiến trình thử thách của người dùng
+        // 3. Cập nhật tiến trình (Dùng Model ChallengeProgress cho đồng bộ)
         $uc = ChallengeProgress::where('user_id', $userId)
             ->where('challenge_id', $challengeId)
             ->first();
@@ -56,11 +47,11 @@ class ChallengeController extends Controller
         if ($uc) {
             $uc->completed_days += 1;
 
-            // Giả sử thử thách kéo dài 30 ngày nếu không có giá trị duration_days
+            // Giả sử mỗi thử thách mặc định 30 ngày
             $totalDays = $uc->challenge->duration_days ?? 30;
             $uc->progress = min(($uc->completed_days / $totalDays) * 100, 100);
 
-            // 4. Tính streak (số ngày liên tiếp)
+            // 4. Tính streak (chuỗi ngày liên tiếp)
             $yesterday = now()->subDay()->toDateString();
             $checkedYesterday = Checkin::where('user_id', $userId)
                 ->where('challenge_id', $challengeId)
@@ -79,12 +70,6 @@ class ChallengeController extends Controller
         return back()->with('success', 'Check-in thành công!');
     }
 
-    /**
-     * Start a challenge for the authenticated user.
-     *
-     * @param Challenge $challenge
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function start(Challenge $challenge)
     {
         $user = Auth::user();
@@ -102,27 +87,14 @@ class ChallengeController extends Controller
                 'streak' => 0,
                 'started_at' => now()
             ]);
-
-            // Tạo tasks cho challenge này nếu chưa có
-            $this->createTasksForChallenge($challenge);
         }
 
         return redirect()->route('challenge.progress', $challenge->id)
             ->with('success', 'Bắt đầu thử thách thành công!');
     }
 
-    /**
-     * Show progress details for a challenge.
-     *
-     * @param Challenge $challenge
-     * @return \Illuminate\View\View
-     */
     public function progress(Challenge $challenge)
     {
-        if (!Auth::check()) {
-            return redirect()->route('auth.login');
-        }
-
         $user = Auth::user();
         $progress = ChallengeProgress::where('user_id', $user->id)
             ->where('challenge_id', $challenge->id)

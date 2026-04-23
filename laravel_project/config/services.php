@@ -30,6 +30,27 @@ return [
 
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
+        'verify_ssl' => env('OPENAI_VERIFY_SSL', true),
+    ],
+
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+        'verify_ssl' => env('GEMINI_VERIFY_SSL', true),
+        'model' => env('GEMINI_MODEL', 'gemini-1.5-flash-8b'),
+        'fallback_models' => [
+            'gemini-1.5-flash-8b',
+            'gemini-1.5-flash',
+            'gemini-1.5-pro',
+        ],
+    ],
+
+    'lmstudio' => [
+        'base_url' => env('LMSTUDIO_BASE_URL', 'http://127.0.0.1:8000'),
+        'chat_endpoint' => env('LMSTUDIO_CHAT_ENDPOINT', '/v1/chat/completions'),
+        'api_key' => env('LMSTUDIO_API_KEY', 'sk-dummy-token-1234567890'),
+        'model' => env('LMSTUDIO_MODEL', 'local-model'),
+        'connect_timeout' => (int) env('LMSTUDIO_CONNECT_TIMEOUT', 10),
+        'timeout' => (int) env('LMSTUDIO_TIMEOUT', 180),
     ],
 
     'slack' => [
