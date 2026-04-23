@@ -41,6 +41,7 @@ class GoalController extends Controller
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'category_id' => 'nullable|exists:categories,id',
+                'duration_days' => 'nullable|integer|min:1|max:365',
             ]);
 
             try {
@@ -55,11 +56,15 @@ class GoalController extends Controller
                         'title' => $validated['title'],
                         'category_id' => $categoryId,
                         'description' => $validated['description'] ?? null,
+                        'duration_days' => (int) ($validated['duration_days'] ?? 30),
                     ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
 
-                    $userGoal = trim(($validated['title'] ?? '') . ' ' . ($validated['description'] ?? ''));
                     $aiService = new GoalAIService();
-                    $aiResult = $aiService->generateSubGoalsFromAI($userGoal);
+                    $aiResult = $aiService->generateSubGoalsFromAI([
+                        'title' => (string) $goal->title,
+                        'description' => (string) ($goal->description ?? ''),
+                        'duration_days' => (int) ($goal->duration_days ?? 30),
+                    ]);
                     $subGoalsData = $aiResult['sub_goals'];
 
                     foreach ($subGoalsData as $subGoalData) {
@@ -106,6 +111,7 @@ class GoalController extends Controller
             'goals' => 'required|array|min:1',
             'goals.*.title' => 'required|string',
             'goals.*.category_id' => 'required|exists:categories,id',
+            'goals.*.duration_days' => 'required|integer|min:1|max:365',
         ]);
 
         try {
@@ -117,11 +123,15 @@ class GoalController extends Controller
                         'title' => $goal['title'],
                         'category_id' => $goal['category_id'],
                         'description' => $goal['description'] ?? null,
+                        'duration_days' => (int) ($goal['duration_days'] ?? 30),
                     ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
 
-                    $userGoal = trim(($createdGoal->title ?? '') . ' ' . ($createdGoal->description ?? ''));
                     $aiService = new GoalAIService();
-                    $aiResult = $aiService->generateSubGoalsFromAI($userGoal);
+                    $aiResult = $aiService->generateSubGoalsFromAI([
+                        'title' => (string) $createdGoal->title,
+                        'description' => (string) ($createdGoal->description ?? ''),
+                        'duration_days' => (int) ($createdGoal->duration_days ?? 30),
+                    ]);
                     $subGoalsData = $aiResult['sub_goals'];
 
                     foreach ($subGoalsData as $subGoalData) {
@@ -181,8 +191,11 @@ class GoalController extends Controller
                     ->firstOrFail();
 
         $aiService = new GoalAIService();
-        $userGoal = trim(($goal->title ?? '') . ' ' . ($goal->description ?? ''));
-        $aiResult = $aiService->generateSubGoalsFromAI($userGoal);
+        $aiResult = $aiService->generateSubGoalsFromAI([
+            'title' => (string) $goal->title,
+            'description' => (string) ($goal->description ?? ''),
+            'duration_days' => (int) ($goal->duration_days ?? 30),
+        ]);
         $subGoalsData = $aiResult['sub_goals'];
 
         if (empty($subGoalsData)) {

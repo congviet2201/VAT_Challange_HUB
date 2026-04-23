@@ -10,11 +10,13 @@ class Goal extends Model
     'title',
     'category_id',
     'description',
+    'duration_days',
     'status',
     'last_completed_date'
 ];
 
 protected $casts = [
+    'duration_days' => 'integer',
     'status' => 'string',
 ];
 
