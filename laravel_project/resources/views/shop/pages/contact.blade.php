@@ -1,5 +1,4 @@
 {{-- File purpose: resources/views/shop/pages/contact.blade.php --}}
-{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
 
 @extends('shop.layout.app')
 {{-- Trang Liên hệ dùng layout chính của shop --}}
@@ -38,8 +37,8 @@
                 <div class="card text-center p-4">
                     <h4 class="mb-3">Điện thoại</h4>
                     <p class="text-muted">
-                        <a href="tel:+84123456789" class="text-decoration-none">
-                            +84 (123) 456 789
+                        <a href="tel:+84933145794" class="text-decoration-none">
+                            +84 (0933) 145 794
                         </a>
                     </p>
                 </div>

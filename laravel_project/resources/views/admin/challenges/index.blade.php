@@ -1,5 +1,4 @@
 {{-- File purpose: resources/views/admin/challenges/index.blade.php --}}
-{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
 
 @extends('admin.layout.app')
 {{-- Trang danh sách thử thách trong Admin --}}

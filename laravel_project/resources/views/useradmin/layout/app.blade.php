@@ -1,5 +1,4 @@
 {{-- File purpose: resources/views/useradmin/layout/app.blade.php --}}
-{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
 
 {{-- Layout chính cho khu vực UserAdmin --}}
 {{-- File này chứa cấu trúc sidebar và header dùng chung cho quản trị nhóm --}}

@@ -1,5 +1,4 @@
 {{-- File purpose: resources/views/shop/layout/app.blade.php --}}
-{{-- Chá»‰ bá»• sung chĂº thĂ­ch, khĂ´ng thay Ä‘á»•i logic hiá»ƒn thá»‹. --}}
 
 <!DOCTYPE html>
 <html lang="vi">
