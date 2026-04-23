@@ -37,6 +37,8 @@
                 </select>
 
                 <textarea class="form-control" name="goals[0][description]" placeholder="Mô tả"></textarea>
+
+                <input class="form-control mt-2" type="number" min="1" max="365" name="goals[0][duration_days]" placeholder="Thời hạn mục tiêu (số ngày)" value="30" required>
             </div>
         </div>
 

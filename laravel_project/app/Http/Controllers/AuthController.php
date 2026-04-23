@@ -10,6 +10,15 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Controller xác thực người dùng:
+ * đăng ký, đăng nhập và đăng xuất.
+ *
+ * Phụ thuộc chính:
+ * - User model
+ * - Laravel Auth/Hash
+ * - WelcomeMail cho email chào mừng
+ */
 class AuthController extends Controller
 {
     /**

@@ -7,8 +7,19 @@ use App\Models\ChallengeAiPlan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Dịch vụ tạo lộ trình AI cho Challenge.
+ *
+ * Luồng chính:
+ * - Ưu tiên gọi OpenAI để sinh plan.
+ * - Nếu lỗi, fallback sang plan nội bộ.
+ * - Persist vào challenge_ai_plans và challenge_ai_tasks.
+ */
 class ChallengeAiPlannerService
 {
+    /**
+     * Entry-point tạo AI plan cho một user/challenge.
+     */
     public static function generatePlan(Challenge $challenge, int $userId, string $currentLevel): ChallengeAiPlan
     {
         try {
@@ -30,6 +41,9 @@ class ChallengeAiPlannerService
         return self::persistPlan($challenge, $userId, $currentLevel, $fallbackPlan, 'fallback');
     }
 
+    /**
+     * Gọi OpenAI Chat Completions để sinh roadmap dạng JSON.
+     */
     protected static function createOpenAiPlan(Challenge $challenge, int $userId, string $currentLevel): array
     {
         $apiKey = config('services.openai.key') ?? env('OPENAI_API_KEY');
@@ -82,6 +96,9 @@ class ChallengeAiPlannerService
         ];
     }
 
+    /**
+     * Lưu plan và danh sách task vào DB.
+     */
     protected static function persistPlan(
         Challenge $challenge,
         int $userId,
@@ -104,6 +121,9 @@ class ChallengeAiPlannerService
         return $aiPlan->load('tasks');
     }
 
+    /**
+     * Tạo prompt cá nhân hóa cho AI theo thông tin challenge và current level.
+     */
     protected static function buildPrompt(Challenge $challenge, string $currentLevel): string
     {
         $categoryName = optional($challenge->category)->name ?? 'Danh mục không xác định';
@@ -139,6 +159,9 @@ Yêu cầu:
 PROMPT);
     }
 
+    /**
+     * Parse nội dung phản hồi thành JSON object.
+     */
     protected static function parseJsonResponse(string $content): ?array
     {
         $json = trim($content);
@@ -157,6 +180,9 @@ PROMPT);
         return json_last_error() === JSON_ERROR_NONE ? $parsed : null;
     }
 
+    /**
+     * Chuẩn hóa danh sách tasks để đảm bảo dữ liệu nhất quán trước khi lưu.
+     */
     protected static function normalizeTasks(array $tasks): array
     {
         $normalized = [];
@@ -183,6 +209,9 @@ PROMPT);
         return $normalized;
     }
 
+    /**
+     * Dự phòng khi không dùng được OpenAI.
+     */
     protected static function buildFallbackPlan(Challenge $challenge, string $currentLevel): array
     {
         $baseTime = max(10, (int) ($challenge->daily_time ?? 30));

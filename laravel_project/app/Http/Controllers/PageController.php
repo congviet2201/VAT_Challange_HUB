@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+/**
+ * Controller cho các trang nội dung tĩnh và form liên hệ.
+ */
 class PageController extends Controller
 {
     /**

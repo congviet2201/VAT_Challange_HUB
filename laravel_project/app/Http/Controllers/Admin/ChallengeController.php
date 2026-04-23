@@ -7,6 +7,13 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Controller quản trị Challenge cho admin.
+ *
+ * Chức năng:
+ * - Quản lý vòng đời challenge (CRUD)
+ * - Tổng hợp thống kê người tham gia / hoàn thành challenge
+ */
 class ChallengeController extends Controller
 {
     /**

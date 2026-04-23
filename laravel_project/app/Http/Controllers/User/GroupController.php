@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller cho user thường tương tác với nhóm.
+ *
+ * Bao gồm: xem danh sách nhóm, xem chi tiết, tham gia và rời nhóm.
+ */
 class GroupController extends Controller
 {
     public function index()

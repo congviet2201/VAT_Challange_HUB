@@ -3,6 +3,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Model Goal (mục tiêu chính) của người dùng.
+ *
+ * Chứa metadata của mục tiêu và quan hệ 1-n với SubGoal.
+ */
 class Goal extends Model
 {
  protected $fillable = [
@@ -10,11 +15,13 @@ class Goal extends Model
     'title',
     'category_id',
     'description',
+    'duration_days',
     'status',
     'last_completed_date'
 ];
 
 protected $casts = [
+    'duration_days' => 'integer',
     'status' => 'string',
 ];
 
@@ -34,6 +41,9 @@ public function subGoals()
     return $this->hasMany(SubGoal::class);
 }
 
+/**
+ * Kiểm tra goal đã hoàn thành hay chưa dựa vào cột status.
+ */
 public function isCompleted()
 {
     if (! Schema::hasColumn('goals', 'status')) {
@@ -43,6 +53,9 @@ public function isCompleted()
     return $this->status === 'completed';
 }
 
+/**
+ * Đồng bộ trạng thái goal dựa trên tỷ lệ sub-goal completed.
+ */
 public function checkCompletion()
 {
     if (! Schema::hasColumn('goals', 'status')) {

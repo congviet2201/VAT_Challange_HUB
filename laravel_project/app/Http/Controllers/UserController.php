@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Controller quản trị người dùng và hồ sơ cá nhân.
+ *
+ * Bao gồm:
+ * - Quản lý danh sách user theo quyền
+ * - Tạo/sửa tài khoản user
+ * - Khóa/mở khóa tài khoản
+ * - Hiển thị profile và thống kê tiến độ challenge
+ */
 class UserController extends Controller
 {
     /**

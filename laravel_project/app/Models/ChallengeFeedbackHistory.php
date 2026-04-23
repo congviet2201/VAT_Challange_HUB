@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model lưu lịch sử feedback AI theo từng user/challenge.
+ */
 class ChallengeFeedbackHistory extends Model
 {
     use HasFactory;

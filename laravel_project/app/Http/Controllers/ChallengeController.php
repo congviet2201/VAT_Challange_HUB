@@ -13,8 +13,22 @@ use App\Models\Checkin;
 use App\Services\ChallengeAiPlannerService;
 use App\Services\ChallengeFeedbackService;
 
+/**
+ * Điều phối các tác vụ liên quan đến Challenge:
+ * - bắt đầu thử thách
+ * - check-in hằng ngày
+ * - tạo lộ trình AI
+ * - hoàn thành AI task và đồng bộ tiến độ
+ *
+ * Phụ thuộc chính:
+ * - Models: Challenge, ChallengeProgress, Checkin, ChallengeAiPlan, ChallengeAiTask
+ * - Services: ChallengeAiPlannerService, ChallengeFeedbackService
+ */
 class ChallengeController extends Controller
 {
+    /**
+     * Check-in theo ngày và cập nhật tiến độ challenge.
+     */
     public function checkin(Request $request)
     {
         $userId = Auth::id();
@@ -70,6 +84,9 @@ class ChallengeController extends Controller
         return back()->with('success', 'Check-in thành công!');
     }
 
+    /**
+     * Khởi tạo tiến độ khi user bắt đầu challenge.
+     */
     public function start(Challenge $challenge)
     {
         $user = Auth::user();
@@ -93,6 +110,9 @@ class ChallengeController extends Controller
             ->with('success', 'Bắt đầu thử thách thành công!');
     }
 
+    /**
+     * Trang theo dõi tiến độ challenge + dữ liệu AI roadmap.
+     */
     public function progress(Challenge $challenge)
     {
         $user = Auth::user();
@@ -113,6 +133,14 @@ class ChallengeController extends Controller
         $completedAiTaskCount = $latestAiPlan
             ? $latestAiPlan->tasks->whereNotNull('completed_at')->count()
             : 0;
+        $hasCompletedAiTaskToday = ChallengeAiTask::query()
+            ->whereHas('plan', function ($query) use ($user, $challenge) {
+                $query->where('user_id', $user->id)
+                    ->where('challenge_id', $challenge->id);
+            })
+            ->whereNotNull('completed_at')
+            ->whereDate('completed_at', now()->toDateString())
+            ->exists();
 
         return view('shop.challenge-progress', compact(
             'challenge',
@@ -121,10 +149,14 @@ class ChallengeController extends Controller
             'feedback',
             'latestAiPlan',
             'aiTaskCount',
-            'completedAiTaskCount'
+            'completedAiTaskCount',
+            'hasCompletedAiTaskToday'
         ));
     }
 
+    /**
+     * Sinh lộ trình AI cá nhân hóa dựa trên trình độ hiện tại.
+     */
     public function generateAiRoadmap(Request $request, Challenge $challenge)
     {
         $request->validate([
@@ -155,6 +187,9 @@ class ChallengeController extends Controller
             ->with('success', 'Đã tạo lộ trình AI cá nhân hóa cho bạn.');
     }
 
+    /**
+     * Đánh dấu AI task đã hoàn thành với ảnh minh chứng.
+     */
     public function completeAiTask(Request $request, Challenge $challenge, ChallengeAiTask $task)
     {
         $request->validate([
@@ -190,6 +225,20 @@ class ChallengeController extends Controller
                 ->with('error', 'Task này đã được hoàn thành trước đó.');
         }
 
+        $hasCompletedAiTaskToday = ChallengeAiTask::query()
+            ->whereHas('plan', function ($query) use ($user, $challenge) {
+                $query->where('user_id', $user->id)
+                    ->where('challenge_id', $challenge->id);
+            })
+            ->whereNotNull('completed_at')
+            ->whereDate('completed_at', now()->toDateString())
+            ->exists();
+
+        if ($hasCompletedAiTaskToday) {
+            return redirect()->route('challenge.progress', $challenge->id)
+                ->with('error', 'Bạn đã hoàn thành 1 task hôm nay. Vui lòng quay lại vào ngày mai.');
+        }
+
         $path = $request->file('proof_image')->store('challenge-proofs', 'public');
 
         $task->update([
@@ -209,6 +258,9 @@ class ChallengeController extends Controller
             ->with('success', 'Đã hoàn thành task và cập nhật tiến độ.');
     }
 
+    /**
+     * Seed task mặc định cho challenge (dùng cho fallback nội bộ).
+     */
     protected function createTasksForChallenge(Challenge $challenge): void
     {
         if ($challenge->tasks()->exists()) {
@@ -238,6 +290,9 @@ class ChallengeController extends Controller
         }
     }
 
+    /**
+     * Đồng bộ phần trăm progress từ số lượng AI task đã hoàn thành.
+     */
     protected function syncProgressFromAiPlan(ChallengeProgress $progress, ?ChallengeAiPlan $plan): void
     {
         if (!$plan) {

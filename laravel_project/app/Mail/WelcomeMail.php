@@ -6,6 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Mailable gửi email chào mừng sau khi user đăng ký thành công.
+ */
 class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;

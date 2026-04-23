@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model Task chuẩn gắn với một challenge.
+ */
 class Task extends Model
 {
     protected $table = 'tasks';

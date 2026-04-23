@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Model lưu metadata của một kế hoạch AI cá nhân hóa theo user/challenge.
+ */
 class ChallengeAiPlan extends Model
 {
     protected $table = 'challenge_ai_plans';
