@@ -38,6 +38,8 @@ class GoalAIService
         $model = (string) config('services.lmstudio.model', 'local-model');
         $connectTimeout = max((int) config('services.lmstudio.connect_timeout', 10), 1);
         $timeout = max((int) config('services.lmstudio.timeout', 180), $connectTimeout);
+        $host = (string) (parse_url($baseUrl, PHP_URL_HOST) ?: '');
+        $port = (int) (parse_url($baseUrl, PHP_URL_PORT) ?: 80);
         
         try {
             $response = Http::withToken($token)
@@ -65,11 +67,7 @@ class GoalAIService
                 'error' => $e->getMessage(),
             ]);
 
-            throw new RuntimeException(
-                'Không thể kết nối đến LM Studio tại ' . $requestUrl .
-                '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT. Chi tiết: ' .
-                $e->getMessage()
-            );
+            throw new RuntimeException($this->transportErrorMessage($requestUrl, $host, $port, $e));
         }
 
         if (! $response->successful()) {
@@ -128,6 +126,27 @@ class GoalAIService
         }
 
         return 'LM Studio trả lỗi HTTP ' . $status . '. ' . $inner;
+    }
+
+    /**
+     * Chuẩn hóa thông điệp lỗi khi không kết nối được tới LM Studio.
+     */
+    private function transportErrorMessage(string $requestUrl, string $host, int $port, Throwable $e): string
+    {
+        $message = 'Không thể kết nối đến LM Studio tại ' . $requestUrl .
+            '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT.';
+
+        if ($host === '127.0.0.1' && $port === 8000) {
+            $message .= ' Cổng 8000 thường đang được Laravel dev server sử dụng; LM Studio mặc định thường chạy ở cổng 1234.';
+        }
+
+        if ($host !== '' && $host !== '127.0.0.1' && $host !== 'localhost') {
+            $message .= ' Host hiện tại là máy từ xa (' . $host . '), nên máy chạy Laravel phải truy cập được địa chỉ này qua mạng LAN.';
+        }
+
+        $message .= ' Chi tiết: ' . $e->getMessage();
+
+        return $message;
     }
 
     /**

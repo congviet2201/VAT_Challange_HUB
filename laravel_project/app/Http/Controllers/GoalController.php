@@ -25,6 +25,29 @@ use Throwable;
 class GoalController extends Controller
 {
     /**
+     * Build goal attributes compatible with current schema.
+     */
+    private function buildGoalAttributes(array $goalInput): array
+    {
+        $attributes = [
+            'user_id' => Auth::id(),
+            'title' => $goalInput['title'],
+            'category_id' => $goalInput['category_id'],
+            'description' => $goalInput['description'] ?? null,
+        ];
+
+        if (Schema::hasColumn('goals', 'duration_days')) {
+            $attributes['duration_days'] = (int) ($goalInput['duration_days'] ?? 30);
+        }
+
+        if (Schema::hasColumn('goals', 'status')) {
+            $attributes['status'] = 'pending';
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Hiển thị danh sách goal của người dùng hiện tại.
      */
     public function index()
@@ -72,19 +95,20 @@ class GoalController extends Controller
                         throw new \RuntimeException('No category found for goal creation.');
                     }
 
-                    $goal = Goal::create([
-                        'user_id' => Auth::id(),
+                    $durationDays = (int) ($validated['duration_days'] ?? 30);
+
+                    $goal = Goal::create($this->buildGoalAttributes([
                         'title' => $validated['title'],
                         'category_id' => $categoryId,
                         'description' => $validated['description'] ?? null,
-                        'duration_days' => (int) ($validated['duration_days'] ?? 30),
-                    ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
+                        'duration_days' => $durationDays,
+                    ]));
 
                     $aiService = new GoalAIService();
                     $aiResult = $aiService->generateSubGoalsFromAI([
                         'title' => (string) $goal->title,
                         'description' => (string) ($goal->description ?? ''),
-                        'duration_days' => (int) ($goal->duration_days ?? 30),
+                        'duration_days' => (int) ($goal->duration_days ?? $durationDays),
                     ]);
                     $subGoalsData = $aiResult['sub_goals'];
 
@@ -139,19 +163,19 @@ class GoalController extends Controller
             $createdGoals = [];
             foreach ($request->goals as $goal) {
                 $goalModel = DB::transaction(function () use ($goal) {
-                    $createdGoal = Goal::create([
-                        'user_id' => Auth::id(),
+                    $durationDays = (int) ($goal['duration_days'] ?? 30);
+                    $createdGoal = Goal::create($this->buildGoalAttributes([
                         'title' => $goal['title'],
                         'category_id' => $goal['category_id'],
                         'description' => $goal['description'] ?? null,
-                        'duration_days' => (int) ($goal['duration_days'] ?? 30),
-                    ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
+                        'duration_days' => $durationDays,
+                    ]));
 
                     $aiService = new GoalAIService();
                     $aiResult = $aiService->generateSubGoalsFromAI([
                         'title' => (string) $createdGoal->title,
                         'description' => (string) ($createdGoal->description ?? ''),
-                        'duration_days' => (int) ($createdGoal->duration_days ?? 30),
+                        'duration_days' => (int) ($createdGoal->duration_days ?? $durationDays),
                     ]);
                     $subGoalsData = $aiResult['sub_goals'];
 

@@ -45,7 +45,7 @@ return [
     ],
 
     'lmstudio' => [
-        'base_url' => env('LMSTUDIO_BASE_URL', 'http://127.0.0.1:8000'),
+        'base_url' => env('LMSTUDIO_BASE_URL', 'http://127.0.0.1:1234'),
         'chat_endpoint' => env('LMSTUDIO_CHAT_ENDPOINT', '/v1/chat/completions'),
         'api_key' => env('LMSTUDIO_API_KEY', 'sk-dummy-token-1234567890'),
         'model' => env('LMSTUDIO_MODEL', 'local-model'),
