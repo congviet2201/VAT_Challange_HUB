@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/challenge-detail.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')

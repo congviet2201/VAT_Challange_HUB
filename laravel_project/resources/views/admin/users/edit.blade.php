@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/admin/users/edit.blade.php --}}
+
 @extends('admin.layout.app')
 {{-- Trang chỉnh sửa thông tin người dùng trong Admin --}}
 

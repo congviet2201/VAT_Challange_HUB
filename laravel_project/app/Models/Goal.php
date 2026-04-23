@@ -1,4 +1,9 @@
 <?php
+/**
+ * File purpose: app/Models/Goal.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
+
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -27,15 +32,24 @@ protected $casts = [
 
 protected $table = 'goals';
 
+/**
+ * Hàm user(): xử lý nghiệp vụ theo tên hàm.
+ */
 public function user()
 {
     return $this->belongsTo(User::class, 'user_id');
 }
+/**
+ * Hàm category(): xử lý nghiệp vụ theo tên hàm.
+ */
 public function category()
 {
     return $this->belongsTo(Category::class, 'category_id');
 }
 
+/**
+ * Hàm subGoals(): xử lý nghiệp vụ theo tên hàm.
+ */
 public function subGoals()
 {
     return $this->hasMany(SubGoal::class);

@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: database/migrations/2025_04_14_000009_add_completed_days_and_streak_to_challenge_progress.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

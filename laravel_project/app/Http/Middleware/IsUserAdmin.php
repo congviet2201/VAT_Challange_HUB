@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Middleware/IsUserAdmin.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Http\Middleware;
 

@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/auth/register.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')

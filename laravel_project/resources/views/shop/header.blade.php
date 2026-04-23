@@ -1,3 +1,6 @@
+{{-- Mục đích file: resources/views/shop/header.blade.php --}}
+{{-- Khung hiển thị thanh điều hướng (header) trên cùng của các trang giao diện người dùng. --}}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand fw-bold text-primary" href="{{ route('home') }}">
@@ -27,25 +30,28 @@
             </form>
 
             <div class="ms-auto d-flex gap-2 align-items-center flex-wrap">
-                <a href="{{ route('challenges') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Thử thách</a>
-                <a href="{{ route('about') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Giới thiệu</a>
-                <a href="{{ route('contact') }}" class="btn btn-outline-primary btn-sm px-2 py-1">Liên hệ</a>
-                <a href="{{ route('goals.index') }}" class="btn btn-success btn-sm px-2 py-1"><i class="bi bi-bullseye"></i> Mục tiêu</a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary btn-sm px-3 py-1 dropdown-toggle" type="button" id="headerMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-grid"></i> Menu
+                    </button>
+                    <ul class="dropdown-menu shadow-sm" aria-labelledby="headerMenuDropdown">
+                        <li><a class="dropdown-item" href="{{ route('challenges') }}">Thử thách</a></li>
+                        <li><a class="dropdown-item" href="{{ route('about') }}">Giới thiệu</a></li>
+                        <li><a class="dropdown-item" href="{{ route('contact') }}">Liên hệ</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-success" href="{{ route('goals.index') }}"><i class="bi bi-bullseye"></i> Mục tiêu</a></li>
+                        @if (Auth::check())
+                            @if (Auth::user()->role === 'admin')
+                                <li><a class="dropdown-item text-info" href="{{ route('admin.challenges.index') }}"><i class="bi bi-gear"></i> Quản lý</a></li>
+                            @elseif (Auth::user()->role === 'useradmin')
+                                <li><a class="dropdown-item text-primary" href="{{ route('useradmin.groups.index') }}"><i class="bi bi-people"></i> Nhóm</a></li>
+                            @else
+                                <li><a class="dropdown-item text-primary" href="{{ route('user.groups.index') }}"><i class="bi bi-people"></i> Nhóm</a></li>
+                            @endif
+                        @endif
+                    </ul>
+                </div>
                 @if (Auth::check())
-                    @if (Auth::user()->role === 'admin')
-                        <a href="{{ route('admin.challenges.index') }}" class="btn btn-info btn-sm px-2 py-1">
-                            <i class="bi bi-gear"></i> Quản lý
-                        </a>
-                    @elseif (Auth::user()->role === 'useradmin')
-                        <a href="{{ route('useradmin.groups.index') }}" class="btn btn-primary btn-sm px-2 py-1">
-                            <i class="bi bi-people"></i> Nhóm
-                        </a>
-                    @else
-                        <a href="{{ route('user.groups.index') }}" class="btn btn-primary btn-sm px-2 py-1">
-                            <i class="bi bi-people"></i> Nhóm
-                        </a>
-                    @endif
-
                     <a href="{{ route('profile') }}" class="btn btn-secondary btn-sm px-2 py-1">
                         <i class="bi bi-person"></i> {{ Auth::user()->name }}
                     </a>

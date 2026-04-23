@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/useradmin/notifications/index.blade.php --}}
+
 @extends('useradmin.layout.app')
 {{-- Trang danh sách thông báo cho UserAdmin --}}
 

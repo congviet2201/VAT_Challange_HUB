@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/useradmin/groups/add-users.blade.php --}}
+
 @extends('useradmin.layout.app')
 {{-- Trang thêm user vào nhóm cho UserAdmin --}}
 

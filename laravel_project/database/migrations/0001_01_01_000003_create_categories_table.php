@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: database/migrations/0001_01_01_000003_create_categories_table.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

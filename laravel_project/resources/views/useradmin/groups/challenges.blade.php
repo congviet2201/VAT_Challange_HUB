@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/useradmin/groups/challenges.blade.php --}}
+
 @extends('useradmin.layout.app')
 {{-- Trang danh sách thử thách của nhóm cho UserAdmin --}}
 

@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/home.blade.php --}}
+
 @extends('shop.layout.app')
 {{-- Kế thừa layout chính của shop --}}
 

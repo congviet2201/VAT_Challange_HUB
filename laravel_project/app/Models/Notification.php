@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/Notification.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Models;
 
@@ -18,11 +22,17 @@ class Notification extends Model
         'message',
     ];
 
+    /**
+     * Hàm group(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function group()
     {
         return $this->belongsTo(Group::class);
     }
 
+    /**
+     * Hàm creator(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

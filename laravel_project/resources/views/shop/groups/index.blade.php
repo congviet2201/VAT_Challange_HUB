@@ -1,3 +1,6 @@
+{{-- File purpose: resources/views/shop/groups/index.blade.php --}}
+{{-- Chỉ bổ sung chú thích, không thay đổi logic hiển thị. --}}
+
 @extends('shop.layout.app')
 {{-- Trang danh sách nhóm thử thách dành cho người dùng --}}
 

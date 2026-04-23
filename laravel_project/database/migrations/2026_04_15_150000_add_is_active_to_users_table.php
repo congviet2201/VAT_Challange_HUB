@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: database/migrations/2026_04_15_150000_add_is_active_to_users_table.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

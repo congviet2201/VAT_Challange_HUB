@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/goals/create.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')

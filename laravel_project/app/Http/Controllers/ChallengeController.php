@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Http/Controllers/ChallengeController.php
+ * Xử lý các nghiệp vụ liên quan đến Thử thách (Challenge) của người dùng.
+ */
 
 namespace App\Http\Controllers;
 
@@ -14,20 +18,23 @@ use App\Services\ChallengeAiPlannerService;
 use App\Services\ChallengeFeedbackService;
 
 /**
- * Điều phối các tác vụ liên quan đến Challenge:
- * - bắt đầu thử thách
- * - check-in hằng ngày
- * - tạo lộ trình AI
- * - hoàn thành AI task và đồng bộ tiến độ
+ * Lớp ChallengeController: Điều phối toàn bộ các tương tác của người dùng với một Thử thách (Challenge).
+ * Bao gồm các tác vụ:
+ * - Bắt đầu tham gia thử thách
+ * - Điểm danh (check-in) hàng ngày để duy trì chuỗi (streak)
+ * - Yêu cầu AI tạo lộ trình cá nhân hóa dựa trên trình độ hiện tại
+ * - Nộp minh chứng để hoàn thành các nhiệm vụ (tasks) do AI đề ra và cập nhật tiến độ
  *
  * Phụ thuộc chính:
  * - Models: Challenge, ChallengeProgress, Checkin, ChallengeAiPlan, ChallengeAiTask
- * - Services: ChallengeAiPlannerService, ChallengeFeedbackService
+ * - Services: ChallengeAiPlannerService (Gọi AI tạo lộ trình), ChallengeFeedbackService (Phân tích phản hồi)
  */
 class ChallengeController extends Controller
 {
     /**
-     * Check-in theo ngày và cập nhật tiến độ challenge.
+     * Hàm checkin(): Xử lý logic điểm danh hàng ngày của người dùng cho một thử thách cụ thể.
+     * Kiểm tra xem người dùng đã điểm danh trong ngày chưa, nếu chưa thì tạo bản ghi Checkin,
+     * sau đó tính toán lại phần trăm hoàn thành và chuỗi ngày liên tục (streak).
      */
     public function checkin(Request $request)
     {
@@ -85,7 +92,9 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Khởi tạo tiến độ khi user bắt đầu challenge.
+     * Hàm start(): Xử lý logic khi người dùng bấm nút "Bắt đầu thử thách".
+     * Khởi tạo một bản ghi tiến độ (ChallengeProgress) với điểm xuất phát ban đầu là 0
+     * nếu người dùng chưa từng tham gia thử thách này.
      */
     public function start(Challenge $challenge)
     {
@@ -111,7 +120,9 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Trang theo dõi tiến độ challenge + dữ liệu AI roadmap.
+     * Hàm progress(): Hiển thị trang theo dõi tiến độ của thử thách.
+     * Cung cấp các thông tin: tổng quan tiến độ, lộ trình do AI lập ra (nếu có),
+     * số lượng task đã hoàn thành và xem hôm nay đã hoàn thành task nào chưa.
      */
     public function progress(Challenge $challenge)
     {
@@ -155,7 +166,8 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Sinh lộ trình AI cá nhân hóa dựa trên trình độ hiện tại.
+     * Hàm generateAiRoadmap(): Nhận yêu cầu từ người dùng để sinh ra lộ trình học tập bằng AI.
+     * Cần đầu vào là trình độ hiện tại của người dùng. Hệ thống sẽ gọi AI tạo ra danh sách các nhiệm vụ cụ thể.
      */
     public function generateAiRoadmap(Request $request, Challenge $challenge)
     {
@@ -188,7 +200,9 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Đánh dấu AI task đã hoàn thành với ảnh minh chứng.
+     * Hàm completeAiTask(): Xử lý khi người dùng nộp minh chứng hoàn thành một nhiệm vụ do AI đề ra.
+     * Yêu cầu phải đính kèm hình ảnh làm minh chứng. Lưu ảnh vào hệ thống, đánh dấu task đã hoàn thành,
+     * và đồng thời cập nhật lại tiến độ (phần trăm) của toàn bộ thử thách.
      */
     public function completeAiTask(Request $request, Challenge $challenge, ChallengeAiTask $task)
     {
@@ -259,7 +273,8 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Seed task mặc định cho challenge (dùng cho fallback nội bộ).
+     * Hàm createTasksForChallenge(): Tạo danh sách các nhiệm vụ mặc định ban đầu nếu thử thách chưa có nhiệm vụ nào.
+     * Dùng như một biện pháp dự phòng (fallback) để đảm bảo luôn có sườn nội dung cơ bản.
      */
     protected function createTasksForChallenge(Challenge $challenge): void
     {
@@ -291,7 +306,8 @@ class ChallengeController extends Controller
     }
 
     /**
-     * Đồng bộ phần trăm progress từ số lượng AI task đã hoàn thành.
+     * Hàm syncProgressFromAiPlan(): Đồng bộ (tính toán lại) phần trăm tiến độ của thử thách
+     * dựa trên số lượng các nhiệm vụ AI (AI Tasks) mà người dùng đã hoàn thành so với tổng số nhiệm vụ.
      */
     protected function syncProgressFromAiPlan(ChallengeProgress $progress, ?ChallengeAiPlan $plan): void
     {

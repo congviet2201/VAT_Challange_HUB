@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Models/ChallengeAiTask.php
+ * Định nghĩa cấu trúc bảng lưu từng nhiệm vụ cụ thể (task) do AI tạo ra.
+ */
 
 namespace App\Models;
 
@@ -26,6 +30,9 @@ class ChallengeAiTask extends Model
         'completed_at' => 'datetime',
     ];
 
+    /**
+     * Hàm plan(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function plan()
     {
         return $this->belongsTo(ChallengeAiPlan::class, 'challenge_ai_plan_id');

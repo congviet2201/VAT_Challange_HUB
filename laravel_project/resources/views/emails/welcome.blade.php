@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/emails/welcome.blade.php --}}
+
 <!DOCTYPE html>
 <html>
 <head>

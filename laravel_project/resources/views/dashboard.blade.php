@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/dashboard.blade.php --}}
+
 @extends('shop.layout.app')
 {{-- Trang dashboard hiển thị tiến độ challenge của người dùng --}}
 

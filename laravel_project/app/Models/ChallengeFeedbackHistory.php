@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Models/ChallengeFeedbackHistory.php
+ * Định nghĩa cấu trúc bảng lưu lịch sử phản hồi AI cho từng user và challenge.
+ */
 
 namespace App\Models;
 
@@ -26,11 +30,17 @@ class ChallengeFeedbackHistory extends Model
         'suggestions' => 'array',
     ];
 
+    /**
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function challenge()
     {
         return $this->belongsTo(Challenge::class);

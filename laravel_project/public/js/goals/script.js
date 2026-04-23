@@ -1,3 +1,7 @@
+/**
+ * File purpose: public/js/goals/script.js
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     let index = 1;

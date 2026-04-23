@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/layout/app.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>

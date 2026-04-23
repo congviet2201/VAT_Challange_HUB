@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Models/ChallengeAiPlan.php
+ * Định nghĩa cấu trúc bảng lưu kế hoạch AI cá nhân hóa cho từng user và challenge.
+ */
 
 namespace App\Models;
 
@@ -19,16 +23,25 @@ class ChallengeAiPlan extends Model
         'summary',
     ];
 
+    /**
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function challenge()
     {
         return $this->belongsTo(Challenge::class);
     }
 
+    /**
+     * Hàm tasks(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function tasks()
     {
         return $this->hasMany(ChallengeAiTask::class)->orderBy('order');

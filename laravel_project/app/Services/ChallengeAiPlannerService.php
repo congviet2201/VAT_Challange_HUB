@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Services/ChallengeAiPlannerService.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Services;
 
@@ -14,6 +18,9 @@ use Illuminate\Support\Facades\Log;
  * - Ưu tiên gọi OpenAI để sinh plan.
  * - Nếu lỗi, fallback sang plan nội bộ.
  * - Persist vào challenge_ai_plans và challenge_ai_tasks.
+ */
+/**
+ * Lớp ChallengeAiPlannerService: mô tả vai trò chính của file.
  */
 class ChallengeAiPlannerService
 {

@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/profile.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')

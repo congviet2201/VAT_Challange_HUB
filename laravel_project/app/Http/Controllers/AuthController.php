@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/AuthController.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Http\Controllers;
 
@@ -19,6 +23,11 @@ use Illuminate\Support\Facades\Log;
  * - Laravel Auth/Hash
  * - WelcomeMail cho email chào mừng
  */
+/**
+ * Lớp AuthController: Xử lý các nghiệp vụ liên quan đến xác thực người dùng.
+ * Cụ thể bao gồm: hiển thị giao diện, xử lý đăng ký tài khoản (kèm gửi email chào mừng),
+ * xử lý đăng nhập, và đăng xuất khỏi hệ thống.
+ */
 class AuthController extends Controller
 {
     /**
@@ -36,6 +45,11 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * Hàm register(): Xử lý logic đăng ký tài khoản mới.
+     * Validate dữ liệu form, tạo người dùng mới, tự động gửi email chào mừng (WelcomeMail),
+     * và chuyển hướng người dùng về trang đăng nhập với thông báo thành công.
      */
     public function register(Request $request)
     {
@@ -84,6 +98,11 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    /**
+     * Hàm login(): Xử lý quá trình đăng nhập.
+     * Kiểm tra thông tin email, mật khẩu. Nếu hợp lệ, hệ thống sẽ tái tạo lại session
+     * để tránh lỗi bảo mật (session fixation), sau đó chuyển hướng người dùng về trang đích ban đầu.
+     */
     public function login(Request $request)
     {
         // Xác thực dữ liệu người dùng
@@ -110,6 +129,11 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * Hàm logout(): Xử lý việc đăng xuất người dùng khỏi hệ thống.
+     * Xóa bỏ session hiện tại và tạo token CSRF mới để bảo vệ ứng dụng,
+     * sau đó đưa người dùng về lại trang chủ.
      */
     public function logout(Request $request)
     {

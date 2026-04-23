@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/admin/users/create.blade.php --}}
+
 @extends('admin.layout.app')
 {{-- Trang tạo người dùng mới trong Admin --}}
 

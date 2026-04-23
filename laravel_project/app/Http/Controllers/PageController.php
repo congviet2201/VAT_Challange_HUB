@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/PageController.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Http\Controllers;
 
@@ -34,6 +38,11 @@ class PageController extends Controller
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     */
+    /**
+     * Hàm sendContact(): Xử lý form liên hệ được gửi từ người dùng.
+     * Xác thực các trường dữ liệu bắt buộc (tên, email, tiêu đề, nội dung).
+     * Trả về thông báo thành công sau khi xác thực hợp lệ (chưa tích hợp gửi mail thực tế).
      */
     public function sendContact(Request $request)
     {
