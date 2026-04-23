@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Http/Controllers/UserAdmin/NotificationController.php
+ * Quản lý việc soạn và gửi thông báo của quản trị viên (UserAdmin) tới các nhóm mà họ quản lý.
+ */
 
 namespace App\Http\Controllers\UserAdmin;
 
@@ -8,9 +12,16 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Lớp NotificationController: Chịu trách nhiệm quản lý thông báo của UserAdmin theo từng nhóm phụ trách.
+ * Cung cấp các tính năng: xem danh sách thông báo đã gửi, gửi thông báo mới cho nhóm, xem chi tiết và xóa thông báo.
+ */
 class NotificationController extends Controller
 {
-    // Hiển thị danh sách thông báo của UserAdmin
+    /**
+     * Hàm index(): Lấy danh sách các thông báo do chính UserAdmin hiện tại đã tạo ra,
+     * kèm theo thông tin của nhóm nhận thông báo, sắp xếp theo thời gian mới nhất.
+     */
     public function index()
     {
         $auth = Auth::user();
@@ -23,7 +34,10 @@ class NotificationController extends Controller
         return view('useradmin.notifications.index', compact('notifications'));
     }
 
-    // Form gửi thông báo
+    /**
+     * Hàm create(): Trả về form để UserAdmin soạn và gửi thông báo mới.
+     * Chỉ lấy danh sách các nhóm đang hoạt động và do chính UserAdmin này quản lý để hiển thị vào thẻ select.
+     */
     public function create()
     {
         $auth = Auth::user();
@@ -35,7 +49,10 @@ class NotificationController extends Controller
         return view('useradmin.notifications.create', compact('groups'));
     }
 
-    // Lưu thông báo
+    /**
+     * Hàm store(): Nhận dữ liệu từ form, kiểm tra quyền sở hữu đối với nhóm được chọn,
+     * và lưu thông báo mới vào cơ sở dữ liệu.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -63,7 +80,11 @@ class NotificationController extends Controller
             ->with('success', '✅ Gửi thông báo tới nhóm thành công!');
     }
 
-    // Xem chi tiết thông báo
+    /**
+     * Hàm show(): Hiển thị nội dung chi tiết của một thông báo cụ thể.
+     * Kèm theo hiển thị danh sách các thành viên trong nhóm nhận thông báo đó.
+     * Cần kiểm tra quyền sở hữu thông báo trước khi cho phép xem.
+     */
     public function show(Notification $notification)
     {
         if ($notification->created_by !== Auth::id()) {
@@ -75,7 +96,10 @@ class NotificationController extends Controller
         return view('useradmin.notifications.show', compact('notification', 'groupMembers'));
     }
 
-    // Xóa thông báo
+    /**
+     * Hàm destroy(): Xóa bỏ một thông báo khỏi hệ thống.
+     * Chỉ người tạo thông báo mới có quyền thực hiện chức năng này.
+     */
     public function destroy(Notification $notification)
     {
         if ($notification->created_by !== Auth::id()) {

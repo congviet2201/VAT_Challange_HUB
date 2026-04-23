@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/useradmin/groups/show.blade.php --}}
+
 @extends('useradmin.layout.app')
 {{-- Trang chi tiết nhóm cho UserAdmin --}}
 

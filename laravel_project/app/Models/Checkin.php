@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/Checkin.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Models;
 

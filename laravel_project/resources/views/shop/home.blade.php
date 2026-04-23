@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/home.blade.php --}}
+
 @extends('shop.layout.app')
 {{-- Kế thừa layout chính của shop --}}
 
@@ -93,7 +95,9 @@
             <small>Hiển thị {{ $categories->firstItem() }}-{{ $categories->lastItem() }} trong tổng số {{ $categories->total() }} danh mục</small>
         </div>
     @endif
-</div>
+
+    </div>
+
 
 {{-- CSS tùy chỉnh cho pagination --}}
 <style>

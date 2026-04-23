@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/useradmin/groups/add-challenges.blade.php --}}
+
 @extends('useradmin.layout.app')
 {{-- Trang thêm thử thách vào nhóm cho UserAdmin --}}
 

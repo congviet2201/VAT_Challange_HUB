@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/Admin/ChallengeController.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Http\Controllers\Admin;
 
@@ -7,6 +11,18 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Controller quản trị Challenge cho admin.
+ *
+ * Chức năng:
+ * - Quản lý vòng đời challenge (CRUD)
+ * - Tổng hợp thống kê người tham gia / hoàn thành challenge
+ */
+/**
+ * Lớp ChallengeController (dành cho Admin): Cung cấp các công cụ quản lý Thử thách.
+ * Cho phép Admin tạo, sửa, xóa, và theo dõi tiến độ tham gia/hoàn thành của người dùng
+ * trong toàn bộ hệ thống.
+ */
 class ChallengeController extends Controller
 {
     /**

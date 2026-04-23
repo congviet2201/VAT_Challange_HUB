@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/admin/challenges/index.blade.php --}}
+
 @extends('admin.layout.app')
 {{-- Trang danh sách thử thách trong Admin --}}
 

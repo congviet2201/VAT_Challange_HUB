@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Models/Category.php
+ * Định nghĩa cấu trúc bảng danh mục (categories) và các mối quan hệ.
+ */
 
 namespace App\Models;
 
@@ -9,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Mô tả: Lưu trữ thông tin các danh mục thử thách
  * Ví dụ: Học tập, Sức khỏe, Phát triển bản thân, v.v.
+ */
+/**
+ * Lớp Category: mô tả vai trò chính của file.
  */
 class Category extends Model
 {
@@ -34,6 +41,9 @@ class Category extends Model
      * Một danh mục có thể có nhiều thử thách
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    /**
+     * Hàm challenges(): xử lý nghiệp vụ theo tên hàm.
      */
     public function challenges()
     {

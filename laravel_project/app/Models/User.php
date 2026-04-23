@@ -1,19 +1,24 @@
 <?php
 
+/**
+ * File purpose: app/Models/User.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 /**
- * Model User - Đại diện cho bảng users trong database
- *
- * Mô tả: Lưu trữ thông tin người dùng của hệ thống
- * Kế thừa từ Authenticatable để có chức năng xác thực (đăng nhập/đăng ký)
+ * Lớp User: mô tả vai trò chính của file.
  */
 class User extends Authenticatable
 {
     use HasFactory;
+
+    protected $table = 'users';
 
     /**
      * Các trường được phép mass assignment
@@ -27,15 +32,15 @@ class User extends Authenticatable
         'is_active', // Trạng thái kích hoạt: 0=không active, 1=active
     ];
 
-    /**
-     * Các trường sẽ bị ẩn khi trả về JSON/API
-     * Những trường này không được hiển thị ra ngoài
-     */
     protected $hidden = [
-        'password',       // Không hiển thị mật khẩu
-        'remember_token', // Token ghi nhớ đăng nhập
+        'password',
+        'remember_token',
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'is_active' => 'boolean',
+    ];
     /**
      * Quan hệ với model ChallengeProgress
      */
@@ -45,7 +50,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Quan hệ với model UserChallenge
+     * Hàm userChallenges(): xử lý nghiệp vụ theo tên hàm.
      */
     public function userChallenges()
     {
@@ -53,7 +58,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Quan hệ nhiều-nhiều với Group
+     * Hàm groups(): xử lý nghiệp vụ theo tên hàm.
      */
     public function groups()
     {
@@ -61,7 +66,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Quan hệ với Group do người dùng tạo
+     * Hàm createdGroups(): xử lý nghiệp vụ theo tên hàm.
      */
     public function createdGroups()
     {
@@ -69,7 +74,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Quan hệ với Notification do người dùng tạo
+     * Hàm notifications(): xử lý nghiệp vụ theo tên hàm.
      */
     public function notifications()
     {

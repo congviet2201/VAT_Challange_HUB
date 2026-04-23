@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: database/migrations/2026_04_14_014848_create_groups_table.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

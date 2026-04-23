@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/shop/profile.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')
@@ -60,12 +62,26 @@
         </div>
 
         <div class="card mb-4">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Hành động nhanh</h5>
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">Mục tiêu của bạn</h5>
             </div>
-            <div class="card-body d-grid gap-2">
-                <a href="{{ route('home') }}" class="btn btn-outline-primary">Tìm thử thách mới</a>
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">Xem dashboard</a>
+            <div class="card-body">
+                @php
+                    $userGoals = \App\Models\Goal::where('user_id', $user->id)->with('category')->latest()->take(3)->get();
+                @endphp
+                @if($userGoals->isEmpty())
+                    <p class="mb-0">Bạn chưa đặt mục tiêu nào. <a href="{{ route('goals.create') }}">Đặt mục tiêu ngay</a></p>
+                @else
+                    <div class="list-group">
+                        @foreach($userGoals as $goal)
+                            <a href="{{ route('goals.show', $goal) }}" class="list-group-item list-group-item-action">
+                                <strong>{{ $goal->title }}</strong>
+                                <br><small class="text-muted">{{ $goal->category->name }}</small>
+                            </a>
+                        @endforeach
+                    </div>
+                    <a href="{{ route('goals.index') }}" class="btn btn-outline-warning mt-2">Xem tất cả mục tiêu</a>
+                @endif
             </div>
         </div>
     </div>
@@ -102,7 +118,7 @@
                                         </div>
 
                                         @if($challenge)
-                                            <p class="mb-3 text-muted">Cấp độ: 
+                                            <p class="mb-3 text-muted">Cấp độ:
                                                 @if($challenge->difficulty === 'easy')
                                                     Dễ
                                                 @elseif($challenge->difficulty === 'medium')

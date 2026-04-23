@@ -1,22 +1,19 @@
+{{-- File purpose: resources/views/shop/auth/login.blade.php --}}
+
 @extends('shop.layout.app')
-{{-- Kế thừa layout chính của shop --}}
 
 @section('content')
-{{-- Bắt đầu nội dung chính của trang --}}
 
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                {{-- Tiêu đề và mô tả --}}
                 <div class="text-center mb-5">
                     <h1>Đăng nhập</h1>
                     <p class="text-muted">Bước vào thế giới của những thử thách không giới hạn</p>
                 </div>
 
-                {{-- Card chứa form đăng nhập --}}
                 <div class="card shadow">
                     <div class="card-body p-4">
-                        {{-- Hiển thị lỗi validation --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 @foreach ($errors->all() as $error)
@@ -25,7 +22,6 @@
                             </div>
                         @endif
 
-                        {{-- Hiển thị thông báo thành công --}}
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}

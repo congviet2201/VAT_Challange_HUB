@@ -1,3 +1,7 @@
+/**
+ * File purpose: public/js/goals/script.js
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
 
     let index = 1;
@@ -33,6 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 </select>
 
                 <textarea class="form-control" name="goals[${index}][description]" placeholder="Mô tả"></textarea>
+
+                <input class="form-control mt-2" type="number" min="1" max="365" name="goals[${index}][duration_days]" placeholder="Thời hạn mục tiêu (số ngày)" value="30" required>
             </div>
         `;
 

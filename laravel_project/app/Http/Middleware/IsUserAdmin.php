@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Http/Middleware/IsUserAdmin.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Http\Middleware;
 
@@ -7,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Middleware kiểm tra quyền truy cập useradmin.
+ */
 class IsUserAdmin
 {
     /**

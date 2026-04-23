@@ -1,4 +1,8 @@
 <?php
+/**
+ * File purpose: app/Models/UserChallenge.php
+ * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
+ */
 
 namespace App\Models;
 
@@ -23,12 +27,18 @@ class UserChallenge extends Model
 
 
 
+    /**
+     * Hàm user(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
 
+    /**
+     * Hàm challenge(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function challenge()
     {
         return $this->belongsTo(Challenge::class, 'challenge_id');

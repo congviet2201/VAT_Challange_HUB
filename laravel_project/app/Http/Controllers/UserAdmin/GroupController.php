@@ -1,4 +1,7 @@
 <?php
+/**
+ * File purpose: app/Http/Controllers/UserAdmin/GroupController.php
+ */
 
 namespace App\Http\Controllers\UserAdmin;
 
@@ -9,8 +12,25 @@ use App\Models\Challenge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller quản lý nhóm dành cho useradmin.
+ *
+ * Phạm vi:
+ * - CRUD nhóm do useradmin tạo
+ * - Quản lý thành viên trong nhóm
+ * - Quản lý danh sách challenge gán vào nhóm
+ */
+/**
+ * Lớp GroupController: Controller này chịu trách nhiệm quản lý các nhóm do UserAdmin tạo ra.
+ * Bao gồm các chức năng: Xem danh sách, tạo mới, chỉnh sửa, vô hiệu hóa nhóm,
+ * cũng như thêm/xóa thành viên (User) và thêm/xóa các thử thách (Challenge) vào nhóm.
+ */
 class GroupController extends Controller
 {
+    /**
+     * Hàm index(): Lấy và hiển thị danh sách các nhóm mà UserAdmin hiện tại đã tạo.
+     * Chỉ lấy những nhóm có 'created_by' bằng với ID của UserAdmin đang đăng nhập.
+     */
     public function index()
     {
         $auth = Auth::user();
@@ -19,11 +39,19 @@ class GroupController extends Controller
         return view('useradmin.groups.index', compact('groups'));
     }
 
+    /**
+     * Hàm create(): Trả về giao diện (view) chứa form để UserAdmin tạo một nhóm mới.
+     */
     public function create()
     {
         return view('useradmin.groups.create');
     }
 
+    /**
+     * Hàm store(): Xử lý dữ liệu từ form tạo nhóm.
+     * Xác thực dữ liệu đầu vào (tên nhóm là bắt buộc), sau đó lưu vào cơ sở dữ liệu.
+     * Mặc định nhóm mới sẽ được kích hoạt (is_active = 1) và gán 'created_by' là ID của người tạo.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -42,6 +70,11 @@ class GroupController extends Controller
             ->with('success', '✅ Tạo nhóm thành công!');
     }
 
+    /**
+     * Hàm edit(): Hiển thị form chỉnh sửa thông tin nhóm.
+     * Kiểm tra bảo mật: chỉ cho phép chỉnh sửa nếu nhóm đó do chính UserAdmin này tạo ra.
+     * Nếu không có quyền, sẽ chuyển hướng về trang danh sách và báo lỗi.
+     */
     public function edit(Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -53,6 +86,10 @@ class GroupController extends Controller
         return view('useradmin.groups.edit', compact('group'));
     }
 
+    /**
+     * Hàm update(): Xử lý dữ liệu từ form chỉnh sửa nhóm và cập nhật vào database.
+     * Đồng thời cũng kiểm tra quyền sở hữu trước khi cho phép cập nhật.
+     */
     public function update(Request $request, Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -75,6 +112,11 @@ class GroupController extends Controller
             ->with('success', '✅ Cập nhật nhóm thành công!');
     }
 
+    /**
+     * Hàm toggleStatus(): Bật hoặc tắt trạng thái hoạt động (is_active) của nhóm.
+     * Giúp UserAdmin có thể tạm thời khóa một nhóm mà không cần xóa nó.
+     * Cần kiểm tra quyền sở hữu trước khi thực hiện.
+     */
     public function toggleStatus(Group $group)
     {
         // Kiểm tra chủ sở hữu nhóm
@@ -89,7 +131,11 @@ class GroupController extends Controller
         return back()->with('success', "✅ Đã $status nhóm {$group->name} thành công!");
     }
 
-    // Hiển thị danh sách users để thêm vào nhóm
+    /**
+     * Hàm addUserIndex(): Trả về giao diện hiển thị danh sách các người dùng (User) 
+     * hiện ĐANG KHÔNG nằm trong nhóm này, để UserAdmin có thể chọn và thêm họ vào nhóm.
+     * Chỉ lấy các User có role là 'user' và đang hoạt động.
+     */
     public function addUserIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -107,7 +153,11 @@ class GroupController extends Controller
         return view('useradmin.groups.add-users', compact('group', 'availableUsers'));
     }
 
-    // Thêm user vào nhóm
+    /**
+     * Hàm addUser(): Xử lý việc thêm nhiều người dùng (Users) vào nhóm cùng lúc.
+     * Dữ liệu nhận vào là một mảng ID của các người dùng (user_ids).
+     * Hàm sẽ lặp qua mảng này và liên kết (attach) từng user vào nhóm trong bảng trung gian.
+     */
     public function addUser(Request $request, Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -127,7 +177,11 @@ class GroupController extends Controller
             ->with('success', '✅ Thêm thành viên vào nhóm thành công!');
     }
 
-    // Xem chi tiết nhóm và danh sách thành viên
+    /**
+     * Hàm show(): Hiển thị trang chi tiết của nhóm.
+     * Trang này sẽ liệt kê danh sách tất cả các thành viên (members) hiện đang có trong nhóm.
+     * Cần kiểm tra quyền sở hữu của UserAdmin trước khi xem.
+     */
     public function show(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -139,7 +193,10 @@ class GroupController extends Controller
         return view('useradmin.groups.show', compact('group', 'members'));
     }
 
-    // Xóa user khỏi nhóm
+    /**
+     * Hàm removeUser(): Xóa (rời) một người dùng cụ thể ra khỏi nhóm.
+     * Thực hiện bằng cách gỡ bỏ liên kết (detach) giữa User và Group trong bảng trung gian.
+     */
     public function removeUser(Group $group, User $user)
     {
         if ($group->created_by !== Auth::id()) {
@@ -151,7 +208,10 @@ class GroupController extends Controller
         return back()->with('success', "✅ Đã xóa {$user->name} khỏi nhóm!");
     }
 
-    // Hiển thị danh sách thử thách trong nhóm
+    /**
+     * Hàm challengeIndex(): Lấy và hiển thị danh sách tất cả các thử thách (Challenges) 
+     * đã được gán cho nhóm này, kèm theo thông tin danh mục (Category) của từng thử thách.
+     */
     public function challengeIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -163,7 +223,11 @@ class GroupController extends Controller
         return view('useradmin.groups.challenges', compact('group', 'challenges'));
     }
 
-    // Hiển thị form thêm thử thách vào nhóm
+    /**
+     * Hàm addChallengeIndex(): Trả về giao diện cho phép chọn thêm các thử thách mới vào nhóm.
+     * Chỉ lấy danh sách các thử thách mà nhóm CHƯA có, sau đó nhóm chúng lại theo danh mục 
+     * để dễ dàng hiển thị trên giao diện (ví dụ: nhóm Sức khỏe, nhóm Học tập...).
+     */
     public function addChallengeIndex(Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -181,7 +245,10 @@ class GroupController extends Controller
         return view('useradmin.groups.add-challenges', compact('group', 'availableChallenges'));
     }
 
-    // Thêm thử thách vào nhóm
+    /**
+     * Hàm addChallenge(): Xử lý lưu các thử thách được chọn vào nhóm.
+     * Nhận mảng ID của các thử thách và liên kết (attach) chúng vào nhóm thông qua bảng trung gian.
+     */
     public function addChallenge(Request $request, Group $group)
     {
         if ($group->created_by !== Auth::id()) {
@@ -201,7 +268,10 @@ class GroupController extends Controller
             ->with('success', '✅ Thêm thử thách vào nhóm thành công!');
     }
 
-    // Xóa thử thách khỏi nhóm
+    /**
+     * Hàm removeChallenge(): Gỡ bỏ một thử thách khỏi nhóm.
+     * Sử dụng detach để xóa liên kết giữa Challenge và Group trong bảng trung gian.
+     */
     public function removeChallenge(Group $group, $challengeId)
     {
         if ($group->created_by !== Auth::id()) {

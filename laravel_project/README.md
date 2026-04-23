@@ -204,3 +204,167 @@ Dự án này được phân phối dưới giấy phép MIT. Xem file `LICENSE`
 ---
 
 <p align="center">Được phát triển với ❤️ bởi Team Challenge Hub</p>
+
+---
+
+## 🆕 Cập nhật mới của dự án
+
+Phần dưới đây bổ sung các tính năng và kiến trúc mới nhất đang chạy trong hệ thống hiện tại.
+
+### 1) Hệ thống Goal cá nhân + AI Sub-goals
+
+- Người dùng có thể tạo **Mục tiêu chính (Goal)** và hệ thống sẽ sinh **Mục tiêu phụ (Sub-goals)** bằng AI.
+- AI generate theo **đúng từng Goal user nhập**, không dùng kế hoạch chung:
+  - `title`
+  - `description`
+  - `duration_days` (thời hạn theo ngày)
+- Sub-goals được ràng buộc theo `goal_id` cụ thể để tránh xung đột giữa các Goal khác nhau.
+
+### 2) Submit Proof và hoàn thành Sub-goal
+
+- User nộp minh chứng (`text` / `image`) cho từng sub-goal.
+- Chỉ được hoàn thành sub-goal khi đã có proof.
+- Luồng hoàn thành được xử lý transaction để đồng bộ:
+  - trạng thái sub-goal
+  - trạng thái goal cha
+  - `last_completed_date`
+
+### 3) Ràng buộc hoàn thành theo ngày (Daily Constraint)
+
+- Đã áp dụng logic giới hạn theo ngày để tránh hoàn thành hàng loạt trong một lần.
+- Với luồng AI task trong challenge progress:
+  - Mỗi ngày chỉ hoàn thành tối đa **1 task**
+  - Backend chặn cứng (không thể bypass chỉ bằng UI)
+  - UI hiển thị trạng thái khóa task còn lại đến ngày hôm sau
+
+### 4) Challenge AI Roadmap cá nhân hóa
+
+- Người dùng nhập trình độ hiện tại (`current_level`) để AI sinh roadmap phù hợp.
+- Hệ thống hỗ trợ:
+  - OpenAI roadmap
+  - Fallback nội bộ khi AI bên ngoài lỗi
+- Task AI hỗ trợ upload ảnh minh chứng và cập nhật tiến độ tự động.
+
+### 5) Tích hợp LM Studio (Local/Remote)
+
+Hệ thống có thể dùng LM Studio làm AI backend qua endpoint tương thích OpenAI:
+
+- `LMSTUDIO_BASE_URL`
+- `LMSTUDIO_CHAT_ENDPOINT`
+- `LMSTUDIO_MODEL`
+- `LMSTUDIO_CONNECT_TIMEOUT`
+- `LMSTUDIO_TIMEOUT`
+
+Ví dụ cấu hình:
+
+```env
+LMSTUDIO_BASE_URL=http://127.0.0.1:8000
+LMSTUDIO_CHAT_ENDPOINT=/v1/chat/completions
+LMSTUDIO_MODEL=google/gemma-3-4b
+LMSTUDIO_CONNECT_TIMEOUT=10
+LMSTUDIO_TIMEOUT=180
+```
+
+> Lưu ý: LM Studio phải **đang load model** thì API generate mới hoạt động.
+
+---
+
+## 🧩 Kiến trúc module hiện tại
+
+### Backend Core
+
+- `app/Http/Controllers`
+  - Xử lý request/response cho auth, challenge, goals, group, admin.
+- `app/Models`
+  - Định nghĩa entity và quan hệ dữ liệu (User, Goal, SubGoal, Challenge, Group, Notification...).
+- `app/Services`
+  - Chứa nghiệp vụ AI/fallback, tách khỏi controller để dễ mở rộng.
+- `app/Http/Middleware`
+  - Phân quyền truy cập theo role (`admin`, `useradmin`).
+
+### Routing
+
+- `routes/web.php` gom toàn bộ route theo nhóm:
+  - public pages
+  - auth
+  - challenge + ai roadmap
+  - admin
+  - useradmin
+  - goals/sub-goals APIs
+
+### Presentation
+
+- `resources/views`
+  - `shop/*`: giao diện người dùng
+  - `admin/*`: màn hình quản trị admin
+  - `useradmin/*`: màn hình quản trị nhóm
+  - `goals/*`: màn hình quản lý mục tiêu cá nhân
+
+### Data layer
+
+- `database/migrations`
+  - Quản lý schema evolution, bao gồm các bảng AI roadmap, goals/sub-goals/proofs, groups, progress...
+
+---
+
+## 🔄 Luồng nghiệp vụ chính
+
+### A. Goal AI Flow
+
+1. User tạo Goal trong `goals/create`
+2. Backend lưu Goal với `duration_days`
+3. Gọi `GoalAIService` để generate sub-goals theo đúng goal đó
+4. Lưu sub-goals theo `goal_id`
+
+### B. Proof & Complete Sub-goal Flow
+
+1. User submit proof
+2. Backend validate ownership + dữ liệu proof
+3. User complete sub-goal
+4. Backend kiểm tra rule + đồng bộ goal cha
+
+### C. Challenge AI Task Flow
+
+1. User bắt đầu challenge
+2. Tạo AI roadmap cá nhân hóa
+3. Hoàn thành task bằng proof image
+4. Cập nhật progress và enforce giới hạn theo ngày
+
+---
+
+## 🧪 Hướng dẫn kiểm tra nhanh sau khi pull code mới
+
+1. Chạy migrate:
+```bash
+php artisan migrate
+```
+
+2. Clear config/cache:
+```bash
+php artisan config:clear
+php artisan cache:clear
+```
+
+3. Kiểm tra AI endpoint:
+```bash
+curl http://<lmstudio-host>:<port>/v1/models
+```
+
+4. Test các luồng:
+- Tạo Goal mới -> AI sinh sub-goals
+- Submit proof -> complete sub-goal
+- Challenge progress -> mỗi ngày chỉ complete tối đa 1 AI task
+
+---
+
+## 📚 Tài liệu giải thích codebase
+
+Để người mới vào dự án có thể nắm nhanh toàn bộ cấu trúc và chức năng từng module, xem thêm:
+
+- `docs/CODEBASE_EXPLAINER_VI.md`
+
+Tài liệu này mô tả:
+- ý nghĩa từng thư mục chính
+- vai trò từng nhóm file
+- các luồng nghiệp vụ cốt lõi
+- gợi ý cách trình bày khi review/bảo vệ dự án

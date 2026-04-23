@@ -1,4 +1,8 @@
 <?php
+/**
+ * Mục đích file: app/Models/Challenge.php
+ * Định nghĩa cấu trúc bảng challenges và các mối quan hệ.
+ */
 
 namespace App\Models;
 
@@ -9,6 +13,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Mô tả: Lưu trữ thông tin các thử thách
  * Ví dụ: "Đọc sách 30 phút mỗi ngày", "Tập thể dục buổi sáng", v.v.
+ */
+/**
+ * Lớp Challenge: mô tả vai trò chính của file.
  */
 class Challenge extends Model
 {
@@ -35,6 +42,9 @@ class Challenge extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    /**
+     * Hàm category(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -45,6 +55,9 @@ class Challenge extends Model
      * Một thử thách có thể có nhiều tiến độ của nhiều người dùng
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    /**
+     * Hàm progress(): xử lý nghiệp vụ theo tên hàm.
      */
     public function progress()
     {
@@ -58,13 +71,27 @@ class Challenge extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    /**
+     * Hàm groups(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_challenge')->withTimestamps();
     }
 
+    /**
+     * Hàm tasks(): xử lý nghiệp vụ theo tên hàm.
+     */
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Hàm aiPlans(): xử lý nghiệp vụ theo tên hàm.
+     */
+    public function aiPlans()
+    {
+        return $this->hasMany(ChallengeAiPlan::class);
     }
 }

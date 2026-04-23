@@ -1,3 +1,5 @@
+{{-- File purpose: resources/views/goals/create.blade.php --}}
+
 @extends('shop.layout.app')
 
 @section('content')
@@ -7,6 +9,9 @@
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    @if($errors->has('goal_ai'))
+        <div class="alert alert-danger">{{ $errors->first('goal_ai') }}</div>
     @endif
 
     <button class="btn btn-primary mb-3" onclick="toggleForm()">
@@ -34,16 +39,20 @@
                 </select>
 
                 <textarea class="form-control" name="goals[0][description]" placeholder="Mô tả"></textarea>
+
+                <input class="form-control mt-2" type="number" min="1" max="365" name="goals[0][duration_days]" placeholder="Thời hạn mục tiêu (số ngày)" value="30" required>
             </div>
         </div>
 
-        <button type="button" class="btn btn-success mb-3" onclick="addGoal()">
-            <i class="bi bi-plus-lg"></i> Thêm mục tiêu
-        </button>
+        <div class="d-flex gap-2 mb-3">
+            <button type="button" class="btn btn-success" onclick="addGoal()">
+                <i class="bi bi-plus-lg"></i> Thêm mục tiêu
+            </button>
 
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-save"></i> Lưu mục tiêu
-        </button>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Lưu mục tiêu
+            </button>
+        </div>
     </form>
 </div>
 
