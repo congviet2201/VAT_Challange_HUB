@@ -28,7 +28,18 @@
                     <div class="card {{ $subGoal->status === 'completed' ? 'border-success' : 'border-warning' }}">
                         <div class="card-body">
                             <h5 class="card-title">Day {{ $subGoal->day }}: {{ $subGoal->title }}</h5>
-                            <p class="card-text">{{ $subGoal->description }}</p>
+                            @php
+                                $descriptionLines = collect(preg_split('/\r\n|\r|\n/', (string) $subGoal->description))
+                                    ->map(fn ($line) => trim($line))
+                                    ->filter();
+                            @endphp
+                            @if ($descriptionLines->isNotEmpty())
+                                <ul class="card-text ps-3 mb-3">
+                                    @foreach ($descriptionLines as $line)
+                                        <li>{{ ltrim($line, "- \t") }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                             <p><strong>Status:</strong> <span class="sub-goal-status">{{ $subGoal->status === 'completed' ? 'Hoàn thành' : 'Đang chờ' }}</span>
                             </p>
 

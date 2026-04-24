@@ -227,27 +227,39 @@ class GoalController extends Controller
                     ->where('user_id', Auth::id())
                     ->firstOrFail();
 
-        $aiService = new GoalAIService();
-        $aiResult = $aiService->generateSubGoalsFromAI([
-            'title' => (string) $goal->title,
-            'description' => (string) ($goal->description ?? ''),
-            'duration_days' => (int) ($goal->duration_days ?? 30),
-        ]);
-        $subGoalsData = $aiResult['sub_goals'];
-
-        if (empty($subGoalsData)) {
-            return response()->json(['error' => 'Unable to generate sub-goals. Please try again.'], 500);
-        }
-
-        // Save sub-goals
-        foreach ($subGoalsData as $subGoalData) {
-            SubGoal::create([
-                'goal_id' => $goal->id,
-                'title' => $subGoalData['title'],
-                'description' => $subGoalData['description'],
-                'day' => $subGoalData['day'],
-                'status' => 'pending',
+        try {
+            $aiService = new GoalAIService();
+            $aiResult = $aiService->generateSubGoalsFromAI([
+                'title' => (string) $goal->title,
+                'description' => (string) ($goal->description ?? ''),
+                'duration_days' => (int) ($goal->duration_days ?? 30),
             ]);
+            $subGoalsData = $aiResult['sub_goals'];
+
+            if (empty($subGoalsData)) {
+                return response()->json(['error' => 'Unable to generate sub-goals. Please try again.'], 500);
+            }
+
+            foreach ($subGoalsData as $subGoalData) {
+                SubGoal::create([
+                    'goal_id' => $goal->id,
+                    'title' => $subGoalData['title'],
+                    'description' => $subGoalData['description'],
+                    'day' => $subGoalData['day'],
+                    'status' => 'pending',
+                ]);
+            }
+        } catch (Throwable $e) {
+            Log::error('Failed to regenerate sub-goals from AI', [
+                'goal_id' => $goal->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'error' => app()->hasDebugModeEnabled()
+                    ? $e->getMessage()
+                    : 'Unable to generate sub-goals. Please try again.',
+            ], 500);
         }
 
         return response()->json([

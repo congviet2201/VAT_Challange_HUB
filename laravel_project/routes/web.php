@@ -139,6 +139,15 @@ Route::middleware(['auth', 'useradmin'])->group(function () {
     // Route: (UserAdmin) Xử lý loại bỏ người dùng khỏi nhóm
     Route::post('/useradmin/groups/{group}/remove-user/{user}', [GroupController::class, 'removeUser'])->name('useradmin.groups.remove-user');
 
+    // Route: (UserAdmin) Xem danh sách thử thách của nhóm
+    Route::get('/useradmin/groups/{group}/challenges', [GroupController::class, 'challengeIndex'])->name('useradmin.groups.challenges');
+    // Route: (UserAdmin) Hiển thị giao diện thêm thử thách vào nhóm
+    Route::get('/useradmin/groups/{group}/add-challenges', [GroupController::class, 'addChallengeIndex'])->name('useradmin.groups.add-challenges');
+    // Route: (UserAdmin) Xử lý thêm thử thách vào nhóm
+    Route::post('/useradmin/groups/{group}/add-challenges', [GroupController::class, 'addChallenge'])->name('useradmin.groups.add-challenges-store');
+    // Route: (UserAdmin) Xử lý xóa thử thách khỏi nhóm
+    Route::post('/useradmin/groups/{group}/remove-challenge/{challengeId}', [GroupController::class, 'removeChallenge'])->name('useradmin.groups.remove-challenge');
+
     // Route: (UserAdmin) Xem danh sách các thông báo đã được tạo gửi tới nhóm
     Route::get('/useradmin/notifications', [NotificationController::class, 'index'])->name('useradmin.notifications.index');
     // Route: (UserAdmin) Hiển thị form tạo mới thông báo
