@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File purpose: app/Services/GoalAIService.php
  * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
@@ -35,10 +36,6 @@ class GoalAIService
      */
     public function generateSubGoalsFromAI(string|array $goalInput): array
     {
-        // Tăng thời gian thực thi tối đa của PHP lên 5 phút (300 giây) 
-        // để chờ Local AI sinh xong văn bản mà không bị sập
-        set_time_limit(300);
-
         $goalContext = $this->normalizeGoalInput($goalInput);
         $prompt = $this->buildPrompt($goalContext);
         $baseUrl = rtrim((string) config('services.lmstudio.base_url', 'http://127.0.0.1:8000'), '/');
@@ -48,7 +45,11 @@ class GoalAIService
         $model = (string) config('services.lmstudio.model', 'local-model');
         $connectTimeout = max((int) config('services.lmstudio.connect_timeout', 10), 1);
         $timeout = max((int) config('services.lmstudio.timeout', 180), $connectTimeout);
-        
+
+        // Đặt thời gian chạy PHP lớn hơn timeout của Guzzle để tránh lỗi execution time exceeded.
+        // Nếu LMSTUDIO_TIMEOUT=120 thì PHP sẽ được cho 150s để hoàn thành request.
+        set_time_limit($timeout + 30);
+
         try {
             $response = Http::withToken($token)
                 ->connectTimeout($connectTimeout)
@@ -58,14 +59,15 @@ class GoalAIService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'You are a helpful assistant. You must output ONLY a valid JSON array. No explanations, no markdown formatting.'
+                            'content' => 'You are a JSON generator. Output ONLY a valid JSON array. No explanations, no markdown, no reasoning. Just the JSON array.'
                         ],
                         [
                             'role' => 'user',
                             'content' => $prompt,
                         ],
                     ],
-                    'temperature' => 0.2,
+                    'temperature' => 0.0,
+                    'max_tokens' => 200,
                 ]);
         } catch (Throwable $e) {
             Log::error('LM Studio transport error', [
@@ -77,8 +79,8 @@ class GoalAIService
 
             throw new RuntimeException(
                 'Không thể kết nối đến LM Studio tại ' . $requestUrl .
-                '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT. Chi tiết: ' .
-                $e->getMessage()
+                    '. Hãy kiểm tra server LM Studio và cấu hình LMSTUDIO_BASE_URL/LMSTUDIO_CHAT_ENDPOINT. Chi tiết: ' .
+                    $e->getMessage()
             );
         }
 
@@ -92,7 +94,13 @@ class GoalAIService
 
         $payload = $response->json();
         $lastRawContent = trim((string) data_get($payload, 'choices.0.message.content', ''));
-        
+        if ($lastRawContent === '') {
+            $lastRawContent = trim((string) data_get($payload, 'choices.0.message.reasoning_content', ''));
+        }
+
+        // Nếu AI trả thêm giải thích, hãy cố gắng trích JSON array từ nội dung
+        $lastRawContent = $this->extractJsonString($lastRawContent);
+
         // Làm sạch JSON trong trường hợp AI trả về markdown code blocks
         $lastRawContent = preg_replace('/```json/i', '', $lastRawContent);
         $lastRawContent = preg_replace('/```/i', '', $lastRawContent);
@@ -104,6 +112,15 @@ class GoalAIService
         if ($subGoals !== null) {
             return [
                 'sub_goals' => $subGoals,
+                'raw_response' => $lastRawContent,
+            ];
+        }
+
+        // Nếu vẫn không parse được, thử một lần nữa với phần text có JSON tiềm năng.
+        $retryResult = $this->retryParseRawContent($lastRawContent, $goalContext['duration_days'], $requestUrl, $token, $model, $connectTimeout, $timeout);
+        if ($retryResult !== null) {
+            return [
+                'sub_goals' => $retryResult,
                 'raw_response' => $lastRawContent,
             ];
         }
@@ -169,21 +186,11 @@ class GoalAIService
         $description = $goalContext['description'] !== '' ? $goalContext['description'] : 'Không có mô tả thêm.';
         $durationDays = (int) $goalContext['duration_days'];
 
-        return "You are a planning engine.
-Create a detailed actionable plan ONLY for this single main goal:
-- Main goal title: {$title}
-- Main goal description: {$description}
-- Main goal duration: {$durationDays} days
+        return "Goal: {$title}
+Duration: {$durationDays} days
+Description: {$description}
 
-Strict rules:
-1) Plan must be specific to this main goal only (no generic plan).
-2) Every sub-goal must map to this duration window.
-3) Return a JSON array only, no markdown and no explanation.
-4) Each item must include: title, description, day.
-5) day must be an integer between 1 and {$durationDays}.
-6) Do not reference other goals or other users.
-
-Output JSON only.";
+Return JSON: [{\"title\":\"Sub-goal 1\",\"description\":\"Description 1\",\"day\":1},{\"title\":\"Sub-goal 2\",\"description\":\"Description 2\",\"day\":2},{\"title\":\"Sub-goal 3\",\"description\":\"Description 3\",\"day\":3}]";
     }
 
     /**
@@ -218,5 +225,78 @@ Output JSON only.";
         }
 
         return $normalized;
+    }
+
+    /**
+     * Trích JSON array từ nội dung text có thể chứa cả suy nghĩ/internal reasoning.
+     */
+    private function extractJsonString(string $text): string
+    {
+        if (trim($text) === '') {
+            return $text;
+        }
+
+        $pattern = '/(\[\s*\{.*?\}\s*\])/s';
+        if (preg_match($pattern, $text, $matches)) {
+            return trim($matches[1]);
+        }
+
+        return $text;
+    }
+
+    /**
+     * Thử parse lại raw response nếu lần đầu không trả về JSON hợp lệ.
+     */
+    private function retryParseRawContent(string $rawContent, int $durationDays, string $requestUrl, string $token, string $model, int $connectTimeout, int $timeout): ?array
+    {
+        if (trim($rawContent) === '') {
+            return null;
+        }
+
+        $retryPrompt = "Extract the JSON array from the following text. Return ONLY the JSON array with objects containing title, description, day.\n\n" . $rawContent;
+
+        try {
+            $response = Http::withToken($token)
+                ->connectTimeout($connectTimeout)
+                ->timeout($timeout)
+                ->post($requestUrl, [
+                    'model' => $model,
+                    'messages' => [
+                        [
+                            'role' => 'system',
+                            'content' => 'You are a JSON extractor. Return only the JSON array found in the user text. Do not add any explanation.'
+                        ],
+                        [
+                            'role' => 'user',
+                            'content' => $retryPrompt,
+                        ],
+                    ],
+                    'temperature' => 0.0,
+                    'max_tokens' => 100,
+                ]);
+        } catch (Throwable $e) {
+            Log::warning('LM Studio retry parse failed', [
+                'error' => $e->getMessage(),
+                'raw_content' => $rawContent,
+            ]);
+            return null;
+        }
+
+        if (! $response->successful()) {
+            return null;
+        }
+
+        $payload = $response->json();
+        $retryRaw = trim((string) data_get($payload, 'choices.0.message.content', ''));
+        if ($retryRaw === '') {
+            $retryRaw = trim((string) data_get($payload, 'choices.0.message.reasoning_content', ''));
+        }
+
+        $retryRaw = $this->extractJsonString($retryRaw);
+        $retryRaw = preg_replace('/```json/i', '', $retryRaw);
+        $retryRaw = preg_replace('/```/i', '', $retryRaw);
+        $retryRaw = trim($retryRaw);
+
+        return $this->parseSubGoals($retryRaw, $durationDays);
     }
 }

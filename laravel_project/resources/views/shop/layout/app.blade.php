@@ -7,12 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenge Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<<<<<<<<< Temporary merge branch 1
-
-    {{-- CSS tùy chỉnh cho giao diện --}}
-=========
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
->>>>>>>>> Temporary merge branch 2
     <style>
         :root {
             --primary: #007bff;
@@ -71,7 +66,6 @@
             border-color: #86b7fe;
         }
 
-Temporary merge branch 2
         .card {
             border: none;
             border-radius: 8px;
@@ -111,8 +105,7 @@ Temporary merge branch 2
             font-weight: 500;
         }
 
-<<<<<<<<< Temporary merge branch 1
-        /* TASK CARDS */
+<<        /* TASK CARDS */
         .bg-light-success {
             background-color: #f0fdf4 !important;
         }
@@ -127,9 +120,6 @@ Temporary merge branch 2
         }
 
         /* FOOTER */
-=========
-        {{-- Cấu hình footer --}}
->>>>>>>>> Temporary merge branch 2
         footer {
             background-color: #0b1120;
             color: white;
@@ -165,17 +155,10 @@ Temporary merge branch 2
             color: #b0b0b0;
         }
 
-<<<<<<<<< Temporary merge branch 1
-        {{-- Responsive cho mobile --}}
+<<        {{-- Responsive cho mobile --}}
         @media (max-width: 768px) {
             .navbar form {
                 display: none; {{-- Ẩn form search trên mobile --}}
-=========
-        @media (max-width: 991px) {
-            .search-form {
-                margin: 1rem 0;
-                padding: 0;
->>>>>>>>> Temporary merge branch 2
             }
         }
 

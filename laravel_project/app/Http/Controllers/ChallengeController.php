@@ -97,6 +97,7 @@ class ChallengeController extends Controller
      * Khởi tạo một bản ghi tiến độ (ChallengeProgress) với điểm xuất phát ban đầu là 0
      * nếu người dùng chưa từng tham gia thử thách này.
      */
+    
     public function start(Challenge $challenge)
     {
         $user = Auth::user();

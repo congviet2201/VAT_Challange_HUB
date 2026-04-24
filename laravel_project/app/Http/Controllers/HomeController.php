@@ -54,7 +54,6 @@ class HomeController extends Controller
     }
     /**
      * Trang chi tiết challenge.
->>>>>>> origin/main
      */
     public function challengeDetail($id)
     {

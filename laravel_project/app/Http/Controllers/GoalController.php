@@ -13,9 +13,9 @@ use App\Models\SubGoal;
 use App\Models\SubGoalProof;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 use App\Services\GoalAIService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Throwable;
 
@@ -90,21 +90,31 @@ class GoalController extends Controller
                     ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
 
                     $aiService = new GoalAIService();
-                    $aiResult = $aiService->generateSubGoalsFromAI([
-                        'title' => (string) $goal->title,
-                        'description' => (string) ($goal->description ?? ''),
-                        'duration_days' => (int) ($goal->duration_days ?? 30),
-                    ]);
-                    $subGoalsData = $aiResult['sub_goals'];
-
-                    foreach ($subGoalsData as $subGoalData) {
-                        SubGoal::create([
-                            'goal_id' => $goal->id,
-                            'title' => $subGoalData['title'],
-                            'description' => $subGoalData['description'],
-                            'day' => $subGoalData['day'],
-                            'status' => 'pending',
+                    $aiResult = null;
+                    try {
+                        $aiResult = $aiService->generateSubGoalsFromAI([
+                            'title' => (string) $goal->title,
+                            'description' => (string) ($goal->description ?? ''),
+                            'duration_days' => (int) ($goal->duration_days ?? 30),
                         ]);
+                        $subGoalsData = $aiResult['sub_goals'];
+
+                        foreach ($subGoalsData as $subGoalData) {
+                            SubGoal::create([
+                                'goal_id' => $goal->id,
+                                'title' => $subGoalData['title'],
+                                'description' => $subGoalData['description'],
+                                'day' => $subGoalData['day'],
+                                'status' => 'pending',
+                            ]);
+                        }
+                    } catch (\Throwable $e) {
+                        // Nếu AI lỗi, tạo goal nhưng không có sub-goals
+                        Log::warning('AI sub-goal generation failed, creating goal without sub-goals', [
+                            'goal_id' => $goal->id,
+                            'error' => $e->getMessage()
+                        ]);
+                        $subGoalsData = [];
                     }
 
                     $response = [
@@ -115,7 +125,7 @@ class GoalController extends Controller
                         'sub_goals' => $subGoalsData,
                     ];
 
-                    if ($request->boolean('debug_ai')) {
+                    if ($request->boolean('debug_ai') && $aiResult) {
                         $response['debug'] = [
                             'raw_ai_response' => $aiResult['raw_response'],
                         ];
@@ -157,20 +167,28 @@ class GoalController extends Controller
                     ] + (Schema::hasColumn('goals', 'status') ? ['status' => 'pending'] : []));
 
                     $aiService = new GoalAIService();
-                    $aiResult = $aiService->generateSubGoalsFromAI([
-                        'title' => (string) $createdGoal->title,
-                        'description' => (string) ($createdGoal->description ?? ''),
-                        'duration_days' => (int) ($createdGoal->duration_days ?? 30),
-                    ]);
-                    $subGoalsData = $aiResult['sub_goals'];
+                    try {
+                        $aiResult = $aiService->generateSubGoalsFromAI([
+                            'title' => (string) $createdGoal->title,
+                            'description' => (string) ($createdGoal->description ?? ''),
+                            'duration_days' => (int) ($createdGoal->duration_days ?? 30),
+                        ]);
+                        $subGoalsData = $aiResult['sub_goals'];
 
-                    foreach ($subGoalsData as $subGoalData) {
-                        SubGoal::create([
+                        foreach ($subGoalsData as $subGoalData) {
+                            SubGoal::create([
+                                'goal_id' => $createdGoal->id,
+                                'title' => $subGoalData['title'],
+                                'description' => $subGoalData['description'],
+                                'day' => $subGoalData['day'],
+                                'status' => 'pending',
+                            ]);
+                        }
+                    } catch (\Throwable $e) {
+                        // Nếu AI lỗi, tạo goal nhưng không có sub-goals
+                        Log::warning('AI sub-goal generation failed for bulk create', [
                             'goal_id' => $createdGoal->id,
-                            'title' => $subGoalData['title'],
-                            'description' => $subGoalData['description'],
-                            'day' => $subGoalData['day'],
-                            'status' => 'pending',
+                            'error' => $e->getMessage()
                         ]);
                     }
 
@@ -229,26 +247,34 @@ class GoalController extends Controller
             ->firstOrFail();
 
         $aiService = new GoalAIService();
-        $aiResult = $aiService->generateSubGoalsFromAI([
-            'title' => (string) $goal->title,
-            'description' => (string) ($goal->description ?? ''),
-            'duration_days' => (int) ($goal->duration_days ?? 30),
-        ]);
-        $subGoalsData = $aiResult['sub_goals'];
-
-        if (empty($subGoalsData)) {
-            return response()->json(['error' => 'Unable to generate sub-goals. Please try again.'], 500);
-        }
-
-        // Save sub-goals
-        foreach ($subGoalsData as $subGoalData) {
-            SubGoal::create([
-                'goal_id' => $goal->id,
-                'title' => $subGoalData['title'],
-                'description' => $subGoalData['description'],
-                'day' => $subGoalData['day'],
-                'status' => 'pending',
+        try {
+            $aiResult = $aiService->generateSubGoalsFromAI([
+                'title' => (string) $goal->title,
+                'description' => (string) ($goal->description ?? ''),
+                'duration_days' => (int) ($goal->duration_days ?? 30),
             ]);
+            $subGoalsData = $aiResult['sub_goals'];
+
+            if (empty($subGoalsData)) {
+                return response()->json(['error' => 'Unable to generate sub-goals. Please try again.'], 500);
+            }
+
+            // Save sub-goals
+            foreach ($subGoalsData as $subGoalData) {
+                SubGoal::create([
+                    'goal_id' => $goal->id,
+                    'title' => $subGoalData['title'],
+                    'description' => $subGoalData['description'],
+                    'day' => $subGoalData['day'],
+                    'status' => 'pending',
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::error('AI sub-goal generation failed in generateSubGoals', [
+                'goal_id' => $goal->id,
+                'error' => $e->getMessage()
+            ]);
+            return response()->json(['error' => 'AI service is currently unavailable. Goal created without sub-goals.'], 503);
         }
 
         return response()->json([

@@ -15,20 +15,8 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
-/**
- * Controller xác thực người dùng:
- * đăng ký, đăng nhập và đăng xuất.
- *
- * Phụ thuộc chính:
- * - User model
- * - Laravel Auth/Hash
- * - WelcomeMail cho email chào mừng
- */
-/**
- * Lớp AuthController: Xử lý các nghiệp vụ liên quan đến xác thực người dùng.
- * Cụ thể bao gồm: hiển thị giao diện, xử lý đăng ký tài khoản (kèm gửi email chào mừng),
- * xử lý đăng nhập, và đăng xuất khỏi hệ thống.
- */
+
+
 class AuthController extends Controller
 {
     /**

@@ -92,7 +92,7 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')
-            ->with('success', '✅ Tạo tài khoản người dùng thành công!');
+            ->with('success', ' Tạo tài khoản người dùng thành công!');
     }
 
     /**
@@ -142,7 +142,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.users.index')
-            ->with('success', '✅ Cập nhật thông tin người dùng thành công!');
+            ->with('success', ' Cập nhật thông tin người dùng thành công!');
     }
 
     /**
@@ -164,7 +164,7 @@ class UserController extends Controller
         $user->save();
 
         $status = $user->is_active ? 'mở khóa' : 'khóa';
-        return back()->with('success', "✅ Đã $status tài khoản {$user->name} thành công!");
+        return back()->with('success', " Đã $status tài khoản {$user->name} thành công!");
     }
 
     /**
