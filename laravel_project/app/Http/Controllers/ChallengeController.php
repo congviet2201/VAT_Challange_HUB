@@ -117,7 +117,7 @@ class ChallengeController extends Controller
                 'progress' => 0,
                 'completed_days' => 0,
                 'streak' => 0,
-                'started_at' => now()
+                'started_at' => now()       
             ]);
         }
 
