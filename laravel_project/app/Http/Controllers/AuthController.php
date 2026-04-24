@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\LoginAlertMail;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -116,6 +117,17 @@ class AuthController extends Controller
         // Thử đăng nhập bằng email và password
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
             $request->session()->regenerate();
+
+            try {
+                Mail::to(Auth::user()->email)->send(new LoginAlertMail(
+                    Auth::user(),
+                    (string) $request->ip(),
+                    now()->format('d/m/Y H:i:s')
+                ));
+            } catch (\Exception $e) {
+                Log::error('Failed to send login alert email: ' . $e->getMessage());
+            }
+
             return redirect()->intended('/')->with('success', 'Đăng nhập thành công!');
         }
 

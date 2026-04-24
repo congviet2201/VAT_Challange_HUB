@@ -29,6 +29,12 @@ use App\Services\ChallengeFeedbackService;
  * - Models: Challenge, ChallengeProgress, Checkin, ChallengeAiPlan, ChallengeAiTask
  * - Services: ChallengeAiPlannerService (Gọi AI tạo lộ trình), ChallengeFeedbackService (Phân tích phản hồi)
  */
+
+// check-in hàng ngày
+// $userId = Auth::id();
+// $challengeId = $request->challenge_id;
+// $today = now()->toDateString();
+
 class ChallengeController extends Controller
 {
     /**

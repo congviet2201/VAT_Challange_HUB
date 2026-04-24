@@ -181,3 +181,18 @@ Route::middleware('auth')->group(function () {
     // Route: [API] Kiểm tra trạng thái hoàn thành tổng thể của mục tiêu lớn
     Route::post('/api/goals/check-completion', [GoalController::class, 'checkGoalCompletion']);
 });
+
+
+
+// Middleware hoạt động == admin | === useradmin
+// if (Auth::check() && Auth::user()->role == 'admin')
+
+// 👉 Giải thích:
+// Auth::check() → đã login chưa
+// Auth::user()->role == 'admin' → đúng quyền chưa
+
+// 👉 Nếu đúng:
+// return $next($request);
+
+// 👉 Nếu sai:
+// return redirect('/');

@@ -21,6 +21,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Lấy danh sách danh mục có phân trang, 6 danh mục mỗi trang.
+        // Database → Category → Controller → View (shop.home)
         $categories = Category::paginate(6);
 
         return view('shop.home', compact('categories'));
@@ -66,6 +68,7 @@ class HomeController extends Controller
     /**
      * Trang tổng hợp tất cả challenge (có phân trang).
      */
+    // Hiển thị danh sách thử thách với phân trang và tìm kiếm
     public function challenges(Request $request)
     {
         $keyword = trim((string) $request->input('keyword', $request->input('query', '')));
@@ -79,8 +82,13 @@ class HomeController extends Controller
     /**
      * Dựng query tìm kiếm dùng chung cho search/challenges.
      */
+    // Logic tìm kiếm thử thách theo từ khóa, tìm trong title và description
+    // định nghĩa trong một phương thức truy cập trong phạm vi lớp (class) 
     protected function buildChallengeSearchQuery(string $keyword)
     {
+        // Em sử dụng Query Builder của Laravel.
+        // Em dùng when() để kiểm tra nếu có keyword thì mới filter.
+        //Sau đó dùng where và orWhere để tìm theo title hoặc description với toán tử LIKE.
         return Challenge::query()
             ->when($keyword !== '', function ($query) use ($keyword) {
                 $query->where(function ($subQuery) use ($keyword) {
@@ -91,3 +99,22 @@ class HomeController extends Controller
             ->latest();
     }
 }
+
+// Trang chủ, shearch, danh sách challenge
+// ->paginate(6), (9), (12)
+// dùng paginate để phân trang“Để giữ lại các tham số tìm kiếm như keyword khi người dùng chuyển sang trang khác.
+
+// 🔥 2. paginate() hoạt động như thế nào?
+
+// 👉 Khi bạn dùng:
+
+// Challenge::paginate(12);
+
+// Laravel sẽ tự:
+
+// ✔ Query SQL có LIMIT + OFFSET
+// ✔ Chỉ lấy 12 bản ghi
+// ✔ Tự tính tổng số trang
+// ✔ Tạo link: ?page=1, ?page=2
+// 👉 Ví dụ SQL phía sau:
+// SELECT * FROM challenges LIMIT 12 OFFSET 0;

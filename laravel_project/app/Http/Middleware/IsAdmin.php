@@ -3,7 +3,7 @@
  * File purpose: app/Http/Middleware/IsAdmin.php
  * Chỉ bổ sung chú thích, không thay đổi logic xử lý.
  */
-
+// Phân quyền được xử lý ở middleware, không viết trực tiếp trong view
 namespace App\Http\Middleware;
 
 use Closure;
